@@ -1,0 +1,38 @@
+{
+  "name": "type-coverage",
+  "version": "1.0.0",
+  "description": "A CLI tool to check type coverage for typescript code",
+  "main": "index.js",
+  "repository": "https://github.com/plantain-00/type-coverage.git",
+  "author": "york yao <yaoao12306@outlook.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "6.0.2",
+    "@commitlint/config-angular": "6.0.2",
+    "@types/glob": "5.0.34",
+    "@types/jasmine": "2.8.4",
+    "@types/minimist": "1.2.0",
+    "@types/node": "9.3.0",
+    "clean-scripts": "1.7.0",
+    "jasmine": "2.8.0",
+    "markdownlint-cli": "0.6.0",
+    "no-unused-export": "1.4.5",
+    "rimraf": "2.6.2",
+    "standard": "10.0.3",
+    "tslint": "5.9.1"
+  },
+  "dependencies": {
+    "glob": "7.1.2",
+    "minimist": "1.2.0",
+    "typescript": "2.6.2"
+  },
+  "scripts": {
+    "build": "clean-scripts build",
+    "lint": "clean-scripts lint",
+    "test": "clean-scripts test",
+    "fix": "clean-scripts fix"
+  },
+  "bin": {
+    "type-coverage": "bin/type-coverage"
+  }
+}

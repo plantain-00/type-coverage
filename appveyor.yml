@@ -1,0 +1,15 @@
+environment:
+  nodejs_version: "8"
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - yarn install --frozen-lockfile
+
+test_script:
+  - node --version
+  - npm --version
+  - npm run build
+  - npm run lint
+  - npm run test
+
+build: off
