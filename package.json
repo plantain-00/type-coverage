@@ -8,7 +8,7 @@
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "6.0.2",
-    "@commitlint/config-angular": "6.0.2",
+    "@commitlint/config-conventional": "6.0.2",
     "@types/glob": "5.0.34",
     "@types/jasmine": "2.8.4",
     "@types/minimist": "1.2.0",
