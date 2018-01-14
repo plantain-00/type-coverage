@@ -17,8 +17,8 @@ src/index.ts:65:56: compilerOptions
 src/index.ts:71:34: detail
 src/index.ts:72:33: debug
 src/index.ts:79:51: intrinsicName
-src/index.ts:86:155: intrinsicName
-src/index.ts:355:9: error
-src/index.ts:358:21: error
-991 / 1013 98%
+src/index.ts:88:169: intrinsicName
+src/index.ts:357:9: error
+src/index.ts:360:21: error
+999 / 1021 98%
 type-coverage success.

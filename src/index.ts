@@ -77,13 +77,15 @@ async function executeCommandLine() {
             const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile));
             totalCount++;
             if (type.flags === 1 && (type as any).intrinsicName === "any") {
-                if (detail || debug) {
+                if (debug) {
+                    console.log(`type === any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`);
+                } else if (detail) {
                     console.log(`${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`);
                 }
             } else {
                 correctCount++;
                 if (debug) {
-                    console.log(`${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind) ${type.flags}(flag) ${(type as any).intrinsicName || ""}`);
+                    console.log(`type !== any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind) ${type.flags}(flag) ${(type as any).intrinsicName || ""}`);
                 }
             }
         }
@@ -96,7 +98,7 @@ async function executeCommandLine() {
 
         if (debug) {
             const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile));
-            console.log(`${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind)`);
+            console.log(`node: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind)`);
         }
 
         if (node.kind === ts.SyntaxKind.CallExpression) {
