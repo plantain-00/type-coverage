@@ -52,6 +52,12 @@ async function executeCommandLine() {
     if (error) {
         throw error;
     }
+
+    const { options: compilerOptions, errors } = ts.convertCompilerOptionsFromJson(config.compilerOptions, basename);
+    if (errors && errors.length > 0) {
+        throw errors;
+    }
+
     const include: string[] | undefined = config.include;
     const exclude: string[] | undefined = config.exclude || ["./node_modules/**"];
     let rootNames: string[];
@@ -62,8 +68,8 @@ async function executeCommandLine() {
     } else {
         rootNames = await globAsync(`${basename}/**/*.{ts,tsx}`, exclude);
     }
-    config.compilerOptions.moduleResolution = undefined;
-    const program = ts.createProgram(rootNames, config.compilerOptions);
+
+    const program = ts.createProgram(rootNames, compilerOptions);
     const checker = program.getTypeChecker();
 
     let correctCount = 0;
