@@ -316,6 +316,26 @@ async function executeCommandLine() {
         } else if (node.kind === ts.SyntaxKind.ShorthandPropertyAssignment) {
             const shorthandPropertyAssignment = node as ts.ShorthandPropertyAssignment;
             handleNode(shorthandPropertyAssignment.name, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.NamedImports) {
+            const namedImports = node as ts.NamedImports;
+            for (const element of namedImports.elements) {
+                handleNode(element, file, sourceFile);
+            }
+        } else if (node.kind === ts.SyntaxKind.ImportSpecifier) {
+            const importSpecifier = node as ts.ImportSpecifier;
+            handleNode(importSpecifier.name, file, sourceFile);
+            handleNode(importSpecifier.propertyName, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.PropertyDeclaration) {
+            const propertyDeclaration = node as ts.PropertyDeclaration;
+            handleNode(propertyDeclaration.name, file, sourceFile);
+            handleNode(propertyDeclaration.initializer, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.GetAccessor) {
+            const getAccessorDeclaration = node as ts.GetAccessorDeclaration;
+            handleNode(getAccessorDeclaration.name, file, sourceFile);
+            for (const parameter of getAccessorDeclaration.parameters) {
+                handleNode(parameter, file, sourceFile);
+            }
+            handleNode(getAccessorDeclaration.body, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.EndOfFileToken
             || node.kind === ts.SyntaxKind.NumericLiteral
             || node.kind === ts.SyntaxKind.StringLiteral
