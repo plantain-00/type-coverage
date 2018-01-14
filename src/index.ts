@@ -337,6 +337,32 @@ async function executeCommandLine() {
                 handleNode(parameter, file, sourceFile);
             }
             handleNode(getAccessorDeclaration.body, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.Constructor) {
+            const constructorDeclaration = node as ts.ConstructorDeclaration;
+            handleNode(constructorDeclaration.name, file, sourceFile);
+            for (const parameter of constructorDeclaration.parameters) {
+                handleNode(parameter, file, sourceFile);
+            }
+            handleNode(constructorDeclaration.body, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.NamespaceExportDeclaration) {
+            const namespaceExportDeclaration = node as ts.NamespaceExportDeclaration;
+            handleNode(namespaceExportDeclaration.name, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.QualifiedName) {
+            const qualifiedName = node as ts.QualifiedName;
+            handleNode(qualifiedName.left, file, sourceFile);
+            handleNode(qualifiedName.right, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.ArrayBindingPattern) {
+            const arrayBindingPattern = node as ts.ArrayBindingPattern;
+            for (const element of arrayBindingPattern.elements) {
+                handleNode(element, file, sourceFile);
+            }
+        } else if (node.kind === ts.SyntaxKind.ExternalModuleReference) {
+            const externalModuleReference = node as ts.ExternalModuleReference;
+            handleNode(externalModuleReference.expression, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.SpreadAssignment) {
+            const spreadAssignment = node as ts.SpreadAssignment;
+            handleNode(spreadAssignment.name, file, sourceFile);
+            handleNode(spreadAssignment.expression, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.EndOfFileToken
             || node.kind === ts.SyntaxKind.NumericLiteral
             || node.kind === ts.SyntaxKind.StringLiteral
@@ -347,6 +373,7 @@ async function executeCommandLine() {
             || node.kind === ts.SyntaxKind.NullKeyword
             || node.kind === ts.SyntaxKind.FalseKeyword
             || node.kind === ts.SyntaxKind.TrueKeyword
+            || node.kind === ts.SyntaxKind.EmptyStatement
             || node.kind === ts.SyntaxKind.BreakStatement
             || node.kind === ts.SyntaxKind.ContinueStatement
             || node.kind === ts.SyntaxKind.RegularExpressionLiteral) {
