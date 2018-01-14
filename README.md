@@ -24,3 +24,4 @@ name | type | description
 -p, --project | string? | show where is the `tsconfig.json`
 --detail | boolean? | show detail
 --at-least | number? | fail if coverage rate < this value
+--debug | boolean? | show debug info

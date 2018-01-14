@@ -68,7 +68,8 @@ async function executeCommandLine() {
     let correctCount = 0;
     let totalCount = 0;
 
-    const detail = argv.detail;
+    const detail: boolean = argv.detail;
+    const debug: boolean = argv.debug;
 
     function collectData(node: ts.Node, file: string, sourceFile: ts.SourceFile) {
         const type = checker.getTypeAtLocation(node);
@@ -76,27 +77,33 @@ async function executeCommandLine() {
             const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile));
             totalCount++;
             if (type.flags === 1 && (type as any).intrinsicName === "any") {
-                if (detail) {
+                if (detail || debug) {
                     console.log(`${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`);
                 }
             } else {
                 correctCount++;
+                if (debug) {
+                    console.log(`${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind) ${type.flags}(flag) ${(type as any).intrinsicName || ""}`);
+                }
             }
         }
     }
 
-    function handleNode(node: ts.Node, file: string, sourceFile: ts.SourceFile): void {
+    function handleNode(node: ts.Node | undefined, file: string, sourceFile: ts.SourceFile): void {
         if (node === undefined) {
             return;
+        }
+
+        if (debug) {
+            const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile));
+            console.log(`${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind)`);
         }
 
         if (node.kind === ts.SyntaxKind.CallExpression) {
             const callExpression = node as ts.CallExpression;
             handleNode(callExpression.expression, file, sourceFile);
-            if (callExpression.arguments) {
-                for (const parameter of callExpression.arguments) {
-                    handleNode(parameter, file, sourceFile);
-                }
+            for (const parameter of callExpression.arguments) {
+                handleNode(parameter, file, sourceFile);
             }
         } else if (node.kind === ts.SyntaxKind.ForOfStatement) {
             const forOfStatement = node as ts.ForOfStatement;
@@ -104,9 +111,7 @@ async function executeCommandLine() {
         } else if (node.kind === ts.SyntaxKind.ArrowFunction
             || node.kind === ts.SyntaxKind.ModuleDeclaration) {
             const declaration = node as ts.ArrowFunction | ts.ModuleDeclaration;
-            if (declaration.body) {
-                handleNode(declaration.body, file, sourceFile);
-            }
+            handleNode(declaration.body, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.PropertyAssignment) {
             const propertyAssignmentExpression = node as ts.PropertyAssignment;
             handleNode(propertyAssignmentExpression.initializer, file, sourceFile);
@@ -124,14 +129,10 @@ async function executeCommandLine() {
         } else if (node.kind === ts.SyntaxKind.VariableDeclaration) {
             const expression = node as ts.VariableDeclaration;
             handleNode(expression.name, file, sourceFile);
-            if (expression.initializer) {
-                handleNode(expression.initializer, file, sourceFile);
-            }
+            handleNode(expression.initializer, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.ExportDeclaration) {
             const exportDeclaration = node as ts.ExportDeclaration;
-            if (exportDeclaration.exportClause) {
-                handleNode(exportDeclaration.exportClause, file, sourceFile);
-            }
+            handleNode(exportDeclaration.exportClause, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.TemplateSpan
             || node.kind === ts.SyntaxKind.ReturnStatement
             || node.kind === ts.SyntaxKind.AsExpression
@@ -162,9 +163,7 @@ async function executeCommandLine() {
                 | ts.DeleteExpression
                 | ts.VoidExpression
                 | ts.TypeAssertion;
-            if (expression.expression) {
-                handleNode(expression.expression, file, sourceFile);
-            }
+            handleNode(expression.expression, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.Block
             || node.kind === ts.SyntaxKind.CaseClause
             || node.kind === ts.SyntaxKind.DefaultClause) {
@@ -176,9 +175,7 @@ async function executeCommandLine() {
             const ifStatement = node as ts.IfStatement;
             handleNode(ifStatement.expression, file, sourceFile);
             handleNode(ifStatement.thenStatement, file, sourceFile);
-            if (ifStatement.elseStatement) {
-                handleNode(ifStatement.elseStatement, file, sourceFile);
-            }
+            handleNode(ifStatement.elseStatement, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.BinaryExpression) {
             const binaryExpression = node as ts.BinaryExpression;
             handleNode(binaryExpression.left, file, sourceFile);
@@ -226,25 +223,15 @@ async function executeCommandLine() {
             }
         } else if (node.kind === ts.SyntaxKind.ForStatement) {
             const forStatement = node as ts.ForStatement;
-            if (forStatement.initializer) {
-                handleNode(forStatement.initializer, file, sourceFile);
-            }
-            if (forStatement.condition) {
-                handleNode(forStatement.condition, file, sourceFile);
-            }
-            if (forStatement.incrementor) {
-                handleNode(forStatement.incrementor, file, sourceFile);
-            }
+            handleNode(forStatement.initializer, file, sourceFile);
+            handleNode(forStatement.condition, file, sourceFile);
+            handleNode(forStatement.incrementor, file, sourceFile);
             handleNode(forStatement.statement, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.TryStatement) {
             const tryStatement = node as ts.TryStatement;
             handleNode(tryStatement.tryBlock, file, sourceFile);
-            if (tryStatement.catchClause) {
-                handleNode(tryStatement.catchClause, file, sourceFile);
-            }
-            if (tryStatement.finallyBlock) {
-                handleNode(tryStatement.finallyBlock, file, sourceFile);
-            }
+            handleNode(tryStatement.catchClause, file, sourceFile);
+            handleNode(tryStatement.finallyBlock, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.VariableDeclarationList) {
             const declarationList = node as ts.VariableDeclarationList;
             for (const declaration of declarationList.declarations) {
@@ -252,9 +239,7 @@ async function executeCommandLine() {
             }
         } else if (node.kind === ts.SyntaxKind.CatchClause) {
             const catchClause = node as ts.CatchClause;
-            if (catchClause.variableDeclaration) {
-                handleNode(catchClause.variableDeclaration, file, sourceFile);
-            }
+            handleNode(catchClause.variableDeclaration, file, sourceFile);
             handleNode(catchClause.block, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.ForInStatement) {
             const forInStatement = node as ts.ForInStatement;
@@ -268,39 +253,35 @@ async function executeCommandLine() {
         } else if (node.kind === ts.SyntaxKind.ElementAccessExpression) {
             const elementAccessExpression = node as ts.ElementAccessExpression;
             handleNode(elementAccessExpression.expression, file, sourceFile);
-            if (elementAccessExpression.argumentExpression) {
-                handleNode(elementAccessExpression.argumentExpression, file, sourceFile);
-            }
+            handleNode(elementAccessExpression.argumentExpression, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.FunctionExpression) {
             const functionExpression = node as ts.FunctionExpression;
             handleNode(functionExpression.body, file, sourceFile);
-            if (functionExpression.name) {
-                handleNode(functionExpression.name, file, sourceFile);
-            }
+            handleNode(functionExpression.name, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.FunctionDeclaration) {
             const functionDeclaration = node as ts.FunctionDeclaration;
-            if (functionDeclaration.body) {
-                handleNode(functionDeclaration.body, file, sourceFile);
-                if (functionDeclaration.body && functionDeclaration.body.statements) {
-                    for (const statement of functionDeclaration.body.statements) {
-                        handleNode(statement, file, sourceFile);
-                    }
-                }
+            handleNode(functionDeclaration.body, file, sourceFile);
+            for (const parameter of functionDeclaration.parameters) {
+                handleNode(parameter, file, sourceFile);
             }
         } else if (node.kind === ts.SyntaxKind.Identifier) {
             collectData(node, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.ObjectBindingPattern) {
             const objectBindingPattern = node as ts.ObjectBindingPattern;
-            if (objectBindingPattern.elements) {
-                for (const element of objectBindingPattern.elements) {
-                    handleNode(element, file, sourceFile);
-                }
+            for (const element of objectBindingPattern.elements) {
+                handleNode(element, file, sourceFile);
             }
         } else if (node.kind === ts.SyntaxKind.BindingElement) {
             const bindingElement = node as ts.BindingElement;
             collectData(bindingElement.name, file, sourceFile);
             if (bindingElement.initializer) {
                 collectData(bindingElement.initializer, file, sourceFile);
+            }
+        } else if (node.kind === ts.SyntaxKind.Parameter) {
+            const parameter = node as ts.ParameterDeclaration;
+            collectData(parameter.name, file, sourceFile);
+            if (parameter.initializer) {
+                collectData(parameter.initializer, file, sourceFile);
             }
         } else if (node.kind === ts.SyntaxKind.EndOfFileToken
             || node.kind === ts.SyntaxKind.NumericLiteral
