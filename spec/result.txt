@@ -1,3 +1,7 @@
+src/index.ts:15:35: resolve
+src/index.ts:15:44: reject
+src/index.ts:18:17: reject
+src/index.ts:20:17: resolve
 src/index.ts:29:39: v
 src/index.ts:29:49: version
 src/index.ts:35:26: suppressError
@@ -21,7 +25,8 @@ src/index.ts:72:34: detail
 src/index.ts:73:33: debug
 src/index.ts:80:51: intrinsicName
 src/index.ts:89:169: intrinsicName
-src/index.ts:481:9: error
-src/index.ts:484:21: error
-902 / 927 97%
+src/index.ts:931:4: error
+src/index.ts:932:9: error
+src/index.ts:935:21: error
+2891 / 2921 99%
 type-coverage success.
