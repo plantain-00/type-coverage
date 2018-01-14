@@ -26,7 +26,7 @@ function globAsync(pattern: string, ignore?: string | string[]) {
 async function executeCommandLine() {
     const argv = minimist(process.argv.slice(2), { "--": true });
 
-    const showVersion = argv.v || argv.version;
+    const showVersion: boolean = argv.v || argv.version;
     if (showVersion) {
         showToolVersion();
         return;
@@ -34,7 +34,7 @@ async function executeCommandLine() {
 
     suppressError = argv.suppressError;
 
-    const project = argv.p || argv.project || ".";
+    const project: string = argv.p || argv.project || ".";
     let configFilePath: string;
     let basename: string;
     const projectStats = fs.statSync(project);
@@ -75,7 +75,7 @@ async function executeCommandLine() {
         if (type) {
             const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile));
             totalCount++;
-            if (type.flags === 1) {
+            if (type.flags === 1 && (type as any).intrinsicName === "any") {
                 if (detail) {
                     console.log(`${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`);
                 }

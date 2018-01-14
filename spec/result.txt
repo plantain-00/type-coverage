@@ -1,18 +1,8 @@
-src/index.ts:15:16: Promise
-src/index.ts:15:16: Promise
-src/index.ts:29:11: showVersion
-src/index.ts:29:30: v
-src/index.ts:29:40: version
-src/index.ts:30:9: showVersion
+src/index.ts:29:39: v
+src/index.ts:29:49: version
 src/index.ts:35:26: suppressError
-src/index.ts:37:11: project
-src/index.ts:37:26: p
-src/index.ts:37:36: project
-src/index.ts:40:38: project
-src/index.ts:42:39: project
-src/index.ts:43:20: project
-src/index.ts:45:26: project
-src/index.ts:46:34: project
+src/index.ts:37:34: p
+src/index.ts:37:44: project
 174
 src/index.ts:55:43: config
 src/index.ts:55:50: include
@@ -27,22 +17,16 @@ src/index.ts:65:56: compilerOptions
 src/index.ts:71:11: detail
 src/index.ts:71:25: detail
 174
+src/index.ts:78:51: intrinsicName
 src/index.ts:79:21: detail
 174
+src/index.ts:78:51: intrinsicName
 src/index.ts:79:21: detail
-src/index.ts:29:11: showVersion
-src/index.ts:29:30: v
-src/index.ts:29:40: version
-src/index.ts:30:9: showVersion
+src/index.ts:29:39: v
+src/index.ts:29:49: version
 src/index.ts:35:26: suppressError
-src/index.ts:37:11: project
-src/index.ts:37:26: p
-src/index.ts:37:36: project
-src/index.ts:40:38: project
-src/index.ts:42:39: project
-src/index.ts:43:20: project
-src/index.ts:45:26: project
-src/index.ts:46:34: project
+src/index.ts:37:34: p
+src/index.ts:37:44: project
 174
 src/index.ts:55:43: config
 src/index.ts:55:50: include
@@ -57,10 +41,12 @@ src/index.ts:65:56: compilerOptions
 src/index.ts:71:11: detail
 src/index.ts:71:25: detail
 174
+src/index.ts:78:51: intrinsicName
 src/index.ts:79:21: detail
 174
+src/index.ts:78:51: intrinsicName
 src/index.ts:79:21: detail
 src/index.ts:336:9: error
 src/index.ts:339:21: error
-3100 / 3158 98%
+3122 / 3166 99%
 type-coverage success.
