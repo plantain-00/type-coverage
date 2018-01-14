@@ -3,7 +3,7 @@ src/index.ts:29:49: version
 src/index.ts:35:26: suppressError
 src/index.ts:37:34: p
 src/index.ts:37:44: project
-174
+src/index.ts:51:13: config
 src/index.ts:55:43: config
 src/index.ts:55:50: include
 src/index.ts:56:43: config
@@ -16,10 +16,8 @@ src/index.ts:65:49: config
 src/index.ts:65:56: compilerOptions
 src/index.ts:71:11: detail
 src/index.ts:71:25: detail
-174
 src/index.ts:78:51: intrinsicName
 src/index.ts:79:21: detail
-174
 src/index.ts:78:51: intrinsicName
 src/index.ts:79:21: detail
 src/index.ts:29:39: v
@@ -27,7 +25,7 @@ src/index.ts:29:49: version
 src/index.ts:35:26: suppressError
 src/index.ts:37:34: p
 src/index.ts:37:44: project
-174
+src/index.ts:51:13: config
 src/index.ts:55:43: config
 src/index.ts:55:50: include
 src/index.ts:56:43: config
@@ -40,13 +38,11 @@ src/index.ts:65:49: config
 src/index.ts:65:56: compilerOptions
 src/index.ts:71:11: detail
 src/index.ts:71:25: detail
-174
 src/index.ts:78:51: intrinsicName
 src/index.ts:79:21: detail
-174
 src/index.ts:78:51: intrinsicName
 src/index.ts:79:21: detail
-src/index.ts:336:9: error
-src/index.ts:339:21: error
-3122 / 3166 99%
+src/index.ts:349:9: error
+src/index.ts:352:21: error
+3260 / 3306 99%
 type-coverage success.

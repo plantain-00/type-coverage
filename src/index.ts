@@ -289,6 +289,19 @@ async function executeCommandLine() {
             }
         } else if (node.kind === ts.SyntaxKind.Identifier) {
             collectData(node, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.ObjectBindingPattern) {
+            const objectBindingPattern = node as ts.ObjectBindingPattern;
+            if (objectBindingPattern.elements) {
+                for (const element of objectBindingPattern.elements) {
+                    handleNode(element, file, sourceFile);
+                }
+            }
+        } else if (node.kind === ts.SyntaxKind.BindingElement) {
+            const bindingElement = node as ts.BindingElement;
+            collectData(bindingElement.name, file, sourceFile);
+            if (bindingElement.initializer) {
+                collectData(bindingElement.initializer, file, sourceFile);
+            }
         } else if (node.kind === ts.SyntaxKind.EndOfFileToken
             || node.kind === ts.SyntaxKind.NumericLiteral
             || node.kind === ts.SyntaxKind.StringLiteral
@@ -310,7 +323,7 @@ async function executeCommandLine() {
             || node.kind === ts.SyntaxKind.RegularExpressionLiteral) {
             // do nothing
         } else {
-            console.log(node.kind);
+            console.log(`warning: unhandled node kind: ${node.kind}`);
         }
     }
 
