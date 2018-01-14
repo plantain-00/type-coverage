@@ -11,7 +11,7 @@ A CLI tool to check type coverage for typescript code
 
 ## install
 
-`yarn add type-coverage -g`
+`yarn add global type-coverage`
 
 ## usage
 
