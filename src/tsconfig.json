@@ -8,6 +8,7 @@
         "noUnusedLocals": true,
         "noImplicitReturns": true,
         "skipLibCheck": true,
-        "newLine": "LF"
+        "newLine": "LF",
+        "noFallthroughCasesInSwitch": true
     }
 }

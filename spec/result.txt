@@ -21,7 +21,7 @@ src/index.ts:72:34: detail
 src/index.ts:73:33: debug
 src/index.ts:80:51: intrinsicName
 src/index.ts:89:169: intrinsicName
-src/index.ts:411:9: error
-src/index.ts:414:21: error
-1176 / 1201 98%
+src/index.ts:481:9: error
+src/index.ts:484:21: error
+902 / 927 97%
 type-coverage success.
