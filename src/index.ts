@@ -53,14 +53,14 @@ async function executeCommandLine() {
         throw error;
     }
     const include: string[] | undefined = config.include;
-    const exclude: string[] | undefined = config.exclude || ["node_modules/"];
+    const exclude: string[] | undefined = config.exclude || ["./node_modules/**"];
     let rootNames: string[];
     if (config.files) {
         rootNames = config.files;
     } else if (include && Array.isArray(include) && include.length > 0) {
         rootNames = await globAsync(include.length === 1 ? include[0] : `{${include.join(",")}}`, exclude);
     } else {
-        rootNames = await globAsync(`{${basename}/**/*.ts,${basename}/**/*.tsx}`, exclude);
+        rootNames = await globAsync(`${basename}/**/*.{ts,tsx}`, exclude);
     }
     config.compilerOptions.moduleResolution = undefined;
     const program = ts.createProgram(rootNames, config.compilerOptions);
@@ -363,6 +363,12 @@ async function executeCommandLine() {
             const spreadAssignment = node as ts.SpreadAssignment;
             handleNode(spreadAssignment.name, file, sourceFile);
             handleNode(spreadAssignment.expression, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.IndexSignature) {
+            const indexSignatureDeclaration = node as ts.IndexSignatureDeclaration;
+            handleNode(indexSignatureDeclaration.name, file, sourceFile);
+            for (const parameter of indexSignatureDeclaration.parameters) {
+                handleNode(parameter, file, sourceFile);
+            }
         } else if (node.kind === ts.SyntaxKind.EndOfFileToken
             || node.kind === ts.SyntaxKind.NumericLiteral
             || node.kind === ts.SyntaxKind.StringLiteral
