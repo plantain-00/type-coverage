@@ -1,6 +1,6 @@
 {
   "name": "type-coverage",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A CLI tool to check type coverage for typescript code",
   "main": "index.js",
   "repository": "https://github.com/plantain-00/type-coverage.git",

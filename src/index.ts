@@ -62,6 +62,7 @@ async function executeCommandLine() {
     } else {
         rootNames = await globAsync(`{${basename}/**/*.ts,${basename}/**/*.tsx}`, exclude);
     }
+    config.compilerOptions.moduleResolution = undefined;
     const program = ts.createProgram(rootNames, config.compilerOptions);
     const checker = program.getTypeChecker();
 

@@ -12,13 +12,16 @@ src/index.ts:58:9: config
 src/index.ts:58:16: files
 src/index.ts:59:21: config
 src/index.ts:59:28: files
-src/index.ts:65:49: config
-src/index.ts:65:56: compilerOptions
-src/index.ts:71:34: detail
-src/index.ts:72:33: debug
-src/index.ts:79:51: intrinsicName
-src/index.ts:88:169: intrinsicName
-src/index.ts:377:9: error
-src/index.ts:380:21: error
-1065 / 1087 98%
+src/index.ts:65:5: config
+src/index.ts:65:12: compilerOptions
+src/index.ts:65:28: moduleResolution
+src/index.ts:66:49: config
+src/index.ts:66:56: compilerOptions
+src/index.ts:72:34: detail
+src/index.ts:73:33: debug
+src/index.ts:80:51: intrinsicName
+src/index.ts:89:169: intrinsicName
+src/index.ts:378:9: error
+src/index.ts:381:21: error
+1066 / 1091 98%
 type-coverage success.
