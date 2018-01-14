@@ -273,32 +273,57 @@ async function executeCommandLine() {
             }
         } else if (node.kind === ts.SyntaxKind.BindingElement) {
             const bindingElement = node as ts.BindingElement;
-            collectData(bindingElement.name, file, sourceFile);
+            handleNode(bindingElement.name, file, sourceFile);
             if (bindingElement.initializer) {
-                collectData(bindingElement.initializer, file, sourceFile);
+                handleNode(bindingElement.initializer, file, sourceFile);
             }
         } else if (node.kind === ts.SyntaxKind.Parameter) {
             const parameter = node as ts.ParameterDeclaration;
-            collectData(parameter.name, file, sourceFile);
+            handleNode(parameter.name, file, sourceFile);
             if (parameter.initializer) {
-                collectData(parameter.initializer, file, sourceFile);
+                handleNode(parameter.initializer, file, sourceFile);
             }
+        } else if (node.kind === ts.SyntaxKind.ImportDeclaration) {
+            const importDeclaration = node as ts.ImportDeclaration;
+            if (importDeclaration.importClause) {
+                handleNode(importDeclaration.importClause.name, file, sourceFile);
+                handleNode(importDeclaration.importClause.namedBindings, file, sourceFile);
+            }
+        } else if (node.kind === ts.SyntaxKind.NamespaceImport) {
+            const namespaceImport = node as ts.NamespaceImport;
+            handleNode(namespaceImport.name, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.MethodDeclaration) {
+            const methodDeclaration = node as ts.MethodDeclaration;
+            for (const parameter of methodDeclaration.parameters) {
+                handleNode(parameter, file, sourceFile);
+            }
+            handleNode(methodDeclaration.body, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.ClassDeclaration) {
+            const classDeclaration = node as ts.ClassDeclaration;
+            handleNode(classDeclaration.name, file, sourceFile);
+            for (const member of classDeclaration.members) {
+                handleNode(member, file, sourceFile);
+            }
+        } else if (node.kind === ts.SyntaxKind.ImportEqualsDeclaration) {
+            const importEqualsDeclaration = node as ts.ImportEqualsDeclaration;
+            handleNode(importEqualsDeclaration.name, file, sourceFile);
+            handleNode(importEqualsDeclaration.moduleReference, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.ThisKeyword) {
+            const thisExpression = node as ts.ThisExpression;
+            collectData(thisExpression, file, sourceFile);
+        } else if (node.kind === ts.SyntaxKind.ShorthandPropertyAssignment) {
+            const shorthandPropertyAssignment = node as ts.ShorthandPropertyAssignment;
+            handleNode(shorthandPropertyAssignment.name, file, sourceFile);
         } else if (node.kind === ts.SyntaxKind.EndOfFileToken
             || node.kind === ts.SyntaxKind.NumericLiteral
             || node.kind === ts.SyntaxKind.StringLiteral
-            || node.kind === ts.SyntaxKind.ImportDeclaration
-            || node.kind === ts.SyntaxKind.MethodDeclaration
             || node.kind === ts.SyntaxKind.InterfaceDeclaration
-            || node.kind === ts.SyntaxKind.ShorthandPropertyAssignment
             || node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral
             || node.kind === ts.SyntaxKind.EnumDeclaration
             || node.kind === ts.SyntaxKind.TypeAliasDeclaration
-            || node.kind === ts.SyntaxKind.ImportEqualsDeclaration
-            || node.kind === ts.SyntaxKind.ClassDeclaration
             || node.kind === ts.SyntaxKind.NullKeyword
-            || node.kind === ts.SyntaxKind.TrueKeyword
             || node.kind === ts.SyntaxKind.FalseKeyword
-            || node.kind === ts.SyntaxKind.ThisKeyword
+            || node.kind === ts.SyntaxKind.TrueKeyword
             || node.kind === ts.SyntaxKind.BreakStatement
             || node.kind === ts.SyntaxKind.ContinueStatement
             || node.kind === ts.SyntaxKind.RegularExpressionLiteral) {
