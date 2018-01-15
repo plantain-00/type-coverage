@@ -918,9 +918,11 @@ async function executeCommandLine() {
 
     for (const file of rootNames) {
         const sourceFile = program.getSourceFile(file);
-        sourceFile.forEachChild(node => {
-            handleNode(node, file, sourceFile);
-        });
+        if (sourceFile) {
+            sourceFile.forEachChild(node => {
+                handleNode(node, file, sourceFile);
+            });
+        }
     }
 
     const percent = Math.round(100 * correctCount / totalCount);
