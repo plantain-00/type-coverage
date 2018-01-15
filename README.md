@@ -2,6 +2,8 @@
 
 A CLI tool to check type coverage for typescript code
 
+This tool will check type of all identifiers, `the code coverage` = `the count of identifiers whose type is not any` / `the total count of identifiers`, the higher, the better.
+
 [![Dependency Status](https://david-dm.org/plantain-00/type-coverage.svg)](https://david-dm.org/plantain-00/type-coverage)
 [![devDependency Status](https://david-dm.org/plantain-00/type-coverage/dev-status.svg)](https://david-dm.org/plantain-00/type-coverage#info=devDependencies)
 [![Build Status: Linux](https://travis-ci.org/plantain-00/type-coverage.svg?branch=master)](https://travis-ci.org/plantain-00/type-coverage)
