@@ -11,6 +11,18 @@ function showToolVersion() {
     console.log(`Version: ${packageJson.version}`);
 }
 
+function statAsync(file: string) {
+    return new Promise<fs.Stats>((resolve, reject) => {
+        fs.stat(file, (error, stats) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(stats);
+            }
+        });
+    });
+}
+
 function globAsync(pattern: string, ignore?: string | string[]) {
     return new Promise<string[]>((resolve, reject) => {
         glob(pattern, { ignore }, (error, matches) => {
@@ -64,7 +76,16 @@ async function executeCommandLine() {
     if (config.files) {
         rootNames = config.files;
     } else if (include && Array.isArray(include) && include.length > 0) {
-        rootNames = await globAsync(include.length === 1 ? include[0] : `{${include.join(",")}}`, exclude);
+        const rules: string[] = [];
+        for (const file of include) {
+            const stats = await statAsync(file);
+            if (stats.isDirectory()) {
+                rules.push(`${file.endsWith("/") ? file.substring(0, file.length - 1) : file}/**/*.{ts,tsx}`);
+            } else if (stats.isFile()) {
+                rules.push(file);
+            }
+        }
+        rootNames = await globAsync(rules.length === 1 ? rules[0] : `{${rules.join(",")}}`, exclude);
     } else {
         rootNames = await globAsync(`${basename}/**/*.{ts,tsx}`, exclude);
     }
