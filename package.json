@@ -14,7 +14,7 @@
     "@types/minimist": "1.2.0",
     "@types/node": "9.3.0",
     "clean-scripts": "1.7.0",
-    "jasmine": "2.8.0",
+    "jasmine": "2.9.0",
     "markdownlint-cli": "0.6.0",
     "no-unused-export": "1.4.5",
     "rimraf": "2.6.2",
