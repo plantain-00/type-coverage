@@ -7,15 +7,15 @@
   "author": "york yao <yaoao12306@outlook.com>",
   "license": "MIT",
   "devDependencies": {
-    "@commitlint/cli": "6.0.2",
-    "@commitlint/config-conventional": "6.0.2",
+    "@commitlint/cli": "6.1.0",
+    "@commitlint/config-conventional": "6.1.0",
     "@types/glob": "5.0.35",
     "@types/jasmine": "2.8.6",
     "@types/minimist": "1.2.0",
     "@types/node": "9.4.0",
     "clean-scripts": "1.7.0",
     "jasmine": "2.9.0",
-    "markdownlint-cli": "0.6.0",
+    "markdownlint-cli": "0.7.0",
     "no-unused-export": "1.4.5",
     "rimraf": "2.6.2",
     "standard": "10.0.3",
@@ -25,7 +25,7 @@
   "dependencies": {
     "glob": "7.1.2",
     "minimist": "1.2.0",
-    "typescript": "2.6.2"
+    "typescript": "2.7.1"
   },
   "scripts": {
     "build": "clean-scripts build",
