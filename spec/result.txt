@@ -1,8 +1,16 @@
-src/index.ts:41:37: v
-src/index.ts:41:47: version
-src/index.ts:47:24: suppressError
-src/index.ts:49:32: p
-src/index.ts:49:42: project
+src/index.ts:15:33: resolve
+src/index.ts:15:42: reject
+src/index.ts:18:9: reject
+src/index.ts:20:9: resolve
+src/index.ts:27:33: resolve
+src/index.ts:27:42: reject
+src/index.ts:28:32: error
+src/index.ts:28:39: matches
+src/index.ts:29:11: error
+src/index.ts:30:9: reject
+src/index.ts:30:16: error
+src/index.ts:32:9: resolve
+src/index.ts:32:17: matches
 src/index.ts:63:11: config
 src/index.ts:68:82: config
 src/index.ts:68:89: compilerOptions
@@ -14,12 +22,10 @@ src/index.ts:76:7: config
 src/index.ts:76:14: files
 src/index.ts:77:17: config
 src/index.ts:77:24: files
-src/index.ts:99:32: detail
-src/index.ts:100:31: debug
 src/index.ts:107:45: intrinsicName
 src/index.ts:116:159: intrinsicName
 src/index.ts:960:4: error
 src/index.ts:961:7: error
 src/index.ts:964:17: error
-2945 / 2968 99%
+2939 / 2968 99%
 type-coverage success.

@@ -1,13 +1,7 @@
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "outDir": "../dist",
-
-        "module": "commonjs",
-        "strict": true,
-        "noUnusedLocals": true,
-        "noImplicitReturns": true,
-        "skipLibCheck": true,
-        "newLine": "LF"
-    }
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../dist",
+    "module": "commonjs"
+  }
 }

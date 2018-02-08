@@ -1,8 +1,8 @@
-import * as minimist from 'minimist'
+import minimist from 'minimist'
 import * as ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
-import * as glob from 'glob'
+import glob from 'glob'
 import * as packageJson from '../package.json'
 
 let suppressError = false
