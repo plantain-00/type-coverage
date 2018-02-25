@@ -7,8 +7,8 @@
   "author": "york yao <yaoao12306@outlook.com>",
   "license": "MIT",
   "devDependencies": {
-    "@commitlint/cli": "6.1.0",
-    "@commitlint/config-conventional": "6.1.0",
+    "@commitlint/cli": "6.1.2",
+    "@commitlint/config-conventional": "6.1.2",
     "@types/glob": "5.0.35",
     "@types/jasmine": "2.8.6",
     "@types/minimist": "1.2.0",
@@ -18,7 +18,7 @@
     "markdownlint-cli": "0.7.1",
     "no-unused-export": "1.5.0",
     "rimraf": "2.6.2",
-    "standard": "10.0.3",
+    "standard": "11.0.0",
     "tslint": "5.9.1",
     "tslint-config-standard": "7.0.0"
   },
