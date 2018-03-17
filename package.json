@@ -18,7 +18,7 @@
     "markdownlint-cli": "0.7.1",
     "no-unused-export": "1.5.0",
     "rimraf": "2.6.2",
-    "standard": "11.0.0",
+    "standard": "11.0.1",
     "tslint": "5.9.1",
     "tslint-config-standard": "7.0.0"
   },
