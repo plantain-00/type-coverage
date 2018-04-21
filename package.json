@@ -12,8 +12,8 @@
     "@types/glob": "5.0.35",
     "@types/jasmine": "2.8.6",
     "@types/minimist": "1.2.0",
-    "@types/node": "9.6.5",
-    "clean-scripts": "1.7.0",
+    "@types/node": "9.6.6",
+    "clean-scripts": "1.8.0",
     "jasmine": "3.1.0",
     "markdownlint-cli": "0.8.1",
     "no-unused-export": "1.5.0",
@@ -25,7 +25,7 @@
   "dependencies": {
     "glob": "7.1.2",
     "minimist": "1.2.0",
-    "typescript": "2.8.1"
+    "typescript": "2.8.3"
   },
   "scripts": {
     "build": "clean-scripts build",
