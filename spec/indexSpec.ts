@@ -1,3 +1,3 @@
 it('', () => {
-    // expect(true).toEqual(true);
+  expect(true).toEqual(true)
 })

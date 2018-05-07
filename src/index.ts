@@ -1,5 +1,5 @@
 import minimist from 'minimist'
-import * as ts from 'typescript'
+import ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
 import glob from 'glob'
@@ -7,11 +7,11 @@ import * as packageJson from '../package.json'
 
 let suppressError = false
 
-function showToolVersion () {
+function showToolVersion() {
   console.log(`Version: ${packageJson.version}`)
 }
 
-function statAsync (file: string) {
+function statAsync(file: string) {
   return new Promise<fs.Stats>((resolve, reject) => {
     fs.stat(file, (error, stats) => {
       if (error) {
@@ -23,7 +23,7 @@ function statAsync (file: string) {
   })
 }
 
-function globAsync (pattern: string, ignore?: string | string[]) {
+function globAsync(pattern: string, ignore?: string | string[]) {
   return new Promise<string[]>((resolve, reject) => {
     glob(pattern, { ignore }, (error, matches) => {
       if (error) {
@@ -35,7 +35,8 @@ function globAsync (pattern: string, ignore?: string | string[]) {
   })
 }
 
-async function executeCommandLine () {
+// tslint:disable-next-line:cognitive-complexity no-big-function
+async function executeCommandLine() {
   const argv = minimist(process.argv.slice(2), { '--': true })
 
   const showVersion: boolean = argv.v || argv.version
@@ -99,7 +100,7 @@ async function executeCommandLine () {
   const detail: boolean = argv.detail
   const debug: boolean = argv.debug
 
-  function collectData (node: ts.Node, file: string, sourceFile: ts.SourceFile) {
+  function collectData(node: ts.Node, file: string, sourceFile: ts.SourceFile) {
     const type = checker.getTypeAtLocation(node)
     if (type) {
       const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
@@ -119,7 +120,7 @@ async function executeCommandLine () {
     }
   }
 
-  function handleNodes (nodes: ts.NodeArray<ts.Node> | undefined, file: string, sourceFile: ts.SourceFile): void {
+  function handleNodes(nodes: ts.NodeArray<ts.Node> | undefined, file: string, sourceFile: ts.SourceFile): void {
     if (nodes === undefined) {
       return
     }
@@ -129,7 +130,8 @@ async function executeCommandLine () {
     }
   }
 
-  function handleNode (node: ts.Node | undefined, file: string, sourceFile: ts.SourceFile): void {
+  // tslint:disable-next-line:no-big-function
+  function handleNode(node: ts.Node | undefined, file: string, sourceFile: ts.SourceFile): void {
     if (node === undefined) {
       return
     }

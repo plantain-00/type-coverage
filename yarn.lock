@@ -952,6 +952,10 @@ ignore@^3.0.9, ignore@^3.3.3, ignore@^3.3.6:
   version "3.3.8"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.8.tgz#3f8e9c35d38708a3a7e0e9abb6c73e7ee7707b2b"
 
+immutable@^3.8.2:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
+
 imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
@@ -1985,6 +1989,12 @@ tslint-eslint-rules@^4.1.1:
     doctrine "^0.7.2"
     tslib "^1.0.0"
     tsutils "^1.4.0"
+
+tslint-sonarts@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/tslint-sonarts/-/tslint-sonarts-1.6.0.tgz#b21366029d83e2426d207174255bb2e09525e162"
+  dependencies:
+    immutable "^3.8.2"
 
 tslint@5.10.0:
   version "5.10.0"
