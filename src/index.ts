@@ -35,19 +35,7 @@ function globAsync(pattern: string, ignore?: string | string[]) {
   })
 }
 
-// tslint:disable-next-line:cognitive-complexity no-big-function
-async function executeCommandLine() {
-  const argv = minimist(process.argv.slice(2), { '--': true })
-
-  const showVersion: boolean = argv.v || argv.version
-  if (showVersion) {
-    showToolVersion()
-    return
-  }
-
-  suppressError = argv.suppressError
-
-  const project: string = argv.p || argv.project || '.'
+function getTsConfigFilePath(project: string) {
   let configFilePath: string
   let basename: string
   const projectStats = fs.statSync(project)
@@ -60,11 +48,46 @@ async function executeCommandLine() {
   } else {
     throw new Error("paramter '-p' should be a file or directory.")
   }
+  return { configFilePath, basename }
+}
 
-  const { config, error } = ts.readConfigFile(configFilePath, p => fs.readFileSync(p).toString())
-  if (error) {
-    throw error
+type JsonConfig = {
+  extends?: string
+  compilerOptions?: { [name: string]: any }
+  include?: string[]
+  exclude?: string[]
+  files?: string[]
+}
+
+function getTsConfig(configFilePath: string, basename: string): JsonConfig {
+  const configResult = ts.readConfigFile(configFilePath, p => fs.readFileSync(p).toString())
+  if (configResult.error) {
+    throw configResult.error
   }
+  const config = configResult.config as JsonConfig
+  if (config.extends) {
+    const project = path.resolve(basename, config.extends)
+    const { configFilePath, basename: extendsBasename } = getTsConfigFilePath(project)
+    const extendsConfig = getTsConfig(configFilePath, extendsBasename)
+    config.compilerOptions = { ...extendsConfig.compilerOptions, ...config.compilerOptions }
+  }
+  return config
+}
+
+// tslint:disable-next-line:cognitive-complexity no-big-function
+async function executeCommandLine() {
+  const argv = minimist(process.argv.slice(2), { '--': true })
+
+  const showVersion: boolean = argv.v || argv.version
+  if (showVersion) {
+    showToolVersion()
+    return
+  }
+
+  suppressError = argv.suppressError
+
+  const { configFilePath, basename } = getTsConfigFilePath(argv.p || argv.project || '.')
+  const config = getTsConfig(configFilePath, basename)
 
   const { options: compilerOptions, errors } = ts.convertCompilerOptionsFromJson(config.compilerOptions, basename)
   if (errors && errors.length > 0) {
