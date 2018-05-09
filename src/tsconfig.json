@@ -3,5 +3,9 @@
   "compilerOptions": {
     "outDir": "../dist",
     "module": "commonjs"
-  }
+  },
+  "files": [
+    "index.ts",
+    "lib.d.ts"
+  ]
 }
