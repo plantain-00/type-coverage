@@ -7,9 +7,9 @@ src/index.ts:25:75: project
 src/index.ts:41:32: detail
 src/index.ts:42:31: debug
 src/index.ts:49:45: intrinsicName
-src/index.ts:58:159: intrinsicName
+src/index.ts:58:181: intrinsicName
 src/index.ts:904:4: error
 src/index.ts:905:7: error
 src/index.ts:908:17: error
-3031 / 3044 100%
+3040 / 3053 100%
 type-coverage success.

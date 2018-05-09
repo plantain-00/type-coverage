@@ -48,14 +48,14 @@ async function executeCommandLine() {
       totalCount++
       if (type.flags === 1 && (type as any).intrinsicName === 'any') {
         if (debug) {
-          console.log(`type === any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
+          console.log(`type === any: ${path.posix.normalize(file)}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
         } else if (detail) {
-          console.log(`${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
+          console.log(`${path.posix.normalize(file)}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
         }
       } else {
         correctCount++
         if (debug) {
-          console.log(`type !== any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind) ${type.flags}(flag) ${(type as any).intrinsicName || ''}`)
+          console.log(`type !== any: ${path.posix.normalize(file)}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind) ${type.flags}(flag) ${(type as any).intrinsicName || ''}`)
         }
       }
     }
