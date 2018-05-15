@@ -9,6 +9,6 @@ module.exports = {
   ],
   postScript: [
     'cd "[dir]" && yarn --production',
-    '[dir]/bin/type-coverage -p src --detail --at-least 90 --supressError'
+    'node [dir]/dist/index.js -p src --detail --at-least 90 --supressError'
   ]
 }
