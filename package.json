@@ -13,6 +13,7 @@
     "@types/jasmine": "2.8.7",
     "@types/minimist": "1.2.0",
     "@types/node": "10.0.8",
+    "clean-release": "2.5.0",
     "clean-scripts": "1.8.0",
     "jasmine": "3.1.0",
     "markdownlint-cli": "0.8.1",
@@ -31,7 +32,6 @@
   },
   "scripts": {
     "build": "clean-scripts build",
-    "test:run": "clean-release --config clean-run.config.js",
     "lint": "clean-scripts lint",
     "test": "clean-scripts test",
     "fix": "clean-scripts fix"

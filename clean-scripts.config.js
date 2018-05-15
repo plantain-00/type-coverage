@@ -16,6 +16,7 @@ module.exports = {
   },
   test: [
     'tsc -p spec',
+    'clean-release --config clean-run.config.js',
     'jasmine'
   ],
   fix: {
