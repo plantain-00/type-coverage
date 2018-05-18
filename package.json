@@ -12,12 +12,12 @@
     "@types/glob": "5.0.35",
     "@types/jasmine": "2.8.7",
     "@types/minimist": "1.2.0",
-    "@types/node": "10.0.8",
-    "clean-release": "2.5.0",
-    "clean-scripts": "1.8.0",
+    "@types/node": "10.1.2",
+    "clean-release": "2.5.2",
+    "clean-scripts": "1.9.2",
     "jasmine": "3.1.0",
-    "markdownlint-cli": "0.8.1",
-    "no-unused-export": "1.5.0",
+    "markdownlint-cli": "0.8.2",
+    "no-unused-export": "1.5.1",
     "rimraf": "2.6.2",
     "standard": "11.0.1",
     "tslint": "5.10.0",
@@ -27,7 +27,7 @@
   "dependencies": {
     "glob": "7.1.2",
     "minimist": "1.2.0",
-    "tslib": "1.9.0",
+    "tslib": "1.9.1",
     "typescript": "2.8.3"
   },
   "scripts": {
