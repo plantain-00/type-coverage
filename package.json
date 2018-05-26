@@ -16,7 +16,7 @@
     "clean-release": "2.5.2",
     "clean-scripts": "1.9.2",
     "jasmine": "3.1.0",
-    "markdownlint-cli": "0.8.2",
+    "markdownlint-cli": "0.9.0",
     "no-unused-export": "1.5.1",
     "rimraf": "2.6.2",
     "standard": "11.0.1",
