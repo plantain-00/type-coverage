@@ -54,7 +54,9 @@ export async function getRootNames(config: JsonConfig, basename: string) {
     const rules: string[] = []
     for (const file of include) {
       const stats = await statAsync(file)
-      if (stats.isDirectory()) {
+      if (stats === undefined) {
+        rules.push(path.resolve(basename, file))
+      } else if (stats.isDirectory()) {
         rules.push(`${file.endsWith('/') ? file.substring(0, file.length - 1) : file}/**/*.{ts,tsx}`)
       } else if (stats.isFile()) {
         rules.push(file)
@@ -66,10 +68,10 @@ export async function getRootNames(config: JsonConfig, basename: string) {
 }
 
 function statAsync(file: string) {
-  return new Promise<fs.Stats>((resolve, reject) => {
+  return new Promise<fs.Stats | undefined>((resolve, reject) => {
     fs.stat(file, (error, stats) => {
       if (error) {
-        reject(error)
+        resolve(undefined)
       } else {
         resolve(stats)
       }
