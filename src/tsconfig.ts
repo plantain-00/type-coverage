@@ -53,13 +53,14 @@ export async function getRootNames(config: JsonConfig, basename: string) {
   if (include && Array.isArray(include) && include.length > 0) {
     const rules: string[] = []
     for (const file of include) {
-      const stats = await statAsync(file)
+      const currentPath = path.resolve(basename, file)
+      const stats = await statAsync(currentPath)
       if (stats === undefined) {
-        rules.push(path.resolve(basename, file))
+        rules.push(currentPath)
       } else if (stats.isDirectory()) {
-        rules.push(`${file.endsWith('/') ? file.substring(0, file.length - 1) : file}/**/*.{ts,tsx}`)
+        rules.push(`${currentPath.endsWith('/') ? currentPath.substring(0, currentPath.length - 1) : currentPath}/**/*.{ts,tsx}`)
       } else if (stats.isFile()) {
-        rules.push(file)
+        rules.push(currentPath)
       }
     }
     return globAsync(rules.length === 1 ? rules[0] : `{${rules.join(',')}}`, exclude)

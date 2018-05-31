@@ -11,5 +11,5 @@ src/index.ts:58:159: intrinsicName
 src/index.ts:904:4: error
 src/index.ts:905:7: error
 src/index.ts:908:17: error
-3039 / 3052 100%
+3041 / 3054 100%
 type-coverage success.
