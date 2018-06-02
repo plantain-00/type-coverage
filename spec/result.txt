@@ -8,8 +8,8 @@ src/index.ts:41:32: detail
 src/index.ts:42:31: debug
 src/index.ts:49:45: intrinsicName
 src/index.ts:58:159: intrinsicName
-src/index.ts:904:4: error
-src/index.ts:905:7: error
-src/index.ts:908:17: error
-3041 / 3054 100%
+src/index.ts:903:4: error
+src/index.ts:904:7: error
+src/index.ts:907:17: error
+3036 / 3049 100%
 type-coverage success.

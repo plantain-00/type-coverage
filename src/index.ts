@@ -754,7 +754,6 @@ async function executeCommandLine() {
       case ts.SyntaxKind.MissingDeclaration:
         const missingDeclaration = node as ts.MissingDeclaration
         handleNode(missingDeclaration.name, file, sourceFile)
-        handleNode(missingDeclaration.questionToken, file, sourceFile)
         break
       case ts.SyntaxKind.ExternalModuleReference:
         const externalModuleReference = node as ts.ExternalModuleReference
