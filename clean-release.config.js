@@ -1,5 +1,3 @@
-const semver = require('semver')
-
 module.exports = {
   include: [
     'bin/*',
@@ -13,8 +11,8 @@ module.exports = {
   askVersion: true,
   changesGitStaged: true,
   postScript: [
-    ({ version, dir }) => semver.prerelease(version)
-      ? `npm publish "${dir}" --access public --tag next`
+    ({ dir, tag }) => tag
+      ? `npm publish "${dir}" --access public --tag ${tag}`
       : `npm publish "${dir}" --access public`,
     'git add package.json',
     ({ version }) => `git commit -m "${version}"`,
