@@ -13,7 +13,7 @@ This tool will check type of all identifiers, `the code coverage` = `the count o
 
 ## install
 
-`yarn add global type-coverage`
+`yarn global add type-coverage`
 
 ## usage
 
