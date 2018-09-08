@@ -7,8 +7,8 @@
   "author": "york yao <yaoao12306@outlook.com>",
   "license": "MIT",
   "devDependencies": {
-    "@commitlint/cli": "7.1.1",
-    "@commitlint/config-conventional": "7.1.1",
+    "@commitlint/cli": "7.1.2",
+    "@commitlint/config-conventional": "7.1.2",
     "@types/glob": "5.0.35",
     "@types/jasmine": "2.8.8",
     "@types/minimist": "1.2.0",
@@ -21,7 +21,7 @@
     "rimraf": "2.6.2",
     "standard": "12.0.1",
     "tslint": "5.11.0",
-    "tslint-config-standard": "8.0.0",
+    "tslint-config-standard": "8.0.1",
     "tslint-sonarts": "1.7.0"
   },
   "dependencies": {
