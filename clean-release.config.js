@@ -16,7 +16,7 @@ module.exports = {
       : `npm publish "${dir}" --access public`,
     'git add package.json',
     ({ version }) => `git commit -m "${version}"`,
-    ({ version }) => `git tag v${version}`,
+    ({ version }) => `git tag -a v${version} -m 'v${version}'`,
     'git push',
     ({ version }) => `git push origin v${version}`
   ]
