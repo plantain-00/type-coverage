@@ -20,7 +20,10 @@ async function executeCommandLine() {
 
   suppressError = argv.suppressError
 
-  const { correctCount, totalCount } = await lint(argv.p || argv.project || '.', argv.detail, argv.debug)
+  const { correctCount, totalCount, anys } = await lint(argv.p || argv.project || '.', argv.detail, argv.debug)
+  for (const { file, line, character, text } of anys) {
+    console.log(`${file}:${line + 1}:${character + 1}: ${text}`)
+  }
   const percent = Math.round(100 * correctCount / totalCount)
   console.log(`${correctCount} / ${totalCount} ${percent}%`)
 

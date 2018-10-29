@@ -1,15 +1,15 @@
 src/tsconfig.ts:35:31: config
-src/core.ts:29:45: intrinsicName
-src/core.ts:38:159: intrinsicName
+src/core.ts:30:45: intrinsicName
+src/core.ts:39:159: intrinsicName
 src/index.ts:15:37: v
 src/index.ts:15:47: version
 src/index.ts:21:24: suppressError
-src/index.ts:23:56: p
-src/index.ts:23:66: project
-src/index.ts:23:87: detail
-src/index.ts:23:100: debug
-src/index.ts:35:4: error
-src/index.ts:36:7: error
-src/index.ts:39:17: error
-3045 / 3058 100%
+src/index.ts:23:62: p
+src/index.ts:23:72: project
+src/index.ts:23:93: detail
+src/index.ts:23:106: debug
+src/index.ts:38:4: error
+src/index.ts:39:7: error
+src/index.ts:42:17: error
+3064 / 3077 100%
 type-coverage success.

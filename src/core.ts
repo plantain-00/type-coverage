@@ -20,6 +20,7 @@ export async function lint(project: string, detail: boolean, debug: boolean) {
 
   let correctCount = 0
   let totalCount = 0
+  let anys: { file: string, line: number, character: number, text: string }[] = []
 
   function collectData(node: ts.Node, file: string, sourceFile: ts.SourceFile) {
     const type = checker.getTypeAtLocation(node)
@@ -30,7 +31,7 @@ export async function lint(project: string, detail: boolean, debug: boolean) {
         if (debug) {
           console.log(`type === any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
         } else if (detail) {
-          console.log(`${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
+          anys.push({ file, line, character, text: node.getText(sourceFile) })
         }
       } else {
         correctCount++
@@ -869,5 +870,5 @@ export async function lint(project: string, detail: boolean, debug: boolean) {
     }
   }
 
-  return { correctCount, totalCount }
+  return { correctCount, totalCount, anys }
 }
