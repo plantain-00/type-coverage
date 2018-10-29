@@ -2,10 +2,12 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../dist",
-    "module": "commonjs"
+    "module": "commonjs",
+    "declaration": true
   },
   "files": [
     "index.ts",
+    "core.ts",
     "lib.d.ts"
   ]
 }
