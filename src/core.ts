@@ -372,6 +372,12 @@ export async function lint(project: string, detail: boolean, debug: boolean) {
         const literalTypeNode = node as ts.LiteralTypeNode
         handleNode(literalTypeNode.literal, file, sourceFile)
         break
+      case ts.SyntaxKind.ImportType:
+        const importTypeNode = node as ts.ImportTypeNode
+        handleNode(importTypeNode.qualifier, file, sourceFile)
+        handleNode(importTypeNode.argument, file, sourceFile)
+        handleNodes(importTypeNode.typeArguments, file, sourceFile)
+        break
       case ts.SyntaxKind.ObjectBindingPattern:
         const objectBindingPattern = node as ts.ObjectBindingPattern
         handleNodes(objectBindingPattern.elements, file, sourceFile)
