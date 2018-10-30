@@ -5,18 +5,18 @@ import glob from 'glob'
 
 export function getTsConfigFilePath(project: string) {
   let configFilePath: string
-  let basename: string
+  let dirname: string
   const projectStats = fs.statSync(project)
   if (projectStats.isDirectory()) {
     configFilePath = path.resolve(project, 'tsconfig.json')
-    basename = project
+    dirname = project
   } else if (projectStats.isFile()) {
     configFilePath = project
-    basename = path.basename(project)
+    dirname = path.dirname(project)
   } else {
     throw new Error("paramter '-p' should be a file or directory.")
   }
-  return { configFilePath, basename }
+  return { configFilePath, dirname }
 }
 
 type JsonConfig = {
@@ -27,15 +27,15 @@ type JsonConfig = {
   files?: string[]
 }
 
-export function getTsConfig(configFilePath: string, basename: string): JsonConfig {
+export function getTsConfig(configFilePath: string, dirname: string): JsonConfig {
   const configResult = ts.readConfigFile(configFilePath, p => fs.readFileSync(p).toString())
   if (configResult.error) {
     throw configResult.error
   }
   const config = configResult.config as JsonConfig
   if (config.extends) {
-    const project = path.resolve(basename, config.extends)
-    const { configFilePath, basename: extendsBasename } = getTsConfigFilePath(project)
+    const project = path.resolve(dirname, config.extends)
+    const { configFilePath, dirname: extendsBasename } = getTsConfigFilePath(project)
     const extendsConfig = getTsConfig(configFilePath, extendsBasename)
     config.compilerOptions = { ...extendsConfig.compilerOptions, ...config.compilerOptions }
   }
@@ -43,17 +43,17 @@ export function getTsConfig(configFilePath: string, basename: string): JsonConfi
 }
 
 // tslint:disable-next-line:cognitive-complexity
-export async function getRootNames(config: JsonConfig, basename: string) {
+export async function getRootNames(config: JsonConfig, dirname: string) {
   const include: string[] | undefined = config.include
   const exclude: string[] | undefined = config.exclude || ['./node_modules/**']
 
   if (config.files) {
-    return config.files.map(f => path.relative(process.cwd(), path.resolve(basename, f)))
+    return config.files.map(f => path.relative(process.cwd(), path.resolve(dirname, f)))
   }
   if (include && Array.isArray(include) && include.length > 0) {
     const rules: string[] = []
     for (const file of include) {
-      const currentPath = path.resolve(basename, file)
+      const currentPath = path.resolve(dirname, file)
       const stats = await statAsync(currentPath)
       if (stats === undefined) {
         rules.push(currentPath)
@@ -65,7 +65,7 @@ export async function getRootNames(config: JsonConfig, basename: string) {
     }
     return globAsync(rules.length === 1 ? rules[0] : `{${rules.join(',')}}`, exclude)
   }
-  return globAsync(`${basename}/**/*.{ts,tsx}`, exclude)
+  return globAsync(`${dirname}/**/*.{ts,tsx}`, exclude)
 }
 
 function statAsync(file: string) {

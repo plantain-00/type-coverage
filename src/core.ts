@@ -5,15 +5,15 @@ import { getTsConfigFilePath, getTsConfig, getRootNames } from './tsconfig'
 
 // tslint:disable-next-line:no-big-function
 export async function lint(project: string, detail: boolean, debug: boolean) {
-  const { configFilePath, basename } = getTsConfigFilePath(project)
-  const config = getTsConfig(configFilePath, basename)
+  const { configFilePath, dirname } = getTsConfigFilePath(project)
+  const config = getTsConfig(configFilePath, dirname)
 
-  const { options: compilerOptions, errors } = ts.convertCompilerOptionsFromJson(config.compilerOptions, basename)
+  const { options: compilerOptions, errors } = ts.convertCompilerOptionsFromJson(config.compilerOptions, dirname)
   if (errors && errors.length > 0) {
     throw errors
   }
 
-  const rootNames = await getRootNames(config, basename)
+  const rootNames = await getRootNames(config, dirname)
 
   const program = ts.createProgram(rootNames, compilerOptions)
   const checker = program.getTypeChecker()
