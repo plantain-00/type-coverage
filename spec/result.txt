@@ -11,5 +11,5 @@ src/index.ts:23:106: debug
 src/index.ts:38:4: error
 src/index.ts:39:7: error
 src/index.ts:42:17: error
-3086 / 3099 100%
+3146 / 3159 100%
 type-coverage success.

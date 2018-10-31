@@ -213,6 +213,8 @@ export async function lint(project: string, detail: boolean, debug: boolean) {
       case ts.SyntaxKind.SymbolKeyword:
       case ts.SyntaxKind.TypeKeyword:
       case ts.SyntaxKind.UndefinedKeyword:
+      case ts.SyntaxKind.UniqueKeyword:
+      case ts.SyntaxKind.UnknownKeyword:
       case ts.SyntaxKind.FromKeyword:
       case ts.SyntaxKind.GlobalKeyword:
       case ts.SyntaxKind.OfKeyword:
@@ -338,6 +340,12 @@ export async function lint(project: string, detail: boolean, debug: boolean) {
         const tupleTypeNode = node as ts.TupleTypeNode
         handleNodes(tupleTypeNode.elementTypes, file, sourceFile)
         break
+      case ts.SyntaxKind.OptionalType:
+        break
+      case ts.SyntaxKind.RestType:
+        const restTypeNode = node as ts.RestTypeNode
+        handleNode(restTypeNode.type, file, sourceFile)
+        break
       case ts.SyntaxKind.UnionType:
         const unionTypeNode = node as ts.UnionTypeNode
         handleNodes(unionTypeNode.types, file, sourceFile)
@@ -345,6 +353,17 @@ export async function lint(project: string, detail: boolean, debug: boolean) {
       case ts.SyntaxKind.IntersectionType:
         const intersectionTypeNode = node as ts.IntersectionTypeNode
         handleNodes(intersectionTypeNode.types, file, sourceFile)
+        break
+      case ts.SyntaxKind.ConditionalType:
+        const conditionalTypeNode = node as ts.ConditionalTypeNode
+        handleNode(conditionalTypeNode.checkType, file, sourceFile)
+        handleNode(conditionalTypeNode.extendsType, file, sourceFile)
+        handleNode(conditionalTypeNode.trueType, file, sourceFile)
+        handleNode(conditionalTypeNode.falseType, file, sourceFile)
+        break
+      case ts.SyntaxKind.InferType:
+        const inferTypeNode = node as ts.InferTypeNode
+        handleNode(inferTypeNode.typeParameter, file, sourceFile)
         break
       case ts.SyntaxKind.ParenthesizedType:
         const parenthesizedTypeNode = node as ts.ParenthesizedTypeNode
