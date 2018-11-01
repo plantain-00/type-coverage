@@ -27,7 +27,13 @@ async function executeCommandLine() {
   const percent = Math.round(10000 * correctCount / totalCount) / 100
   console.log(`${correctCount} / ${totalCount} ${percent.toFixed(2)}%`)
 
-  const atLeast: number | undefined = argv['at-least']
+  let atLeast: number | undefined
+  if (packageJson.typeCoverage && packageJson.typeCoverage.atLeast) {
+    atLeast = packageJson.typeCoverage.atLeast
+  }
+  if (argv['at-least']) {
+    atLeast = argv['at-least']
+  }
   if (atLeast && percent < atLeast) {
     throw new Error(`The type coverage rate(${percent.toFixed(2)}%) is lower than the target(${atLeast}%). \nYou can add '--detail' or use VSCode plugin to show detailed informations.`)
   }

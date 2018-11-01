@@ -37,6 +37,9 @@
     "test": "clean-scripts test",
     "fix": "clean-scripts fix"
   },
+  "typeCoverage": {
+    "atLeast": 99
+  },
   "bin": {
     "type-coverage": "bin/type-coverage"
   }

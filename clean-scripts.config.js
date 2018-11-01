@@ -5,7 +5,7 @@ module.exports = {
   build: [
     'rimraf dist/',
     'tsc -p src/',
-    'node dist/index.js -p src --detail --at-least 99 --supressError > spec/result.txt'
+    'node dist/index.js -p src --detail --supressError > spec/result.txt'
   ],
   lint: {
     ts: `tslint ${tsFiles}`,

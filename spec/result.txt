@@ -8,8 +8,8 @@ src/index.ts:23:62: p
 src/index.ts:23:72: project
 src/index.ts:23:93: detail
 src/index.ts:23:106: debug
-src/index.ts:38:4: error
-src/index.ts:39:7: error
-src/index.ts:42:17: error
-3148 / 3161 99.59%
+src/index.ts:44:4: error
+src/index.ts:45:7: error
+src/index.ts:48:17: error
+3160 / 3173 99.59%
 type-coverage success.
