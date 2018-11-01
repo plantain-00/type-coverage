@@ -887,13 +887,11 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
 
   for (const sourceFile of program.getSourceFiles()) {
     let file = sourceFile.fileName
-    if (!file.includes('node_modules')) {
+    if (!file.includes('node_modules') && (!files || files.includes(file))) {
       file = path.relative(process.cwd(), file)
-      if (!files || files.includes(file)) {
-        sourceFile.forEachChild(node => {
-          handleNode(node, file, sourceFile)
-        })
-      }
+      sourceFile.forEachChild(node => {
+        handleNode(node, file, sourceFile)
+      })
     }
   }
 
