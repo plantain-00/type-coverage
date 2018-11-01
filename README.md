@@ -37,6 +37,10 @@ name | type | description
   },
 ```
 
+## vscode plugin
+
+<https://marketplace.visualstudio.com/items?itemName=york-yao.vscode-type-coverage>
+
 ## add dynamic badges of type coverage
 
 Use your own project url:
