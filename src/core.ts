@@ -4,7 +4,7 @@ import * as path from 'path'
 import { getTsConfigFilePath, getTsConfig, getRootNames } from './tsconfig'
 
 // tslint:disable-next-line:no-big-function
-export async function lint(project: string, detail: boolean, debug: boolean) {
+export async function lint(project: string, detail: boolean, debug: boolean, files?: string[]) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
   const config = getTsConfig(configFilePath, dirname)
 
@@ -889,9 +889,11 @@ export async function lint(project: string, detail: boolean, debug: boolean) {
     let file = sourceFile.fileName
     if (!file.includes('node_modules')) {
       file = path.relative(process.cwd(), file)
-      sourceFile.forEachChild(node => {
-        handleNode(node, file, sourceFile)
-      })
+      if (!files || files.includes(file)) {
+        sourceFile.forEachChild(node => {
+          handleNode(node, file, sourceFile)
+        })
+      }
     }
   }
 
