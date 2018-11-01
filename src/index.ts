@@ -29,7 +29,7 @@ async function executeCommandLine() {
 
   const atLeast: number | undefined = argv['at-least']
   if (atLeast && percent < atLeast) {
-    throw new Error(`The type coverage rate(${percent}%) is lower than ${atLeast}`)
+    throw new Error(`The type coverage rate(${percent}%) is lower than the target(${atLeast}%). \nYou can add '--detail' to show more informations.`)
   }
 }
 
