@@ -20,7 +20,7 @@ async function executeCommandLine() {
 
   suppressError = argv.suppressError
 
-  const { correctCount, totalCount, anys } = await lint(argv.p || argv.project || '.', argv.detail, argv.debug, process.cwd())
+  const { correctCount, totalCount, anys } = await lint(argv.p || argv.project || '.', argv.detail, argv.debug)
   for (const { file, line, character, text } of anys) {
     console.log(`${file}:${line + 1}:${character + 1}: ${text}`)
   }

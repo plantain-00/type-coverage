@@ -45,10 +45,10 @@ export function getTsConfig(configFilePath: string, dirname: string): JsonConfig
 // tslint:disable-next-line:cognitive-complexity
 export async function getRootNames(config: JsonConfig, dirname: string) {
   const include: string[] | undefined = config.include
-  const exclude: string[] | undefined = config.exclude || ['./node_modules/**']
+  const exclude: string[] | undefined = config.exclude || ['node_modules/**']
 
   if (config.files) {
-    return config.files.map(f => path.relative(process.cwd(), path.resolve(dirname, f)))
+    return config.files.map(f => path.resolve(dirname, f))
   }
   if (include && Array.isArray(include) && include.length > 0) {
     const rules: string[] = []
@@ -63,9 +63,10 @@ export async function getRootNames(config: JsonConfig, dirname: string) {
         rules.push(currentPath)
       }
     }
-    return globAsync(rules.length === 1 ? rules[0] : `{${rules.join(',')}}`, exclude)
+    return globAsync(rules.length === 1 ? rules[0] : `{${rules.join(',')}}`, exclude, dirname)
   }
-  return globAsync(`**/*.{ts,tsx}`, exclude, dirname)
+  const rootNames = await globAsync(`**/*.{ts,tsx}`, exclude, dirname)
+  return rootNames.map((r) => path.resolve(process.cwd(), dirname, r))
 }
 
 function statAsync(file: string) {

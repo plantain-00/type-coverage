@@ -4,7 +4,7 @@ import * as path from 'path'
 import { getTsConfigFilePath, getTsConfig, getRootNames } from './tsconfig'
 
 // tslint:disable-next-line:no-big-function
-export async function lint(project: string, detail: boolean, debug: boolean, rootPath: string, files?: string[]) {
+export async function lint(project: string, detail: boolean, debug: boolean, files?: string[], oldProgram?: ts.Program) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
   const config = getTsConfig(configFilePath, dirname)
 
@@ -13,10 +13,9 @@ export async function lint(project: string, detail: boolean, debug: boolean, roo
     throw errors
   }
 
-  let rootNames = await getRootNames(config, dirname)
-  rootNames = rootNames.map((r) => path.resolve(rootPath, r))
+  const rootNames = await getRootNames(config, dirname)
 
-  const program = ts.createProgram(rootNames, compilerOptions)
+  const program = ts.createProgram(rootNames, compilerOptions, undefined, oldProgram)
   const checker = program.getTypeChecker()
 
   let correctCount = 0
@@ -896,5 +895,5 @@ export async function lint(project: string, detail: boolean, debug: boolean, roo
     }
   }
 
-  return { correctCount, totalCount, anys }
+  return { correctCount, totalCount, anys, program }
 }
