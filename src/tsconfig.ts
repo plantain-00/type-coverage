@@ -65,7 +65,7 @@ export async function getRootNames(config: JsonConfig, dirname: string) {
     }
     return globAsync(rules.length === 1 ? rules[0] : `{${rules.join(',')}}`, exclude)
   }
-  return globAsync(`${dirname}/**/*.{ts,tsx}`, exclude)
+  return globAsync(`**/*.{ts,tsx}`, exclude, dirname)
 }
 
 function statAsync(file: string) {
@@ -80,9 +80,9 @@ function statAsync(file: string) {
   })
 }
 
-function globAsync(pattern: string, ignore?: string | string[]) {
+function globAsync(pattern: string, ignore: string | string[], cwd?: string) {
   return new Promise<string[]>((resolve, reject) => {
-    glob(pattern, { ignore }, (error, matches) => {
+    glob(pattern, { ignore, cwd }, (error, matches) => {
       if (error) {
         reject(error)
       } else {
