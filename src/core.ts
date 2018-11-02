@@ -4,7 +4,7 @@ import * as path from 'path'
 import { getTsConfigFilePath, getTsConfig, getRootNames } from './tsconfig'
 
 // tslint:disable-next-line:no-big-function
-export async function lint(project: string, detail: boolean, debug: boolean, files?: string[]) {
+export async function lint(project: string, detail: boolean, debug: boolean, rootPath: string, files?: string[]) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
   const config = getTsConfig(configFilePath, dirname)
 
@@ -13,7 +13,8 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
     throw errors
   }
 
-  const rootNames = await getRootNames(config, dirname)
+  let rootNames = await getRootNames(config, dirname)
+  rootNames = rootNames.map((r) => path.resolve(rootPath, r))
 
   const program = ts.createProgram(rootNames, compilerOptions)
   const checker = program.getTypeChecker()
