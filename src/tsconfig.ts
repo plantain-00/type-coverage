@@ -29,10 +29,7 @@ type JsonConfig = {
 
 export function getTsConfig(configFilePath: string, dirname: string): JsonConfig {
   const configResult = ts.readConfigFile(configFilePath, p => fs.readFileSync(p).toString())
-  if (configResult.error) {
-    throw configResult.error
-  }
-  const config = configResult.config as JsonConfig
+  const config = configResult.error ? {} : configResult.config as JsonConfig
   if (config.extends) {
     const project = path.resolve(dirname, config.extends)
     const { configFilePath, dirname: extendsBasename } = getTsConfigFilePath(project)
