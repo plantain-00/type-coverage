@@ -1,4 +1,4 @@
-src/tsconfig.ts:42:20: config
+src/tsconfig.ts:43:20: config
 src/core.ts:30:45: intrinsicName
 src/core.ts:39:159: intrinsicName
 src/index.ts:15:37: v
@@ -11,5 +11,5 @@ src/index.ts:23:106: debug
 src/index.ts:44:4: error
 src/index.ts:45:7: error
 src/index.ts:48:17: error
-3180 / 3193 99.59%
+3181 / 3194 99.59%
 type-coverage success.
