@@ -1,8 +1,14 @@
 import minimist from 'minimist'
+import * as fs from 'fs'
+import * as util from 'util'
+import * as path from 'path'
+
 import * as packageJson from '../package.json'
 import { lint } from './core'
 
 let suppressError = false
+const existsAsync = util.promisify(fs.exists)
+const readFileAsync = util.promisify(fs.readFile)
 
 function showToolVersion() {
   console.log(`Version: ${packageJson.version}`)
@@ -28,8 +34,16 @@ async function executeCommandLine() {
   console.log(`${correctCount} / ${totalCount} ${percent.toFixed(2)}%`)
 
   let atLeast: number | undefined
-  if (packageJson.typeCoverage && packageJson.typeCoverage.atLeast) {
-    atLeast = packageJson.typeCoverage.atLeast
+  const packageJsonPath = path.resolve(process.cwd(), 'package.json')
+  if (await existsAsync(packageJsonPath)) {
+    const currentPackageJson: {
+      typeCoverage?: {
+        atLeast?: number
+      }
+    } = JSON.parse((await readFileAsync(packageJsonPath)).toString())
+    if (currentPackageJson.typeCoverage && currentPackageJson.typeCoverage.atLeast) {
+      atLeast = currentPackageJson.typeCoverage.atLeast
+    }
   }
   if (argv['at-least']) {
     atLeast = argv['at-least']
