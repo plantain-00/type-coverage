@@ -26,13 +26,22 @@ async function executeCommandLine() {
 
   suppressError = argv.suppressError
 
-  const { correctCount, totalCount, anys } = await lint(argv.p || argv.project || '.', argv.detail, argv.debug)
-  for (const { file, line, character, text } of anys) {
-    console.log(`${path.resolve(process.cwd(), file)}:${line + 1}:${character + 1}: ${text}`)
-  }
+  const { correctCount, totalCount, anys } = await lint(argv.p || argv.project || '.', true, argv.debug)
   const percent = Math.round(10000 * correctCount / totalCount) / 100
+  const atLeast = await getAtLeast(argv)
+  const failed = atLeast && percent < atLeast
+  if (argv.detail || failed) {
+    for (const { file, line, character, text } of anys) {
+      console.log(`${path.resolve(process.cwd(), file)}:${line + 1}:${character + 1}: ${text}`)
+    }
+  }
   console.log(`${correctCount} / ${totalCount} ${percent.toFixed(2)}%`)
+  if (failed) {
+    throw new Error(`The type coverage rate(${percent.toFixed(2)}%) is lower than the target(${atLeast}%). \nYou can add '--detail' or use VSCode plugin to show detailed informations.`)
+  }
+}
 
+async function getAtLeast(argv: minimist.ParsedArgs) {
   let atLeast: number | undefined
   const packageJsonPath = path.resolve(process.cwd(), 'package.json')
   if (await existsAsync(packageJsonPath)) {
@@ -48,9 +57,7 @@ async function executeCommandLine() {
   if (argv['at-least']) {
     atLeast = argv['at-least']
   }
-  if (atLeast && percent < atLeast) {
-    throw new Error(`The type coverage rate(${percent.toFixed(2)}%) is lower than the target(${atLeast}%). \nYou can add '--detail' or use VSCode plugin to show detailed informations.`)
-  }
+  return atLeast
 }
 
 executeCommandLine().then(() => {
