@@ -13,7 +13,7 @@
     "@types/glob": "7.1.1",
     "@types/jasmine": "2.8.11",
     "@types/minimist": "1.2.0",
-    "@types/node": "10.12.5",
+    "@types/node": "10.12.9",
     "clean-release": "2.7.0",
     "clean-scripts": "1.9.2",
     "jasmine": "3.3.0",
