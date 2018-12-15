@@ -217,6 +217,7 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
       case ts.SyntaxKind.UnknownKeyword:
       case ts.SyntaxKind.FromKeyword:
       case ts.SyntaxKind.GlobalKeyword:
+      case ts.SyntaxKind.BigIntKeyword:
       case ts.SyntaxKind.OfKeyword:
         break
       case ts.SyntaxKind.QualifiedName:
