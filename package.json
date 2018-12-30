@@ -11,7 +11,7 @@
     "@commitlint/cli": "7.2.1",
     "@commitlint/config-conventional": "7.1.2",
     "@types/glob": "7.1.1",
-    "@types/jasmine": "3.3.4",
+    "@types/jasmine": "3.3.5",
     "@types/minimist": "1.2.0",
     "@types/node": "10.12.18",
     "clean-release": "2.7.0",
