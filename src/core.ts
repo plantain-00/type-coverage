@@ -25,9 +25,9 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
   function collectData(node: ts.Node, file: string, sourceFile: ts.SourceFile) {
     const type = checker.getTypeAtLocation(node)
     if (type) {
-      const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
       totalCount++
       if (type.flags === 1 && (type as any).intrinsicName === 'any') {
+        const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
         if (debug) {
           console.log(`type === any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
         } else if (detail) {
@@ -36,6 +36,7 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
       } else {
         correctCount++
         if (debug) {
+          const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
           console.log(`type !== any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind) ${type.flags}(flag) ${(type as any).intrinsicName || ''}`)
         }
       }
