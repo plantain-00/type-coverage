@@ -4,7 +4,7 @@ import * as path from 'path'
 import { getTsConfigFilePath, getTsConfig, getRootNames } from './tsconfig'
 
 // tslint:disable-next-line:no-big-function
-export async function lint(project: string, detail: boolean, debug: boolean, files?: string[], oldProgram?: ts.Program) {
+export async function lint(project: string, detail: boolean, debug: boolean, files?: string[], oldProgram?: ts.Program, strict?: boolean) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
   const config = getTsConfig(configFilePath, dirname)
 
@@ -22,23 +22,38 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
   let totalCount = 0
   let anys: { file: string, line: number, character: number, text: string }[] = []
 
+  function collectAny(node: ts.Node, file: string, sourceFile: ts.SourceFile) {
+    const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
+    if (debug) {
+      console.log(`type === any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
+    } else if (detail) {
+      anys.push({ file, line, character, text: node.getText(sourceFile) })
+    }
+  }
+
+  function collectNotAny(node: ts.Node, file: string, sourceFile: ts.SourceFile, type: ts.Type) {
+    correctCount++
+    if (debug) {
+      const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
+      console.log(`type !== any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind) ${type.flags}(flag) ${(type as any).intrinsicName || ''}`)
+    }
+  }
+
   function collectData(node: ts.Node, file: string, sourceFile: ts.SourceFile) {
     const type = checker.getTypeAtLocation(node)
     if (type) {
       totalCount++
-      if (type.flags === 1 && (type as any).intrinsicName === 'any') {
-        const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
-        if (debug) {
-          console.log(`type === any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
-        } else if (detail) {
-          anys.push({ file, line, character, text: node.getText(sourceFile) })
+      if (typeIsAny(type)) {
+        collectAny(node, file, sourceFile)
+      } else if (strict && type.flags === ts.TypeFlags.Object) {
+        const typeArguments = (type as ts.TypeReference).typeArguments
+        if (typeArguments && typeArguments.some((ypeArgument) => typeIsAny(ypeArgument))) {
+          collectAny(node, file, sourceFile)
+        } else {
+          collectNotAny(node, file, sourceFile, type)
         }
       } else {
-        correctCount++
-        if (debug) {
-          const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
-          console.log(`type !== any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind) ${type.flags}(flag) ${(type as any).intrinsicName || ''}`)
-        }
+        collectNotAny(node, file, sourceFile, type)
       }
     }
   }
@@ -898,4 +913,8 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
   }
 
   return { correctCount, totalCount, anys, program }
+}
+
+function typeIsAny(type: ts.Type) {
+  return type.flags === 1 && (type as any).intrinsicName === 'any'
 }
