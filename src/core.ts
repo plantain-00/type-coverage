@@ -43,15 +43,8 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
     const type = checker.getTypeAtLocation(node)
     if (type) {
       totalCount++
-      if (typeIsAny(type)) {
+      if (typeIsStrictAny(type, strict)) {
         collectAny(node, file, sourceFile)
-      } else if (strict && type.flags === ts.TypeFlags.Object) {
-        const typeArguments = (type as ts.TypeReference).typeArguments
-        if (typeArguments && typeArguments.some((ypeArgument) => typeIsAny(ypeArgument))) {
-          collectAny(node, file, sourceFile)
-        } else {
-          collectNotAny(node, file, sourceFile, type)
-        }
       } else {
         collectNotAny(node, file, sourceFile, type)
       }
@@ -916,6 +909,15 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
   return { correctCount, totalCount, anys, program }
 }
 
-function typeIsAny(type: ts.Type) {
-  return type.flags === 1 && (type as any).intrinsicName === 'any'
+function typeIsStrictAny(type: ts.Type, strict: boolean): boolean {
+  if (type.flags === ts.TypeFlags.Any) {
+    return (type as any).intrinsicName === 'any'
+  }
+  if (strict && type.flags === ts.TypeFlags.Object) {
+    const typeArguments = (type as ts.TypeReference).typeArguments
+    if (typeArguments) {
+      return typeArguments.some((typeArgument) => typeIsStrictAny(typeArgument, strict))
+    }
+  }
+  return false
 }
