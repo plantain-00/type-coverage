@@ -11,7 +11,7 @@
     "@commitlint/cli": "7.3.2",
     "@commitlint/config-conventional": "7.3.1",
     "@types/glob": "7.1.1",
-    "@types/jasmine": "3.3.7",
+    "@types/jasmine": "3.3.8",
     "@types/minimist": "1.2.0",
     "@types/node": "10.12.18",
     "clean-release": "2.7.0",
@@ -23,7 +23,7 @@
     "standard": "12.0.1",
     "tslint": "5.12.1",
     "tslint-config-standard": "8.0.1",
-    "tslint-sonarts": "1.8.0"
+    "tslint-sonarts": "1.9.0"
   },
   "dependencies": {
     "glob": "7.1.3",

@@ -4,7 +4,7 @@ import * as path from 'path'
 import { getTsConfigFilePath, getTsConfig, getRootNames } from './tsconfig'
 
 // tslint:disable-next-line:no-big-function
-export async function lint(project: string, detail: boolean, debug: boolean, files?: string[], oldProgram?: ts.Program, strict?: boolean) {
+export async function lint(project: string, detail: boolean, debug: boolean, files?: string[], oldProgram?: ts.Program, strict = false) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
   const config = getTsConfig(configFilePath, dirname)
 
@@ -82,6 +82,7 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
     handleNodes(node.decorators, file, sourceFile)
     handleNodes(node.modifiers, file, sourceFile)
 
+    // tslint:disable-next-line:max-switch-cases
     switch (node.kind) {
       case ts.SyntaxKind.Unknown:
       case ts.SyntaxKind.EndOfFileToken:
