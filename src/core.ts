@@ -907,9 +907,7 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
 
   for (const sourceFile of program.getSourceFiles()) {
     let file = sourceFile.fileName
-    if (!program.isSourceFileDefaultLibrary(sourceFile)
-      && !program.isSourceFileFromExternalLibrary(sourceFile)
-      && (!files || files.includes(file))) {
+    if (!file.includes('node_modules') && (!files || files.includes(file))) {
       file = path.relative(process.cwd(), file)
       utils.forEachComment(sourceFile, (_, comment) => {
         const commentText = comment.kind === ts.SyntaxKind.SingleLineCommentTrivia
