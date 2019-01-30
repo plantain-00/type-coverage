@@ -1,9 +1,10 @@
 import ts from 'typescript'
 import * as path from 'path'
+import * as utils from 'tsutils/util'
 
 import { getTsConfigFilePath, getTsConfig, getRootNames } from './tsconfig'
 
-// tslint:disable-next-line:no-big-function
+// tslint:disable-next-line:no-big-function cognitive-complexity
 export async function lint(project: string, detail: boolean, debug: boolean, files?: string[], oldProgram?: ts.Program, strict = false) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
   const config = getTsConfig(configFilePath, dirname)
@@ -21,14 +22,19 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
   let correctCount = 0
   let totalCount = 0
   let anys: { file: string, line: number, character: number, text: string }[] = []
+  const ingoreMap: { [file: string]: Set<number> } = {}
 
-  function collectAny(node: ts.Node, file: string, sourceFile: ts.SourceFile) {
+  function collectAny(node: ts.Node, file: string, sourceFile: ts.SourceFile, type: ts.Type) {
     const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
+    if (ingoreMap[file] && ingoreMap[file].has(line)) {
+      return false
+    }
     if (debug) {
       console.log(`type === any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
     } else if (detail) {
       anys.push({ file, line, character, text: node.getText(sourceFile) })
     }
+    return true
   }
 
   function collectNotAny(node: ts.Node, file: string, sourceFile: ts.SourceFile, type: ts.Type) {
@@ -44,7 +50,10 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
     if (type) {
       totalCount++
       if (typeIsStrictAny(type, strict)) {
-        collectAny(node, file, sourceFile)
+        const success = collectAny(node, file, sourceFile, type)
+        if (!success) {
+          collectNotAny(node, file, sourceFile, type)
+        }
       } else {
         collectNotAny(node, file, sourceFile, type)
       }
@@ -898,8 +907,28 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
 
   for (const sourceFile of program.getSourceFiles()) {
     let file = sourceFile.fileName
-    if (!file.includes('node_modules') && (!files || files.includes(file))) {
+    if (!program.isSourceFileDefaultLibrary(sourceFile)
+      && !program.isSourceFileFromExternalLibrary(sourceFile)
+      && (!files || files.includes(file))) {
       file = path.relative(process.cwd(), file)
+      utils.forEachComment(sourceFile, (_, comment) => {
+        const commentText = comment.kind === ts.SyntaxKind.SingleLineCommentTrivia
+          ? sourceFile.text.substring(comment.pos + 2, comment.end).trim()
+          : sourceFile.text.substring(comment.pos + 2, comment.end - 2).trim()
+        if (commentText.includes('type-coverage:ignore-next-line')) {
+          if (!ingoreMap[file]) {
+            ingoreMap[file] = new Set()
+          }
+          const line = ts.getLineAndCharacterOfPosition(sourceFile, comment.pos).line
+          ingoreMap[file].add(line + 1)
+        } else if (commentText.includes('type-coverage:ignore-line')) {
+          if (!ingoreMap[file]) {
+            ingoreMap[file] = new Set()
+          }
+          const line = ts.getLineAndCharacterOfPosition(sourceFile, comment.pos).line
+          ingoreMap[file].add(line)
+        }
+      })
       sourceFile.forEachChild(node => {
         handleNode(node, file, sourceFile)
       })

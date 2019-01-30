@@ -62,7 +62,7 @@ async function getAtLeast(argv: minimist.ParsedArgs) {
 
 executeCommandLine().then(() => {
   console.log('type-coverage success.')
-}, error => {
+}, error => { // type-coverage:ignore-line
   if (error instanceof Error) {
     console.log(error.message)
   } else {

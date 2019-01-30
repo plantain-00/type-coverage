@@ -38,6 +38,17 @@ name | type | description
   },
 ```
 
+## ingore line
+
+Use `type-coverage:ignore-next-line` or `type-coverage:ignore-line` in comment(`//` or `/*  */`) to ignore `any` in a line.
+
+```ts
+try {
+  // type-coverage:ignore-next-line
+} catch (error) { // type-coverage:ignore-line
+}
+```
+
 ## vscode plugin
 
 <https://marketplace.visualstudio.com/items?itemName=york-yao.vscode-type-coverage>
