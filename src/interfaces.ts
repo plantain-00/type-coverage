@@ -17,6 +17,11 @@ export interface FileContext {
   file: string
   sourceFile: ts.SourceFile
   typeCheckResult: FileTypeCheckResult
+  debug: boolean
+  detail: boolean
+  strict: boolean
+  checker: ts.TypeChecker
+  ingoreMap: { [file: string]: Set<number> }
 }
 
 interface TypeCheckCache extends FileTypeCheckResult {

@@ -16,30 +16,17 @@
     },
     {
       "file": "src/interfaces.ts",
-      "hash": "236a055c788bf4cf9448222a057c5df1eba21483fe1c6a4350265ccba259e229",
-      "correctCount": 33,
-      "totalCount": 33,
+      "hash": "1a1b784436429d54601217e3a15e275ba25c575cc709e62cd2226534654d6424",
+      "correctCount": 42,
+      "totalCount": 42,
       "anys": []
     },
     {
       "file": "src/core.ts",
-      "hash": "897012628690fb79a67aa102f526b86ba35873c45378a8e6c379b669e284962c",
-      "correctCount": 3095,
-      "totalCount": 3097,
-      "anys": [
-        {
-          "file": "src/core.ts",
-          "line": 56,
-          "character": 154,
-          "text": "intrinsicName"
-        },
-        {
-          "file": "src/core.ts",
-          "line": 1054,
-          "character": 25,
-          "text": "intrinsicName"
-        }
-      ]
+      "hash": "445157d9776da1c35b9244e0460c35069576e7dd40e6d77b0f39a8be8003a905",
+      "correctCount": 218,
+      "totalCount": 218,
+      "anys": []
     },
     {
       "file": "src/index.ts",
@@ -120,6 +107,47 @@
       "hash": "e93a9c18c2131c7fe28d759988aa31e44a2eea14e7e84104036a42ccc325c949",
       "correctCount": 1,
       "totalCount": 1,
+      "anys": []
+    },
+    {
+      "file": "src/checker.ts",
+      "hash": "5736e9697235fca3531d8368040031b4d7f0ca2313e26131c7494bcf19cf8083",
+      "correctCount": 2635,
+      "totalCount": 2637,
+      "anys": [
+        {
+          "file": "src/checker.ts",
+          "line": 21,
+          "character": 152,
+          "text": "intrinsicName"
+        },
+        {
+          "file": "src/checker.ts",
+          "line": 42,
+          "character": 25,
+          "text": "intrinsicName"
+        }
+      ]
+    },
+    {
+      "file": "src/dependencies.ts",
+      "hash": "1be35397008f244b1bf101c993472f97a9b8372ba7e84a2ee00a24d69fc361e8",
+      "correctCount": 140,
+      "totalCount": 140,
+      "anys": []
+    },
+    {
+      "file": "src/ignore.ts",
+      "hash": "5d3da5714d147d38b972894ecf83e04aac6af2caadd6c8df2f5cc615f3490080",
+      "correctCount": 74,
+      "totalCount": 74,
+      "anys": []
+    },
+    {
+      "file": "src/cache.ts",
+      "hash": "c6d8a915dddfcc29cba4b9633a6530a34077626c4cbd93aa554abf77944dc637",
+      "correctCount": 90,
+      "totalCount": 90,
       "anys": []
     }
   ]
