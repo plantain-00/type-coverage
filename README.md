@@ -29,6 +29,7 @@ name | type | description
 --at-least | number? | fail if coverage rate < this value
 --debug | boolean? | show debug info
 --strict | boolean? | if the identifiers' type arguments exist and contain at least one `any`, like `any[]`, `ReadonlyArray<any>`, `Promise<any>`, `Foo<number, any>`, it will be considered as `any` too; also, future minor release may introduce stricter type check in this mode, which may lower the code coverage
+--cache | boolean? | save and reuse type check result of files that is unchanged and independent of changed files in `.type-coverage` directory, to improve speed
 
 ## config in package.json
 

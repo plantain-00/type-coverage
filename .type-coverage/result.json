@@ -1,0 +1,126 @@
+{
+  "cache": [
+    {
+      "file": "src/tsconfig.ts",
+      "hash": "fc8d4b90399fc8a6e3ba8c2801b446c5f59d79aa77eced68d7417cde80bb573c",
+      "correctCount": 197,
+      "totalCount": 198,
+      "anys": [
+        {
+          "file": "src/tsconfig.ts",
+          "line": 42,
+          "character": 19,
+          "text": "config"
+        }
+      ]
+    },
+    {
+      "file": "src/interfaces.ts",
+      "hash": "236a055c788bf4cf9448222a057c5df1eba21483fe1c6a4350265ccba259e229",
+      "correctCount": 33,
+      "totalCount": 33,
+      "anys": []
+    },
+    {
+      "file": "src/core.ts",
+      "hash": "897012628690fb79a67aa102f526b86ba35873c45378a8e6c379b669e284962c",
+      "correctCount": 3095,
+      "totalCount": 3097,
+      "anys": [
+        {
+          "file": "src/core.ts",
+          "line": 56,
+          "character": 154,
+          "text": "intrinsicName"
+        },
+        {
+          "file": "src/core.ts",
+          "line": 1054,
+          "character": 25,
+          "text": "intrinsicName"
+        }
+      ]
+    },
+    {
+      "file": "src/index.ts",
+      "hash": "b545f5d190bd03e3da596574b57783b05c661e9e8f9d2c675dd40cafe75a3d01",
+      "correctCount": 134,
+      "totalCount": 145,
+      "anys": [
+        {
+          "file": "src/index.ts",
+          "line": 20,
+          "character": 36,
+          "text": "v"
+        },
+        {
+          "file": "src/index.ts",
+          "line": 20,
+          "character": 46,
+          "text": "version"
+        },
+        {
+          "file": "src/index.ts",
+          "line": 26,
+          "character": 23,
+          "text": "suppressError"
+        },
+        {
+          "file": "src/index.ts",
+          "line": 29,
+          "character": 9,
+          "text": "p"
+        },
+        {
+          "file": "src/index.ts",
+          "line": 29,
+          "character": 19,
+          "text": "project"
+        },
+        {
+          "file": "src/index.ts",
+          "line": 31,
+          "character": 9,
+          "text": "debug"
+        },
+        {
+          "file": "src/index.ts",
+          "line": 34,
+          "character": 9,
+          "text": "strict"
+        },
+        {
+          "file": "src/index.ts",
+          "line": 35,
+          "character": 9,
+          "text": "cache"
+        },
+        {
+          "file": "src/index.ts",
+          "line": 40,
+          "character": 11,
+          "text": "detail"
+        },
+        {
+          "file": "src/index.ts",
+          "line": 73,
+          "character": 6,
+          "text": "error"
+        },
+        {
+          "file": "src/index.ts",
+          "line": 76,
+          "character": 16,
+          "text": "error"
+        }
+      ]
+    },
+    {
+      "file": "src/lib.d.ts",
+      "hash": "e93a9c18c2131c7fe28d759988aa31e44a2eea14e7e84104036a42ccc325c949",
+      "correctCount": 1,
+      "totalCount": 1,
+      "anys": []
+    }
+  ]
+}
