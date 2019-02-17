@@ -1,11 +1,27 @@
 import ts from 'typescript'
 import * as path from 'path'
 import * as utils from 'tsutils/util'
+import * as fs from 'fs'
+import { promisify } from 'util'
+import * as crypto from 'crypto'
 
 import { getTsConfigFilePath, getTsConfig, getRootNames } from './tsconfig'
+import { FileContext, AnyInfo, TypeCheckResult, SourceFileInfo } from './interfaces'
+
+const readFileAsync = promisify(fs.readFile)
+const writeFileAsync = promisify(fs.writeFile)
+const mkdirAsync = promisify(fs.mkdir)
 
 // tslint:disable-next-line:no-big-function cognitive-complexity
-export async function lint(project: string, detail: boolean, debug: boolean, files?: string[], oldProgram?: ts.Program, strict = false) {
+export async function lint(
+  project: string,
+  detail: boolean,
+  debug: boolean,
+  files?: string[],
+  oldProgram?: ts.Program,
+  strict = false,
+  enableCache = false
+) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
   const config = getTsConfig(configFilePath, dirname)
 
@@ -19,12 +35,9 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
   const program = ts.createProgram(rootNames, compilerOptions, undefined, oldProgram)
   const checker = program.getTypeChecker()
 
-  let correctCount = 0
-  let totalCount = 0
-  let anys: { file: string, line: number, character: number, text: string }[] = []
   const ingoreMap: { [file: string]: Set<number> } = {}
 
-  function collectAny(node: ts.Node, file: string, sourceFile: ts.SourceFile, type: ts.Type) {
+  function collectAny(node: ts.Node, { file, sourceFile, typeCheckResult }: FileContext) {
     const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
     if (ingoreMap[file] && ingoreMap[file].has(line)) {
       return false
@@ -32,57 +45,57 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
     if (debug) {
       console.log(`type === any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
     } else if (detail) {
-      anys.push({ file, line, character, text: node.getText(sourceFile) })
+      typeCheckResult.anys.push({ file, line, character, text: node.getText(sourceFile) })
     }
     return true
   }
 
-  function collectNotAny(node: ts.Node, file: string, sourceFile: ts.SourceFile, type: ts.Type) {
-    correctCount++
+  function collectNotAny(node: ts.Node, { file, sourceFile, typeCheckResult }: FileContext, type: ts.Type) {
+    typeCheckResult.correctCount++
     if (debug) {
       const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
       console.log(`type !== any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind) ${type.flags}(flag) ${(type as any).intrinsicName || ''}`)
     }
   }
 
-  function collectData(node: ts.Node, file: string, sourceFile: ts.SourceFile) {
+  function collectData(node: ts.Node, context: FileContext) {
     const type = checker.getTypeAtLocation(node)
     if (type) {
-      totalCount++
+      context.typeCheckResult.totalCount++
       if (typeIsStrictAny(type, strict)) {
-        const success = collectAny(node, file, sourceFile, type)
+        const success = collectAny(node, context)
         if (!success) {
-          collectNotAny(node, file, sourceFile, type)
+          collectNotAny(node, context, type)
         }
       } else {
-        collectNotAny(node, file, sourceFile, type)
+        collectNotAny(node, context, type)
       }
     }
   }
 
-  function handleNodes(nodes: ts.NodeArray<ts.Node> | undefined, file: string, sourceFile: ts.SourceFile): void {
+  function handleNodes(nodes: ts.NodeArray<ts.Node> | undefined, context: FileContext): void {
     if (nodes === undefined) {
       return
     }
 
     for (const node of nodes) {
-      handleNode(node, file, sourceFile)
+      handleNode(node, context)
     }
   }
 
   // tslint:disable-next-line:no-big-function
-  function handleNode(node: ts.Node | undefined, file: string, sourceFile: ts.SourceFile): void {
+  function handleNode(node: ts.Node | undefined, context: FileContext): void {
     if (node === undefined) {
       return
     }
 
     if (debug) {
-      const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
-      console.log(`node: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind)`)
+      const { line, character } = ts.getLineAndCharacterOfPosition(context.sourceFile, node.getStart(context.sourceFile))
+      console.log(`node: ${context.file}:${line + 1}:${character + 1}: ${node.getText(context.sourceFile)} ${node.kind}(kind)`)
     }
 
-    handleNodes(node.decorators, file, sourceFile)
-    handleNodes(node.modifiers, file, sourceFile)
+    handleNodes(node.decorators, context)
+    handleNodes(node.modifiers, context)
 
     // tslint:disable-next-line:max-switch-cases
     switch (node.kind) {
@@ -159,7 +172,7 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
       case ts.SyntaxKind.CaretEqualsToken:
         break
       case ts.SyntaxKind.Identifier:
-        collectData(node, file, sourceFile)
+        collectData(node, context)
         break
       case ts.SyntaxKind.BreakKeyword:
       case ts.SyntaxKind.CaseKeyword:
@@ -190,7 +203,7 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
       case ts.SyntaxKind.SwitchKeyword:
         break
       case ts.SyntaxKind.ThisKeyword:
-        collectData(node, file, sourceFile)
+        collectData(node, context)
         break
       case ts.SyntaxKind.ThrowKeyword:
       case ts.SyntaxKind.TrueKeyword:
@@ -241,575 +254,575 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
         break
       case ts.SyntaxKind.QualifiedName:
         const qualifiedName = node as ts.QualifiedName
-        handleNode(qualifiedName.left, file, sourceFile)
-        handleNode(qualifiedName.right, file, sourceFile)
+        handleNode(qualifiedName.left, context)
+        handleNode(qualifiedName.right, context)
         break
       case ts.SyntaxKind.ComputedPropertyName:
         const computedPropertyName = node as ts.ComputedPropertyName
-        handleNode(computedPropertyName.expression, file, sourceFile)
+        handleNode(computedPropertyName.expression, context)
         break
       case ts.SyntaxKind.TypeParameter:
         const typeParameterDeclaration = node as ts.TypeParameterDeclaration
-        handleNode(typeParameterDeclaration.name, file, sourceFile)
-        handleNode(typeParameterDeclaration.default, file, sourceFile)
-        handleNode(typeParameterDeclaration.expression, file, sourceFile)
-        handleNode(typeParameterDeclaration.constraint, file, sourceFile)
+        handleNode(typeParameterDeclaration.name, context)
+        handleNode(typeParameterDeclaration.default, context)
+        handleNode(typeParameterDeclaration.expression, context)
+        handleNode(typeParameterDeclaration.constraint, context)
         break
       case ts.SyntaxKind.Parameter:
         const parameterDeclaration = node as ts.ParameterDeclaration
-        handleNode(parameterDeclaration.dotDotDotToken, file, sourceFile)
-        handleNode(parameterDeclaration.name, file, sourceFile)
-        handleNode(parameterDeclaration.initializer, file, sourceFile)
-        handleNode(parameterDeclaration.type, file, sourceFile)
-        handleNode(parameterDeclaration.questionToken, file, sourceFile)
+        handleNode(parameterDeclaration.dotDotDotToken, context)
+        handleNode(parameterDeclaration.name, context)
+        handleNode(parameterDeclaration.initializer, context)
+        handleNode(parameterDeclaration.type, context)
+        handleNode(parameterDeclaration.questionToken, context)
         break
       case ts.SyntaxKind.Decorator:
         const decorator = node as ts.Decorator
-        handleNode(decorator.expression, file, sourceFile)
+        handleNode(decorator.expression, context)
         break
       case ts.SyntaxKind.PropertySignature:
         const propertySignature = node as ts.PropertySignature
-        handleNode(propertySignature.name, file, sourceFile)
-        handleNode(propertySignature.questionToken, file, sourceFile)
-        handleNode(propertySignature.type, file, sourceFile)
-        handleNode(propertySignature.initializer, file, sourceFile)
+        handleNode(propertySignature.name, context)
+        handleNode(propertySignature.questionToken, context)
+        handleNode(propertySignature.type, context)
+        handleNode(propertySignature.initializer, context)
         break
       case ts.SyntaxKind.PropertyDeclaration:
         const propertyDeclaration = node as ts.PropertyDeclaration
-        handleNode(propertyDeclaration.name, file, sourceFile)
-        handleNode(propertyDeclaration.initializer, file, sourceFile)
-        handleNode(propertyDeclaration.type, file, sourceFile)
-        handleNode(propertyDeclaration.questionToken, file, sourceFile)
+        handleNode(propertyDeclaration.name, context)
+        handleNode(propertyDeclaration.initializer, context)
+        handleNode(propertyDeclaration.type, context)
+        handleNode(propertyDeclaration.questionToken, context)
         break
       case ts.SyntaxKind.MethodSignature:
         const methodSignature = node as ts.MethodSignature
-        handleNode(methodSignature.name, file, sourceFile)
-        handleNodes(methodSignature.parameters, file, sourceFile)
-        handleNode(methodSignature.questionToken, file, sourceFile)
-        handleNode(methodSignature.type, file, sourceFile)
-        handleNodes(methodSignature.typeParameters, file, sourceFile)
+        handleNode(methodSignature.name, context)
+        handleNodes(methodSignature.parameters, context)
+        handleNode(methodSignature.questionToken, context)
+        handleNode(methodSignature.type, context)
+        handleNodes(methodSignature.typeParameters, context)
         break
       case ts.SyntaxKind.MethodDeclaration:
       case ts.SyntaxKind.Constructor:
       case ts.SyntaxKind.GetAccessor:
       case ts.SyntaxKind.SetAccessor:
         const functionLikeDeclarationBase = node as ts.FunctionLikeDeclarationBase
-        handleNode(functionLikeDeclarationBase.name, file, sourceFile)
-        handleNodes(functionLikeDeclarationBase.parameters, file, sourceFile)
-        handleNode(functionLikeDeclarationBase.body, file, sourceFile)
-        handleNode(functionLikeDeclarationBase.asteriskToken, file, sourceFile)
-        handleNode(functionLikeDeclarationBase.questionToken, file, sourceFile)
-        handleNode(functionLikeDeclarationBase.type, file, sourceFile)
-        handleNodes(functionLikeDeclarationBase.typeParameters, file, sourceFile)
+        handleNode(functionLikeDeclarationBase.name, context)
+        handleNodes(functionLikeDeclarationBase.parameters, context)
+        handleNode(functionLikeDeclarationBase.body, context)
+        handleNode(functionLikeDeclarationBase.asteriskToken, context)
+        handleNode(functionLikeDeclarationBase.questionToken, context)
+        handleNode(functionLikeDeclarationBase.type, context)
+        handleNodes(functionLikeDeclarationBase.typeParameters, context)
         break
       case ts.SyntaxKind.CallSignature:
         const callSignatureDeclaration = node as ts.CallSignatureDeclaration
-        handleNode(callSignatureDeclaration.name, file, sourceFile)
-        handleNodes(callSignatureDeclaration.parameters, file, sourceFile)
-        handleNode(callSignatureDeclaration.questionToken, file, sourceFile)
-        handleNode(callSignatureDeclaration.type, file, sourceFile)
-        handleNodes(callSignatureDeclaration.typeParameters, file, sourceFile)
+        handleNode(callSignatureDeclaration.name, context)
+        handleNodes(callSignatureDeclaration.parameters, context)
+        handleNode(callSignatureDeclaration.questionToken, context)
+        handleNode(callSignatureDeclaration.type, context)
+        handleNodes(callSignatureDeclaration.typeParameters, context)
         break
       case ts.SyntaxKind.ConstructSignature:
         const constructSignatureDeclaration = node as ts.ConstructSignatureDeclaration
-        handleNode(constructSignatureDeclaration.name, file, sourceFile)
-        handleNodes(constructSignatureDeclaration.parameters, file, sourceFile)
-        handleNode(constructSignatureDeclaration.questionToken, file, sourceFile)
-        handleNode(constructSignatureDeclaration.type, file, sourceFile)
-        handleNodes(constructSignatureDeclaration.typeParameters, file, sourceFile)
+        handleNode(constructSignatureDeclaration.name, context)
+        handleNodes(constructSignatureDeclaration.parameters, context)
+        handleNode(constructSignatureDeclaration.questionToken, context)
+        handleNode(constructSignatureDeclaration.type, context)
+        handleNodes(constructSignatureDeclaration.typeParameters, context)
         break
       case ts.SyntaxKind.IndexSignature:
         const indexSignatureDeclaration = node as ts.IndexSignatureDeclaration
-        handleNode(indexSignatureDeclaration.name, file, sourceFile)
-        handleNodes(indexSignatureDeclaration.parameters, file, sourceFile)
-        handleNode(indexSignatureDeclaration.questionToken, file, sourceFile)
-        handleNode(indexSignatureDeclaration.type, file, sourceFile)
-        handleNodes(indexSignatureDeclaration.typeParameters, file, sourceFile)
+        handleNode(indexSignatureDeclaration.name, context)
+        handleNodes(indexSignatureDeclaration.parameters, context)
+        handleNode(indexSignatureDeclaration.questionToken, context)
+        handleNode(indexSignatureDeclaration.type, context)
+        handleNodes(indexSignatureDeclaration.typeParameters, context)
         break
       case ts.SyntaxKind.TypePredicate:
         const typePredicateNode = node as ts.TypePredicateNode
-        handleNode(typePredicateNode.type, file, sourceFile)
-        handleNode(typePredicateNode.parameterName, file, sourceFile)
+        handleNode(typePredicateNode.type, context)
+        handleNode(typePredicateNode.parameterName, context)
         break
       case ts.SyntaxKind.TypeReference:
         const typeReferenceNode = node as ts.TypeReferenceNode
-        handleNode(typeReferenceNode.typeName, file, sourceFile)
-        handleNodes(typeReferenceNode.typeArguments, file, sourceFile)
+        handleNode(typeReferenceNode.typeName, context)
+        handleNodes(typeReferenceNode.typeArguments, context)
         break
       case ts.SyntaxKind.FunctionType:
       case ts.SyntaxKind.ConstructorType:
         const signatureDeclarationBase = node as ts.SignatureDeclarationBase
-        handleNode(signatureDeclarationBase.name, file, sourceFile)
-        handleNodes(signatureDeclarationBase.parameters, file, sourceFile)
-        handleNode(signatureDeclarationBase.type, file, sourceFile)
-        handleNodes(signatureDeclarationBase.typeParameters, file, sourceFile)
+        handleNode(signatureDeclarationBase.name, context)
+        handleNodes(signatureDeclarationBase.parameters, context)
+        handleNode(signatureDeclarationBase.type, context)
+        handleNodes(signatureDeclarationBase.typeParameters, context)
         break
       case ts.SyntaxKind.TypeQuery:
         const typeQueryNode = node as ts.TypeQueryNode
-        handleNode(typeQueryNode.exprName, file, sourceFile)
+        handleNode(typeQueryNode.exprName, context)
         break
       case ts.SyntaxKind.TypeLiteral:
         const typeLiteralNode = node as ts.TypeLiteralNode
-        handleNodes(typeLiteralNode.members, file, sourceFile)
+        handleNodes(typeLiteralNode.members, context)
         break
       case ts.SyntaxKind.ArrayType:
         const arrayTypeNode = node as ts.ArrayTypeNode
-        handleNode(arrayTypeNode.elementType, file, sourceFile)
+        handleNode(arrayTypeNode.elementType, context)
         break
       case ts.SyntaxKind.TupleType:
         const tupleTypeNode = node as ts.TupleTypeNode
-        handleNodes(tupleTypeNode.elementTypes, file, sourceFile)
+        handleNodes(tupleTypeNode.elementTypes, context)
         break
       case ts.SyntaxKind.OptionalType:
         break
       case ts.SyntaxKind.RestType:
         const restTypeNode = node as ts.RestTypeNode
-        handleNode(restTypeNode.type, file, sourceFile)
+        handleNode(restTypeNode.type, context)
         break
       case ts.SyntaxKind.UnionType:
         const unionTypeNode = node as ts.UnionTypeNode
-        handleNodes(unionTypeNode.types, file, sourceFile)
+        handleNodes(unionTypeNode.types, context)
         break
       case ts.SyntaxKind.IntersectionType:
         const intersectionTypeNode = node as ts.IntersectionTypeNode
-        handleNodes(intersectionTypeNode.types, file, sourceFile)
+        handleNodes(intersectionTypeNode.types, context)
         break
       case ts.SyntaxKind.ConditionalType:
         const conditionalTypeNode = node as ts.ConditionalTypeNode
-        handleNode(conditionalTypeNode.checkType, file, sourceFile)
-        handleNode(conditionalTypeNode.extendsType, file, sourceFile)
-        handleNode(conditionalTypeNode.trueType, file, sourceFile)
-        handleNode(conditionalTypeNode.falseType, file, sourceFile)
+        handleNode(conditionalTypeNode.checkType, context)
+        handleNode(conditionalTypeNode.extendsType, context)
+        handleNode(conditionalTypeNode.trueType, context)
+        handleNode(conditionalTypeNode.falseType, context)
         break
       case ts.SyntaxKind.InferType:
         const inferTypeNode = node as ts.InferTypeNode
-        handleNode(inferTypeNode.typeParameter, file, sourceFile)
+        handleNode(inferTypeNode.typeParameter, context)
         break
       case ts.SyntaxKind.ParenthesizedType:
         const parenthesizedTypeNode = node as ts.ParenthesizedTypeNode
-        handleNode(parenthesizedTypeNode.type, file, sourceFile)
+        handleNode(parenthesizedTypeNode.type, context)
         break
       case ts.SyntaxKind.ThisType:
         break
       case ts.SyntaxKind.TypeOperator:
         const typeOperatorNode = node as ts.TypeOperatorNode
-        handleNode(typeOperatorNode.type, file, sourceFile)
+        handleNode(typeOperatorNode.type, context)
         break
       case ts.SyntaxKind.IndexedAccessType:
         const indexedAccessTypeNode = node as ts.IndexedAccessTypeNode
-        handleNode(indexedAccessTypeNode.objectType, file, sourceFile)
-        handleNode(indexedAccessTypeNode.indexType, file, sourceFile)
+        handleNode(indexedAccessTypeNode.objectType, context)
+        handleNode(indexedAccessTypeNode.indexType, context)
         break
       case ts.SyntaxKind.MappedType:
         const mappedTypeNode = node as ts.MappedTypeNode
-        handleNode(mappedTypeNode.questionToken, file, sourceFile)
-        handleNode(mappedTypeNode.readonlyToken, file, sourceFile)
-        handleNode(mappedTypeNode.type, file, sourceFile)
-        handleNode(mappedTypeNode.typeParameter, file, sourceFile)
+        handleNode(mappedTypeNode.questionToken, context)
+        handleNode(mappedTypeNode.readonlyToken, context)
+        handleNode(mappedTypeNode.type, context)
+        handleNode(mappedTypeNode.typeParameter, context)
         break
       case ts.SyntaxKind.LiteralType:
         const literalTypeNode = node as ts.LiteralTypeNode
-        handleNode(literalTypeNode.literal, file, sourceFile)
+        handleNode(literalTypeNode.literal, context)
         break
       case ts.SyntaxKind.ImportType:
         const importTypeNode = node as ts.ImportTypeNode
-        handleNode(importTypeNode.qualifier, file, sourceFile)
-        handleNode(importTypeNode.argument, file, sourceFile)
-        handleNodes(importTypeNode.typeArguments, file, sourceFile)
+        handleNode(importTypeNode.qualifier, context)
+        handleNode(importTypeNode.argument, context)
+        handleNodes(importTypeNode.typeArguments, context)
         break
       case ts.SyntaxKind.ObjectBindingPattern:
         const objectBindingPattern = node as ts.ObjectBindingPattern
-        handleNodes(objectBindingPattern.elements, file, sourceFile)
+        handleNodes(objectBindingPattern.elements, context)
         break
       case ts.SyntaxKind.ArrayBindingPattern:
         const arrayBindingPattern = node as ts.ArrayBindingPattern
-        handleNodes(arrayBindingPattern.elements, file, sourceFile)
+        handleNodes(arrayBindingPattern.elements, context)
         break
       case ts.SyntaxKind.BindingElement:
         const bindingElement = node as ts.BindingElement
-        handleNode(bindingElement.name, file, sourceFile)
-        handleNode(bindingElement.initializer, file, sourceFile)
-        handleNode(bindingElement.dotDotDotToken, file, sourceFile)
-        handleNode(bindingElement.propertyName, file, sourceFile)
+        handleNode(bindingElement.name, context)
+        handleNode(bindingElement.initializer, context)
+        handleNode(bindingElement.dotDotDotToken, context)
+        handleNode(bindingElement.propertyName, context)
         break
       case ts.SyntaxKind.ArrayLiteralExpression:
         const arrayLiteralExpression = node as ts.ArrayLiteralExpression
-        handleNodes(arrayLiteralExpression.elements, file, sourceFile)
+        handleNodes(arrayLiteralExpression.elements, context)
         break
       case ts.SyntaxKind.ObjectLiteralExpression:
         const objectLiteralExpression = node as ts.ObjectLiteralExpression
-        handleNodes(objectLiteralExpression.properties, file, sourceFile)
+        handleNodes(objectLiteralExpression.properties, context)
         break
       case ts.SyntaxKind.PropertyAccessExpression:
         const propertyAccessExpression = node as ts.PropertyAccessExpression
-        handleNode(propertyAccessExpression.expression, file, sourceFile)
-        handleNode(propertyAccessExpression.name, file, sourceFile)
+        handleNode(propertyAccessExpression.expression, context)
+        handleNode(propertyAccessExpression.name, context)
         break
       case ts.SyntaxKind.ElementAccessExpression:
         const elementAccessExpression = node as ts.ElementAccessExpression
-        handleNode(elementAccessExpression.expression, file, sourceFile)
-        handleNode(elementAccessExpression.argumentExpression, file, sourceFile)
+        handleNode(elementAccessExpression.expression, context)
+        handleNode(elementAccessExpression.argumentExpression, context)
         break
       case ts.SyntaxKind.CallExpression:
         const callExpression = node as ts.CallExpression
-        handleNode(callExpression.expression, file, sourceFile)
-        handleNodes(callExpression.arguments, file, sourceFile)
-        handleNodes(callExpression.typeArguments, file, sourceFile)
+        handleNode(callExpression.expression, context)
+        handleNodes(callExpression.arguments, context)
+        handleNodes(callExpression.typeArguments, context)
         break
       case ts.SyntaxKind.NewExpression:
         const newExpression = node as ts.NewExpression
-        handleNode(newExpression.expression, file, sourceFile)
-        handleNodes(newExpression.arguments, file, sourceFile)
-        handleNodes(newExpression.typeArguments, file, sourceFile)
+        handleNode(newExpression.expression, context)
+        handleNodes(newExpression.arguments, context)
+        handleNodes(newExpression.typeArguments, context)
         break
       case ts.SyntaxKind.TaggedTemplateExpression:
         const taggedTemplateExpression = node as ts.TaggedTemplateExpression
-        handleNode(taggedTemplateExpression.template, file, sourceFile)
+        handleNode(taggedTemplateExpression.template, context)
         break
       case ts.SyntaxKind.TypeAssertionExpression:
         const typeAssertion = node as ts.TypeAssertion
-        handleNode(typeAssertion.expression, file, sourceFile)
-        handleNode(typeAssertion.type, file, sourceFile)
+        handleNode(typeAssertion.expression, context)
+        handleNode(typeAssertion.type, context)
         break
       case ts.SyntaxKind.ParenthesizedExpression:
         const parenthesizedExpression = node as ts.ParenthesizedExpression
-        handleNode(parenthesizedExpression.expression, file, sourceFile)
+        handleNode(parenthesizedExpression.expression, context)
         break
       case ts.SyntaxKind.FunctionExpression:
         const functionExpression = node as ts.FunctionExpression
-        handleNode(functionExpression.name, file, sourceFile)
-        handleNodes(functionExpression.parameters, file, sourceFile)
-        handleNode(functionExpression.body, file, sourceFile)
-        handleNode(functionExpression.asteriskToken, file, sourceFile)
-        handleNode(functionExpression.questionToken, file, sourceFile)
-        handleNode(functionExpression.type, file, sourceFile)
-        handleNodes(functionExpression.typeParameters, file, sourceFile)
+        handleNode(functionExpression.name, context)
+        handleNodes(functionExpression.parameters, context)
+        handleNode(functionExpression.body, context)
+        handleNode(functionExpression.asteriskToken, context)
+        handleNode(functionExpression.questionToken, context)
+        handleNode(functionExpression.type, context)
+        handleNodes(functionExpression.typeParameters, context)
         break
       case ts.SyntaxKind.ArrowFunction:
         const arrowFunction = node as ts.ArrowFunction
-        handleNode(arrowFunction.name, file, sourceFile)
-        handleNodes(arrowFunction.parameters, file, sourceFile)
-        handleNode(arrowFunction.body, file, sourceFile)
-        handleNode(arrowFunction.asteriskToken, file, sourceFile)
-        handleNode(arrowFunction.questionToken, file, sourceFile)
-        handleNode(arrowFunction.type, file, sourceFile)
-        handleNodes(arrowFunction.typeParameters, file, sourceFile)
-        handleNode(arrowFunction.equalsGreaterThanToken, file, sourceFile)
+        handleNode(arrowFunction.name, context)
+        handleNodes(arrowFunction.parameters, context)
+        handleNode(arrowFunction.body, context)
+        handleNode(arrowFunction.asteriskToken, context)
+        handleNode(arrowFunction.questionToken, context)
+        handleNode(arrowFunction.type, context)
+        handleNodes(arrowFunction.typeParameters, context)
+        handleNode(arrowFunction.equalsGreaterThanToken, context)
         break
       case ts.SyntaxKind.DeleteExpression:
         const deleteExpression = node as ts.DeleteExpression
-        handleNode(deleteExpression.expression, file, sourceFile)
+        handleNode(deleteExpression.expression, context)
         break
       case ts.SyntaxKind.TypeOfExpression:
         const typeOfExpression = node as ts.TypeOfExpression
-        handleNode(typeOfExpression.expression, file, sourceFile)
+        handleNode(typeOfExpression.expression, context)
         break
       case ts.SyntaxKind.VoidExpression:
         const voidExpression = node as ts.VoidExpression
-        handleNode(voidExpression.expression, file, sourceFile)
+        handleNode(voidExpression.expression, context)
         break
       case ts.SyntaxKind.AwaitExpression:
         const awaitExpression = node as ts.AwaitExpression
-        handleNode(awaitExpression.expression, file, sourceFile)
+        handleNode(awaitExpression.expression, context)
         break
       case ts.SyntaxKind.PrefixUnaryExpression:
         const prefixUnaryExpression = node as ts.PrefixUnaryExpression
-        handleNode(prefixUnaryExpression.operand, file, sourceFile)
+        handleNode(prefixUnaryExpression.operand, context)
         break
       case ts.SyntaxKind.PostfixUnaryExpression:
         const postfixUnaryExpression = node as ts.PostfixUnaryExpression
-        handleNode(postfixUnaryExpression.operand, file, sourceFile)
+        handleNode(postfixUnaryExpression.operand, context)
         break
       case ts.SyntaxKind.BinaryExpression:
         const binaryExpression = node as ts.BinaryExpression
-        handleNode(binaryExpression.left, file, sourceFile)
-        handleNode(binaryExpression.right, file, sourceFile)
-        handleNode(binaryExpression.operatorToken, file, sourceFile)
+        handleNode(binaryExpression.left, context)
+        handleNode(binaryExpression.right, context)
+        handleNode(binaryExpression.operatorToken, context)
         break
       case ts.SyntaxKind.ConditionalExpression:
         const conditionalExpression = node as ts.ConditionalExpression
-        handleNode(conditionalExpression.condition, file, sourceFile)
-        handleNode(conditionalExpression.colonToken, file, sourceFile)
-        handleNode(conditionalExpression.questionToken, file, sourceFile)
-        handleNode(conditionalExpression.whenTrue, file, sourceFile)
-        handleNode(conditionalExpression.whenFalse, file, sourceFile)
+        handleNode(conditionalExpression.condition, context)
+        handleNode(conditionalExpression.colonToken, context)
+        handleNode(conditionalExpression.questionToken, context)
+        handleNode(conditionalExpression.whenTrue, context)
+        handleNode(conditionalExpression.whenFalse, context)
         break
       case ts.SyntaxKind.TemplateExpression:
         const templateExpression = node as ts.TemplateExpression
-        handleNodes(templateExpression.templateSpans, file, sourceFile)
+        handleNodes(templateExpression.templateSpans, context)
         break
       case ts.SyntaxKind.YieldExpression:
         const yieldExpression = node as ts.YieldExpression
-        handleNode(yieldExpression.asteriskToken, file, sourceFile)
-        handleNode(yieldExpression.expression, file, sourceFile)
+        handleNode(yieldExpression.asteriskToken, context)
+        handleNode(yieldExpression.expression, context)
         break
       case ts.SyntaxKind.SpreadElement:
         const spreadElement = node as ts.SpreadElement
-        handleNode(spreadElement.expression, file, sourceFile)
+        handleNode(spreadElement.expression, context)
         break
       case ts.SyntaxKind.ClassExpression:
         const classExpression = node as ts.ClassExpression
-        handleNode(classExpression.name, file, sourceFile)
-        handleNodes(classExpression.typeParameters, file, sourceFile)
-        handleNodes(classExpression.members, file, sourceFile)
-        handleNodes(classExpression.heritageClauses, file, sourceFile)
+        handleNode(classExpression.name, context)
+        handleNodes(classExpression.typeParameters, context)
+        handleNodes(classExpression.members, context)
+        handleNodes(classExpression.heritageClauses, context)
         break
       case ts.SyntaxKind.OmittedExpression:
         break
       case ts.SyntaxKind.ExpressionWithTypeArguments:
         const expressionWithTypeArguments = node as ts.ExpressionWithTypeArguments
-        handleNode(expressionWithTypeArguments.expression, file, sourceFile)
-        handleNodes(expressionWithTypeArguments.typeArguments, file, sourceFile)
+        handleNode(expressionWithTypeArguments.expression, context)
+        handleNodes(expressionWithTypeArguments.typeArguments, context)
         break
       case ts.SyntaxKind.AsExpression:
         const asExpression = node as ts.AsExpression
-        handleNode(asExpression.expression, file, sourceFile)
-        handleNode(asExpression.type, file, sourceFile)
+        handleNode(asExpression.expression, context)
+        handleNode(asExpression.type, context)
         break
       case ts.SyntaxKind.NonNullExpression:
         const nonNullExpression = node as ts.NonNullExpression
-        handleNode(nonNullExpression.expression, file, sourceFile)
+        handleNode(nonNullExpression.expression, context)
         break
       case ts.SyntaxKind.MetaProperty:
         const metaProperty = node as ts.MetaProperty
-        handleNode(metaProperty.name, file, sourceFile)
+        handleNode(metaProperty.name, context)
         break
       case ts.SyntaxKind.TemplateSpan:
         const templateSpan = node as ts.TemplateSpan
-        handleNode(templateSpan.expression, file, sourceFile)
-        handleNode(templateSpan.literal, file, sourceFile)
+        handleNode(templateSpan.expression, context)
+        handleNode(templateSpan.literal, context)
         break
       case ts.SyntaxKind.SemicolonClassElement:
         const semicolonClassElement = node as ts.SemicolonClassElement
-        handleNode(semicolonClassElement.name, file, sourceFile)
+        handleNode(semicolonClassElement.name, context)
         break
       case ts.SyntaxKind.Block:
         const block = node as ts.Block
-        handleNodes(block.statements, file, sourceFile)
+        handleNodes(block.statements, context)
         break
       case ts.SyntaxKind.VariableStatement:
         const variableStatement = node as ts.VariableStatement
-        handleNode(variableStatement.declarationList, file, sourceFile)
+        handleNode(variableStatement.declarationList, context)
         break
       case ts.SyntaxKind.EmptyStatement:
         break
       case ts.SyntaxKind.ExpressionStatement:
         const expressionStatement = node as ts.ExpressionStatement
-        handleNode(expressionStatement.expression, file, sourceFile)
+        handleNode(expressionStatement.expression, context)
         break
       case ts.SyntaxKind.IfStatement:
         const ifStatement = node as ts.IfStatement
-        handleNode(ifStatement.expression, file, sourceFile)
-        handleNode(ifStatement.thenStatement, file, sourceFile)
-        handleNode(ifStatement.elseStatement, file, sourceFile)
+        handleNode(ifStatement.expression, context)
+        handleNode(ifStatement.thenStatement, context)
+        handleNode(ifStatement.elseStatement, context)
         break
       case ts.SyntaxKind.DoStatement:
         const doStatement = node as ts.DoStatement
-        handleNode(doStatement.expression, file, sourceFile)
-        handleNode(doStatement.statement, file, sourceFile)
+        handleNode(doStatement.expression, context)
+        handleNode(doStatement.statement, context)
         break
       case ts.SyntaxKind.WhileStatement:
         const whileStatement = node as ts.WhileStatement
-        handleNode(whileStatement.statement, file, sourceFile)
-        handleNode(whileStatement.expression, file, sourceFile)
+        handleNode(whileStatement.statement, context)
+        handleNode(whileStatement.expression, context)
         break
       case ts.SyntaxKind.ForStatement:
         const forStatement = node as ts.ForStatement
-        handleNode(forStatement.initializer, file, sourceFile)
-        handleNode(forStatement.condition, file, sourceFile)
-        handleNode(forStatement.incrementor, file, sourceFile)
-        handleNode(forStatement.statement, file, sourceFile)
+        handleNode(forStatement.initializer, context)
+        handleNode(forStatement.condition, context)
+        handleNode(forStatement.incrementor, context)
+        handleNode(forStatement.statement, context)
         break
       case ts.SyntaxKind.ForInStatement:
         const forInStatement = node as ts.ForInStatement
-        handleNode(forInStatement.initializer, file, sourceFile)
-        handleNode(forInStatement.expression, file, sourceFile)
-        handleNode(forInStatement.statement, file, sourceFile)
+        handleNode(forInStatement.initializer, context)
+        handleNode(forInStatement.expression, context)
+        handleNode(forInStatement.statement, context)
         break
       case ts.SyntaxKind.ForOfStatement:
         const forOfStatement = node as ts.ForOfStatement
-        handleNode(forOfStatement.initializer, file, sourceFile)
-        handleNode(forOfStatement.statement, file, sourceFile)
-        handleNode(forOfStatement.expression, file, sourceFile)
-        handleNode(forOfStatement.awaitModifier, file, sourceFile)
+        handleNode(forOfStatement.initializer, context)
+        handleNode(forOfStatement.statement, context)
+        handleNode(forOfStatement.expression, context)
+        handleNode(forOfStatement.awaitModifier, context)
         break
       case ts.SyntaxKind.ContinueStatement:
       case ts.SyntaxKind.BreakStatement:
         break
       case ts.SyntaxKind.ReturnStatement:
         const returnStatement = node as ts.ReturnStatement
-        handleNode(returnStatement.expression, file, sourceFile)
+        handleNode(returnStatement.expression, context)
         break
       case ts.SyntaxKind.WithStatement:
         const withStatement = node as ts.WithStatement
-        handleNode(withStatement.expression, file, sourceFile)
-        handleNode(withStatement.statement, file, sourceFile)
+        handleNode(withStatement.expression, context)
+        handleNode(withStatement.statement, context)
         break
       case ts.SyntaxKind.SwitchStatement:
         const switchStatement = node as ts.SwitchStatement
-        handleNode(switchStatement.expression, file, sourceFile)
-        handleNode(switchStatement.caseBlock, file, sourceFile)
+        handleNode(switchStatement.expression, context)
+        handleNode(switchStatement.caseBlock, context)
         break
       case ts.SyntaxKind.LabeledStatement:
         const labeledStatement = node as ts.LabeledStatement
-        handleNode(labeledStatement.label, file, sourceFile)
-        handleNode(labeledStatement.statement, file, sourceFile)
+        handleNode(labeledStatement.label, context)
+        handleNode(labeledStatement.statement, context)
         break
       case ts.SyntaxKind.ThrowStatement:
         const throwStatement = node as ts.ThrowStatement
-        handleNode(throwStatement.expression, file, sourceFile)
+        handleNode(throwStatement.expression, context)
         break
       case ts.SyntaxKind.TryStatement:
         const tryStatement = node as ts.TryStatement
-        handleNode(tryStatement.tryBlock, file, sourceFile)
-        handleNode(tryStatement.catchClause, file, sourceFile)
-        handleNode(tryStatement.finallyBlock, file, sourceFile)
+        handleNode(tryStatement.tryBlock, context)
+        handleNode(tryStatement.catchClause, context)
+        handleNode(tryStatement.finallyBlock, context)
         break
       case ts.SyntaxKind.DebuggerStatement:
         break
       case ts.SyntaxKind.VariableDeclaration:
         const variableDeclaration = node as ts.VariableDeclaration
-        handleNode(variableDeclaration.name, file, sourceFile)
-        handleNode(variableDeclaration.type, file, sourceFile)
-        handleNode(variableDeclaration.initializer, file, sourceFile)
+        handleNode(variableDeclaration.name, context)
+        handleNode(variableDeclaration.type, context)
+        handleNode(variableDeclaration.initializer, context)
         break
       case ts.SyntaxKind.VariableDeclarationList:
         const declarationList = node as ts.VariableDeclarationList
-        handleNodes(declarationList.declarations, file, sourceFile)
+        handleNodes(declarationList.declarations, context)
         break
       case ts.SyntaxKind.FunctionDeclaration:
         const functionDeclaration = node as ts.FunctionDeclaration
-        handleNode(functionDeclaration.name, file, sourceFile)
-        handleNodes(functionDeclaration.parameters, file, sourceFile)
-        handleNode(functionDeclaration.body, file, sourceFile)
-        handleNode(functionDeclaration.asteriskToken, file, sourceFile)
-        handleNode(functionDeclaration.questionToken, file, sourceFile)
-        handleNode(functionDeclaration.type, file, sourceFile)
-        handleNodes(functionDeclaration.typeParameters, file, sourceFile)
+        handleNode(functionDeclaration.name, context)
+        handleNodes(functionDeclaration.parameters, context)
+        handleNode(functionDeclaration.body, context)
+        handleNode(functionDeclaration.asteriskToken, context)
+        handleNode(functionDeclaration.questionToken, context)
+        handleNode(functionDeclaration.type, context)
+        handleNodes(functionDeclaration.typeParameters, context)
         break
       case ts.SyntaxKind.ClassDeclaration:
         const classDeclaration = node as ts.ClassDeclaration
-        handleNode(classDeclaration.name, file, sourceFile)
-        handleNodes(classDeclaration.members, file, sourceFile)
-        handleNodes(classDeclaration.typeParameters, file, sourceFile)
-        handleNodes(classDeclaration.heritageClauses, file, sourceFile)
+        handleNode(classDeclaration.name, context)
+        handleNodes(classDeclaration.members, context)
+        handleNodes(classDeclaration.typeParameters, context)
+        handleNodes(classDeclaration.heritageClauses, context)
         break
       case ts.SyntaxKind.InterfaceDeclaration:
         const interfaceDeclaration = node as ts.InterfaceDeclaration
-        handleNode(interfaceDeclaration.name, file, sourceFile)
-        handleNodes(interfaceDeclaration.members, file, sourceFile)
-        handleNodes(interfaceDeclaration.typeParameters, file, sourceFile)
-        handleNodes(interfaceDeclaration.heritageClauses, file, sourceFile)
+        handleNode(interfaceDeclaration.name, context)
+        handleNodes(interfaceDeclaration.members, context)
+        handleNodes(interfaceDeclaration.typeParameters, context)
+        handleNodes(interfaceDeclaration.heritageClauses, context)
         break
       case ts.SyntaxKind.TypeAliasDeclaration:
         const typeAliasDeclaration = node as ts.TypeAliasDeclaration
-        handleNode(typeAliasDeclaration.name, file, sourceFile)
-        handleNode(typeAliasDeclaration.type, file, sourceFile)
-        handleNodes(typeAliasDeclaration.typeParameters, file, sourceFile)
+        handleNode(typeAliasDeclaration.name, context)
+        handleNode(typeAliasDeclaration.type, context)
+        handleNodes(typeAliasDeclaration.typeParameters, context)
         break
       case ts.SyntaxKind.EnumDeclaration:
         const enumDeclaration = node as ts.EnumDeclaration
-        handleNode(enumDeclaration.name, file, sourceFile)
-        handleNodes(enumDeclaration.members, file, sourceFile)
+        handleNode(enumDeclaration.name, context)
+        handleNodes(enumDeclaration.members, context)
         break
       case ts.SyntaxKind.ModuleDeclaration:
         const moduleDeclaration = node as ts.ModuleDeclaration
-        handleNode(moduleDeclaration.name, file, sourceFile)
-        handleNode(moduleDeclaration.body, file, sourceFile)
+        handleNode(moduleDeclaration.name, context)
+        handleNode(moduleDeclaration.body, context)
         break
       case ts.SyntaxKind.ModuleBlock:
         const moduleBlock = node as ts.ModuleBlock
-        handleNodes(moduleBlock.statements, file, sourceFile)
+        handleNodes(moduleBlock.statements, context)
         break
       case ts.SyntaxKind.CaseBlock:
         const caseBlock = node as ts.CaseBlock
-        handleNodes(caseBlock.clauses, file, sourceFile)
+        handleNodes(caseBlock.clauses, context)
         break
       case ts.SyntaxKind.NamespaceExportDeclaration:
         const namespaceExportDeclaration = node as ts.NamespaceExportDeclaration
-        handleNode(namespaceExportDeclaration.name, file, sourceFile)
+        handleNode(namespaceExportDeclaration.name, context)
         break
       case ts.SyntaxKind.ImportEqualsDeclaration:
         const importEqualsDeclaration = node as ts.ImportEqualsDeclaration
-        handleNode(importEqualsDeclaration.name, file, sourceFile)
-        handleNode(importEqualsDeclaration.moduleReference, file, sourceFile)
+        handleNode(importEqualsDeclaration.name, context)
+        handleNode(importEqualsDeclaration.moduleReference, context)
         break
       case ts.SyntaxKind.ImportDeclaration:
         const importDeclaration = node as ts.ImportDeclaration
-        handleNode(importDeclaration.importClause, file, sourceFile)
-        handleNode(importDeclaration.moduleSpecifier, file, sourceFile)
+        handleNode(importDeclaration.importClause, context)
+        handleNode(importDeclaration.moduleSpecifier, context)
         break
       case ts.SyntaxKind.ImportClause:
         const importClause = node as ts.ImportClause
-        handleNode(importClause.name, file, sourceFile)
-        handleNode(importClause.namedBindings, file, sourceFile)
+        handleNode(importClause.name, context)
+        handleNode(importClause.namedBindings, context)
         break
       case ts.SyntaxKind.NamespaceImport:
         const namespaceImport = node as ts.NamespaceImport
-        handleNode(namespaceImport.name, file, sourceFile)
+        handleNode(namespaceImport.name, context)
         break
       case ts.SyntaxKind.NamedImports:
         const namedImports = node as ts.NamedImports
-        handleNodes(namedImports.elements, file, sourceFile)
+        handleNodes(namedImports.elements, context)
         break
       case ts.SyntaxKind.ImportSpecifier:
         const importSpecifier = node as ts.ImportSpecifier
-        handleNode(importSpecifier.name, file, sourceFile)
-        handleNode(importSpecifier.propertyName, file, sourceFile)
+        handleNode(importSpecifier.name, context)
+        handleNode(importSpecifier.propertyName, context)
         break
       case ts.SyntaxKind.ExportAssignment:
         const exportAssignment = node as ts.ExportAssignment
-        handleNode(exportAssignment.name, file, sourceFile)
-        handleNode(exportAssignment.expression, file, sourceFile)
+        handleNode(exportAssignment.name, context)
+        handleNode(exportAssignment.expression, context)
         break
       case ts.SyntaxKind.ExportDeclaration:
         const exportDeclaration = node as ts.ExportDeclaration
-        handleNode(exportDeclaration.exportClause, file, sourceFile)
-        handleNode(exportDeclaration.name, file, sourceFile)
-        handleNode(exportDeclaration.moduleSpecifier, file, sourceFile)
+        handleNode(exportDeclaration.exportClause, context)
+        handleNode(exportDeclaration.name, context)
+        handleNode(exportDeclaration.moduleSpecifier, context)
         break
       case ts.SyntaxKind.NamedExports:
         const namedExports = node as ts.NamedExports
-        handleNodes(namedExports.elements, file, sourceFile)
+        handleNodes(namedExports.elements, context)
         break
       case ts.SyntaxKind.ExportSpecifier:
         const exportSpecifier = node as ts.ExportSpecifier
-        handleNode(exportSpecifier.name, file, sourceFile)
-        handleNode(exportSpecifier.propertyName, file, sourceFile)
+        handleNode(exportSpecifier.name, context)
+        handleNode(exportSpecifier.propertyName, context)
         break
       case ts.SyntaxKind.MissingDeclaration:
         const missingDeclaration = node as ts.MissingDeclaration
-        handleNode(missingDeclaration.name, file, sourceFile)
+        handleNode(missingDeclaration.name, context)
         break
       case ts.SyntaxKind.ExternalModuleReference:
         const externalModuleReference = node as ts.ExternalModuleReference
-        handleNode(externalModuleReference.expression, file, sourceFile)
+        handleNode(externalModuleReference.expression, context)
         break
       case ts.SyntaxKind.JsxElement:
         const jsxElement = node as ts.JsxElement
-        handleNode(jsxElement.openingElement, file, sourceFile)
-        handleNode(jsxElement.closingElement, file, sourceFile)
-        handleNodes(jsxElement.children, file, sourceFile)
+        handleNode(jsxElement.openingElement, context)
+        handleNode(jsxElement.closingElement, context)
+        handleNodes(jsxElement.children, context)
         break
       case ts.SyntaxKind.JsxSelfClosingElement:
         const jsxSelfClosingElement = node as ts.JsxSelfClosingElement
-        handleNode(jsxSelfClosingElement.attributes, file, sourceFile)
-        handleNode(jsxSelfClosingElement.tagName, file, sourceFile)
+        handleNode(jsxSelfClosingElement.attributes, context)
+        handleNode(jsxSelfClosingElement.tagName, context)
         break
       case ts.SyntaxKind.JsxOpeningElement:
         const jsxOpeningElement = node as ts.JsxOpeningElement
-        handleNode(jsxOpeningElement.attributes, file, sourceFile)
-        handleNode(jsxOpeningElement.tagName, file, sourceFile)
+        handleNode(jsxOpeningElement.attributes, context)
+        handleNode(jsxOpeningElement.tagName, context)
         break
       case ts.SyntaxKind.JsxClosingElement:
         const jsxClosingElement = node as ts.JsxClosingElement
-        handleNode(jsxClosingElement.tagName, file, sourceFile)
+        handleNode(jsxClosingElement.tagName, context)
         break
       case ts.SyntaxKind.JsxFragment:
         const jsxFragment = node as ts.JsxFragment
-        handleNode(jsxFragment.openingFragment, file, sourceFile)
-        handleNode(jsxFragment.closingFragment, file, sourceFile)
-        handleNodes(jsxFragment.children, file, sourceFile)
+        handleNode(jsxFragment.openingFragment, context)
+        handleNode(jsxFragment.closingFragment, context)
+        handleNodes(jsxFragment.children, context)
         break
       case ts.SyntaxKind.JsxOpeningFragment:
         break
@@ -817,58 +830,58 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
         break
       case ts.SyntaxKind.JsxAttribute:
         const jsxAttribute = node as ts.JsxAttribute
-        handleNode(jsxAttribute.name, file, sourceFile)
-        handleNode(jsxAttribute.initializer, file, sourceFile)
+        handleNode(jsxAttribute.name, context)
+        handleNode(jsxAttribute.initializer, context)
         break
       case ts.SyntaxKind.JsxAttributes:
         const jsxAttributes = node as ts.JsxAttributes
-        handleNodes(jsxAttributes.properties, file, sourceFile)
+        handleNodes(jsxAttributes.properties, context)
         break
       case ts.SyntaxKind.JsxSpreadAttribute:
         const jsxSpreadAttribute = node as ts.JsxSpreadAttribute
-        handleNode(jsxSpreadAttribute.name, file, sourceFile)
-        handleNode(jsxSpreadAttribute.expression, file, sourceFile)
+        handleNode(jsxSpreadAttribute.name, context)
+        handleNode(jsxSpreadAttribute.expression, context)
         break
       case ts.SyntaxKind.JsxExpression:
         const jsxExpression = node as ts.JsxExpression
-        handleNode(jsxExpression.dotDotDotToken, file, sourceFile)
-        handleNode(jsxExpression.expression, file, sourceFile)
+        handleNode(jsxExpression.dotDotDotToken, context)
+        handleNode(jsxExpression.expression, context)
         break
       case ts.SyntaxKind.CaseClause:
         const caseClause = node as ts.CaseClause
-        handleNodes(caseClause.statements, file, sourceFile)
-        handleNode(caseClause.expression, file, sourceFile)
+        handleNodes(caseClause.statements, context)
+        handleNode(caseClause.expression, context)
         break
       case ts.SyntaxKind.DefaultClause:
         const defaultClause = node as ts.DefaultClause
-        handleNodes(defaultClause.statements, file, sourceFile)
+        handleNodes(defaultClause.statements, context)
         break
       case ts.SyntaxKind.HeritageClause:
         const heritageClause = node as ts.HeritageClause
-        handleNodes(heritageClause.types, file, sourceFile)
+        handleNodes(heritageClause.types, context)
         break
       case ts.SyntaxKind.CatchClause:
         const catchClause = node as ts.CatchClause
-        handleNode(catchClause.variableDeclaration, file, sourceFile)
-        handleNode(catchClause.block, file, sourceFile)
+        handleNode(catchClause.variableDeclaration, context)
+        handleNode(catchClause.block, context)
         break
       case ts.SyntaxKind.PropertyAssignment:
         const propertyAssignmentExpression = node as ts.PropertyAssignment
-        handleNode(propertyAssignmentExpression.name, file, sourceFile)
-        handleNode(propertyAssignmentExpression.questionToken, file, sourceFile)
-        handleNode(propertyAssignmentExpression.initializer, file, sourceFile)
+        handleNode(propertyAssignmentExpression.name, context)
+        handleNode(propertyAssignmentExpression.questionToken, context)
+        handleNode(propertyAssignmentExpression.initializer, context)
         break
       case ts.SyntaxKind.ShorthandPropertyAssignment:
         const shorthandPropertyAssignment = node as ts.ShorthandPropertyAssignment
-        handleNode(shorthandPropertyAssignment.name, file, sourceFile)
-        handleNode(shorthandPropertyAssignment.questionToken, file, sourceFile)
-        handleNode(shorthandPropertyAssignment.equalsToken, file, sourceFile)
-        handleNode(shorthandPropertyAssignment.objectAssignmentInitializer, file, sourceFile)
+        handleNode(shorthandPropertyAssignment.name, context)
+        handleNode(shorthandPropertyAssignment.questionToken, context)
+        handleNode(shorthandPropertyAssignment.equalsToken, context)
+        handleNode(shorthandPropertyAssignment.objectAssignmentInitializer, context)
         break
       case ts.SyntaxKind.SpreadAssignment:
         const spreadAssignment = node as ts.SpreadAssignment
-        handleNode(spreadAssignment.name, file, sourceFile)
-        handleNode(spreadAssignment.expression, file, sourceFile)
+        handleNode(spreadAssignment.name, context)
+        handleNode(spreadAssignment.expression, context)
         break
       case ts.SyntaxKind.EnumMember:
       case ts.SyntaxKind.SourceFile:
@@ -905,32 +918,133 @@ export async function lint(project: string, detail: boolean, debug: boolean, fil
     }
   }
 
+  const allFiles: string[] = []
+  const sourceFileInfos: SourceFileInfo[] = []
+  const typeCheckResult = await readCache(enableCache)
   for (const sourceFile of program.getSourceFiles()) {
     let file = sourceFile.fileName
     if (!file.includes('node_modules') && (!files || files.includes(file))) {
       file = path.relative(process.cwd(), file)
-      utils.forEachComment(sourceFile, (_, comment) => {
-        const commentText = comment.kind === ts.SyntaxKind.SingleLineCommentTrivia
-          ? sourceFile.text.substring(comment.pos + 2, comment.end).trim()
-          : sourceFile.text.substring(comment.pos + 2, comment.end - 2).trim()
-        if (commentText.includes('type-coverage:ignore-next-line')) {
-          if (!ingoreMap[file]) {
-            ingoreMap[file] = new Set()
-          }
-          const line = ts.getLineAndCharacterOfPosition(sourceFile, comment.pos).line
-          ingoreMap[file].add(line + 1)
-        } else if (commentText.includes('type-coverage:ignore-line')) {
-          if (!ingoreMap[file]) {
-            ingoreMap[file] = new Set()
-          }
-          const line = ts.getLineAndCharacterOfPosition(sourceFile, comment.pos).line
-          ingoreMap[file].add(line)
-        }
-      })
-      sourceFile.forEachChild(node => {
-        handleNode(node, file, sourceFile)
+      allFiles.push(file)
+      const hash = enableCache ? calculateHash((await readFileAsync(file)).toString()) : ''
+      const cache = typeCheckResult.cache.find((c) => c.file === file && c.hash === hash)
+      sourceFileInfos.push({
+        file,
+        sourceFile,
+        hash,
+        cache
       })
     }
+  }
+
+  const dependencies: [string, string][] = []
+  if (enableCache) {
+    for (const { sourceFile, file } of sourceFileInfos) {
+      sourceFile.forEachChild(node => {
+        let source: string | undefined
+        if (node.kind === ts.SyntaxKind.ImportEqualsDeclaration) {
+          source = (node as ts.ImportEqualsDeclaration).name.text
+        } else if (node.kind === ts.SyntaxKind.ImportDeclaration) {
+          source = ((node as ts.ImportDeclaration).moduleSpecifier as ts.Identifier).text
+        }
+        if (source
+          && (source.startsWith('.') || source.startsWith('/'))
+          && !source.endsWith('.json')
+          && !source.endsWith('.node')
+        ) {
+          const resolveResult = resolveImport(path.relative(process.cwd(), path.resolve(path.dirname(file), source)), allFiles)
+          dependencies.push([file, resolveResult])
+        }
+      })
+    }
+  }
+
+  function clearCacheOfDependencies(sourceFileInfo: SourceFileInfo) {
+    for (const dependency of dependencies) {
+      if (dependency[1] === sourceFileInfo.file) {
+        const dependentSourceFileInfo = sourceFileInfos.find((s) => s.file === dependency[0])
+        if (dependentSourceFileInfo && dependentSourceFileInfo.cache) {
+          dependentSourceFileInfo.cache = undefined
+          clearCacheOfDependencies(dependentSourceFileInfo)
+        }
+      }
+    }
+  }
+
+  if (enableCache) {
+    for (const sourceFileInfo of sourceFileInfos) {
+      if (!sourceFileInfo.cache) {
+        clearCacheOfDependencies(sourceFileInfo)
+      }
+    }
+  }
+
+  let correctCount = 0
+  let totalCount = 0
+  let anys: AnyInfo[] = []
+  for (const { sourceFile, file, hash, cache } of sourceFileInfos) {
+    if (cache) {
+      correctCount += cache.correctCount
+      totalCount += cache.totalCount
+      anys.push(...cache.anys)
+      continue
+    }
+
+    const context: FileContext = {
+      file,
+      sourceFile,
+      typeCheckResult: {
+        correctCount: 0,
+        totalCount: 0,
+        anys: []
+      }
+    }
+
+    utils.forEachComment(sourceFile, (_, comment) => {
+      const commentText = comment.kind === ts.SyntaxKind.SingleLineCommentTrivia
+        ? sourceFile.text.substring(comment.pos + 2, comment.end).trim()
+        : sourceFile.text.substring(comment.pos + 2, comment.end - 2).trim()
+      if (commentText.includes('type-coverage:ignore-next-line')) {
+        if (!ingoreMap[file]) {
+          ingoreMap[file] = new Set()
+        }
+        const line = ts.getLineAndCharacterOfPosition(sourceFile, comment.pos).line
+        ingoreMap[file].add(line + 1)
+      } else if (commentText.includes('type-coverage:ignore-line')) {
+        if (!ingoreMap[file]) {
+          ingoreMap[file] = new Set()
+        }
+        const line = ts.getLineAndCharacterOfPosition(sourceFile, comment.pos).line
+        ingoreMap[file].add(line)
+      }
+    })
+    sourceFile.forEachChild(node => {
+      handleNode(node, context)
+    })
+
+    correctCount += context.typeCheckResult.correctCount
+    totalCount += context.typeCheckResult.totalCount
+    anys.push(...context.typeCheckResult.anys)
+    if (enableCache) {
+      const resultCache = typeCheckResult.cache.find((c) => c.file === file)
+      if (resultCache) {
+        resultCache.hash = hash
+        resultCache.correctCount = context.typeCheckResult.correctCount
+        resultCache.totalCount = context.typeCheckResult.totalCount
+        resultCache.anys = context.typeCheckResult.anys
+      } else {
+        typeCheckResult.cache.push({
+          file,
+          hash,
+          ...context.typeCheckResult
+        })
+      }
+    }
+  }
+
+  if (enableCache) {
+    await mkdirIfmissing()
+    await writeFileAsync(path.resolve(dirName, 'result.json'), JSON.stringify(typeCheckResult, null, 2))
   }
 
   return { correctCount, totalCount, anys, program }
@@ -947,4 +1061,80 @@ function typeIsStrictAny(type: ts.Type, strict: boolean): boolean {
     }
   }
   return false
+}
+
+function calculateHash(str: string): string {
+  return crypto.createHash('sha256').update(str).digest('hex')
+}
+
+const dirName = '.type-coverage'
+
+function statAsync(p: string) {
+  return new Promise<fs.Stats | undefined>((resolve) => {
+    fs.stat(p, (err, stats) => {
+      if (err) {
+        resolve(undefined)
+      } else {
+        resolve(stats)
+      }
+    })
+  })
+}
+
+async function mkdirIfmissing() {
+  const stats = await statAsync(dirName)
+  if (!stats) {
+    await mkdirAsync(dirName)
+  }
+}
+
+async function readCache(enableCache: boolean) {
+  if (!enableCache) {
+    return {
+      cache: []
+    }
+  }
+  const filepath = path.resolve(dirName, 'result.json')
+  const stats = await statAsync(filepath)
+  if (stats && stats.isFile()) {
+    const text = (await readFileAsync(filepath)).toString()
+    return JSON.parse(text) as TypeCheckResult
+  }
+  return {
+    cache: []
+  }
+}
+
+function resolveImport(moduleName: string, allFiles: string[]) {
+  let resolveResult = moduleName + '.ts'
+  if (allFiles.includes(resolveResult)) {
+    return resolveResult
+  }
+
+  resolveResult = moduleName + '.tsx'
+  if (allFiles.includes(resolveResult)) {
+    return resolveResult
+  }
+
+  resolveResult = moduleName + '.d.ts'
+  if (allFiles.includes(resolveResult)) {
+    return resolveResult
+  }
+
+  resolveResult = path.resolve(moduleName, 'index.ts')
+  if (allFiles.includes(resolveResult)) {
+    return resolveResult
+  }
+
+  resolveResult = path.resolve(moduleName, 'index.tsx')
+  if (allFiles.includes(resolveResult)) {
+    return resolveResult
+  }
+
+  resolveResult = path.resolve(moduleName, 'index.d.ts')
+  if (allFiles.includes(resolveResult)) {
+    return resolveResult
+  }
+
+  return moduleName
 }

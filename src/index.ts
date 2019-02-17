@@ -26,7 +26,15 @@ async function executeCommandLine() {
 
   suppressError = argv.suppressError
 
-  const { correctCount, totalCount, anys } = await lint(argv.p || argv.project || '.', true, argv.debug, undefined, undefined, argv.strict)
+  const { correctCount, totalCount, anys } = await lint(
+    argv.p || argv.project || '.',
+    true,
+    argv.debug,
+    undefined,
+    undefined,
+    argv.strict,
+    argv.cache
+  )
   const percent = Math.round(10000 * correctCount / totalCount) / 100
   const atLeast = await getAtLeast(argv)
   const failed = atLeast && percent < atLeast
