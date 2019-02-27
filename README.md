@@ -24,12 +24,22 @@ run `type-coverage`
 
 name | type | description
 --- | --- | ---
--p, --project | string? | show where is the `tsconfig.json`
---detail | boolean? | show detail
---at-least | number? | fail if coverage rate < this value
---debug | boolean? | show debug info
---strict | boolean? | if the identifiers' type arguments exist and contain at least one `any`, like `any[]`, `ReadonlyArray<any>`, `Promise<any>`, `Foo<number, any>`, it will be considered as `any` too; also, future minor release may introduce stricter type check in this mode, which may lower the code coverage
---cache | boolean? | save and reuse type check result of files that is unchanged and independent of changed files in `.type-coverage` directory, to improve speed
+`-p`, `--project` | string? | tell the CLI where is the `tsconfig.json`
+`--detail` | boolean? | show detail
+`--at-least` | number? | fail if coverage rate < this value
+`--debug` | boolean? | show debug info
+`--strict` | boolean? | [strict mode](#strict-mode)
+`--cache` | boolean? | [enable cache](#enable-cache)
+
+### strict mode
+
+If the identifiers' type arguments exist and contain at least one `any`, like `any[]`, `ReadonlyArray<any>`, `Promise<any>`, `Foo<number, any>`, it will be considered as `any` too
+
+Also, future minor release may introduce stricter type check in this mode, which may lower the code coverage
+
+### enable cache
+
+save and reuse type check result of files that is unchanged and independent of changed files in `.type-coverage` directory, to improve speed
 
 ## config in package.json
 
