@@ -2,7 +2,7 @@
 
 A CLI tool to check type coverage for typescript code
 
-This tool will check type of all identifiers, `the code coverage` = `the count of identifiers whose type is not any` / `the total count of identifiers`, the higher, the better.
+This tool will check type of all identifiers, `the type coverage rate` = `the count of identifiers whose type is not any` / `the total count of identifiers`, the higher, the better.
 
 [![Dependency Status](https://david-dm.org/plantain-00/type-coverage.svg)](https://david-dm.org/plantain-00/type-coverage)
 [![devDependency Status](https://david-dm.org/plantain-00/type-coverage/dev-status.svg)](https://david-dm.org/plantain-00/type-coverage#info=devDependencies)
@@ -35,7 +35,7 @@ name | type | description
 
 If the identifiers' type arguments exist and contain at least one `any`, like `any[]`, `ReadonlyArray<any>`, `Promise<any>`, `Foo<number, any>`, it will be considered as `any` too
 
-Also, future minor release may introduce stricter type check in this mode, which may lower the code coverage
+Also, future minor release may introduce stricter type check in this mode, which may lower the type coverage rate
 
 ### enable cache
 
@@ -64,7 +64,7 @@ try {
 
 <https://marketplace.visualstudio.com/items?itemName=york-yao.vscode-type-coverage>
 
-## add dynamic badges of type coverage
+## add dynamic badges of type coverage rate
 
 Use your own project url:
 
