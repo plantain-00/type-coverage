@@ -85,7 +85,7 @@ export function lint(
   enableCache = false
 ): Promise<{
   correctCount: number
-  totalCount: numbe
+  totalCount: number
   anys: {
     file: string
     line: number
