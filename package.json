@@ -1,6 +1,6 @@
 {
   "name": "type-coverage",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "A CLI tool to check type coverage for typescript code",
   "main": "dist/core.js",
   "types": "dist/core.d.ts",
