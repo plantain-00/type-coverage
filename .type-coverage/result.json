@@ -1,154 +1,131 @@
 {
-  "cache": [
-    {
-      "file": "src/tsconfig.ts",
-      "hash": "fc8d4b90399fc8a6e3ba8c2801b446c5f59d79aa77eced68d7417cde80bb573c",
+  "cache": {
+    "src/tsconfig.ts": {
+      "hash": "f2a57da880ef82f3802357e3e784ab3a11c06dc8",
       "correctCount": 197,
       "totalCount": 198,
       "anys": [
         {
-          "file": "src/tsconfig.ts",
           "line": 42,
           "character": 19,
           "text": "config"
         }
       ]
     },
-    {
-      "file": "src/interfaces.ts",
-      "hash": "1a1b784436429d54601217e3a15e275ba25c575cc709e62cd2226534654d6424",
-      "correctCount": 42,
-      "totalCount": 42,
+    "src/interfaces.ts": {
+      "hash": "8148a2398fd296027e0685617bbe40552a53975d",
+      "correctCount": 44,
+      "totalCount": 44,
       "anys": []
     },
-    {
-      "file": "src/core.ts",
-      "hash": "445157d9776da1c35b9244e0460c35069576e7dd40e6d77b0f39a8be8003a905",
-      "correctCount": 218,
-      "totalCount": 218,
-      "anys": []
-    },
-    {
-      "file": "src/index.ts",
-      "hash": "b545f5d190bd03e3da596574b57783b05c661e9e8f9d2c675dd40cafe75a3d01",
-      "correctCount": 134,
-      "totalCount": 145,
+    "src/checker.ts": {
+      "hash": "fc598a81318c5a6a321b8f481d603b27454b442c",
+      "correctCount": 2634,
+      "totalCount": 2636,
       "anys": [
         {
-          "file": "src/index.ts",
-          "line": 20,
-          "character": 36,
-          "text": "v"
-        },
-        {
-          "file": "src/index.ts",
-          "line": 20,
-          "character": 46,
-          "text": "version"
-        },
-        {
-          "file": "src/index.ts",
-          "line": 26,
-          "character": 23,
-          "text": "suppressError"
-        },
-        {
-          "file": "src/index.ts",
-          "line": 29,
-          "character": 9,
-          "text": "p"
-        },
-        {
-          "file": "src/index.ts",
-          "line": 29,
-          "character": 19,
-          "text": "project"
-        },
-        {
-          "file": "src/index.ts",
-          "line": 31,
-          "character": 9,
-          "text": "debug"
-        },
-        {
-          "file": "src/index.ts",
-          "line": 34,
-          "character": 9,
-          "text": "strict"
-        },
-        {
-          "file": "src/index.ts",
-          "line": 35,
-          "character": 9,
-          "text": "cache"
-        },
-        {
-          "file": "src/index.ts",
-          "line": 40,
-          "character": 11,
-          "text": "detail"
-        },
-        {
-          "file": "src/index.ts",
-          "line": 73,
-          "character": 6,
-          "text": "error"
-        },
-        {
-          "file": "src/index.ts",
-          "line": 76,
-          "character": 16,
-          "text": "error"
-        }
-      ]
-    },
-    {
-      "file": "src/lib.d.ts",
-      "hash": "e93a9c18c2131c7fe28d759988aa31e44a2eea14e7e84104036a42ccc325c949",
-      "correctCount": 1,
-      "totalCount": 1,
-      "anys": []
-    },
-    {
-      "file": "src/checker.ts",
-      "hash": "5736e9697235fca3531d8368040031b4d7f0ca2313e26131c7494bcf19cf8083",
-      "correctCount": 2635,
-      "totalCount": 2637,
-      "anys": [
-        {
-          "file": "src/checker.ts",
           "line": 21,
           "character": 152,
           "text": "intrinsicName"
         },
         {
-          "file": "src/checker.ts",
           "line": 42,
           "character": 25,
           "text": "intrinsicName"
         }
       ]
     },
-    {
-      "file": "src/dependencies.ts",
-      "hash": "1be35397008f244b1bf101c993472f97a9b8372ba7e84a2ee00a24d69fc361e8",
+    "src/dependencies.ts": {
+      "hash": "0a369c18020a01196f8e5cab9a7bf1b38e1cb669",
       "correctCount": 140,
       "totalCount": 140,
       "anys": []
     },
-    {
-      "file": "src/ignore.ts",
-      "hash": "5d3da5714d147d38b972894ecf83e04aac6af2caadd6c8df2f5cc615f3490080",
+    "src/ignore.ts": {
+      "hash": "ba489c29dd2cad7b5375f2819a49b2809bb8779e",
       "correctCount": 74,
       "totalCount": 74,
       "anys": []
     },
-    {
-      "file": "src/cache.ts",
-      "hash": "c6d8a915dddfcc29cba4b9633a6530a34077626c4cbd93aa554abf77944dc637",
-      "correctCount": 90,
-      "totalCount": 90,
+    "src/cache.ts": {
+      "hash": "8ff65e5859ffb69974319bb63a599a1dbd4f9506",
+      "correctCount": 101,
+      "totalCount": 101,
+      "anys": []
+    },
+    "src/core.ts": {
+      "hash": "245ee919a07db928793efa29983d52a1702e5f0e",
+      "correctCount": 220,
+      "totalCount": 220,
+      "anys": []
+    },
+    "src/index.ts": {
+      "hash": "a261a5eaa4bde81f7afce7265526efad8454b32f",
+      "correctCount": 134,
+      "totalCount": 145,
+      "anys": [
+        {
+          "line": 20,
+          "character": 36,
+          "text": "v"
+        },
+        {
+          "line": 20,
+          "character": 46,
+          "text": "version"
+        },
+        {
+          "line": 26,
+          "character": 23,
+          "text": "suppressError"
+        },
+        {
+          "line": 29,
+          "character": 9,
+          "text": "p"
+        },
+        {
+          "line": 29,
+          "character": 19,
+          "text": "project"
+        },
+        {
+          "line": 31,
+          "character": 9,
+          "text": "debug"
+        },
+        {
+          "line": 34,
+          "character": 9,
+          "text": "strict"
+        },
+        {
+          "line": 35,
+          "character": 9,
+          "text": "cache"
+        },
+        {
+          "line": 40,
+          "character": 11,
+          "text": "detail"
+        },
+        {
+          "line": 73,
+          "character": 6,
+          "text": "error"
+        },
+        {
+          "line": 76,
+          "character": 16,
+          "text": "error"
+        }
+      ]
+    },
+    "src/lib.d.ts": {
+      "hash": "fadc7978a4bb193f869db0272ce19e1d20228eb6",
+      "correctCount": 1,
+      "totalCount": 1,
       "anys": []
     }
-  ]
+  }
 }

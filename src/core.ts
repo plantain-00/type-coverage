@@ -40,12 +40,12 @@ export async function lint(
       file = path.relative(process.cwd(), file)
       allFiles.push(file)
       const hash = await getFileHash(file, enableCache)
-      const cache = typeCheckResult.cache.find((c) => c.file === file && c.hash === hash)
+      const cache = typeCheckResult.cache[file]
       sourceFileInfos.push({
         file,
         sourceFile,
         hash,
-        cache
+        cache: cache && cache.hash === hash ? cache : undefined
       })
     }
   }
@@ -67,7 +67,7 @@ export async function lint(
     if (cache) {
       correctCount += cache.correctCount
       totalCount += cache.totalCount
-      anys.push(...cache.anys)
+      anys.push(...cache.anys.map((a) => ({ file, ...a })))
       continue
     }
 
@@ -93,20 +93,19 @@ export async function lint(
 
     correctCount += context.typeCheckResult.correctCount
     totalCount += context.typeCheckResult.totalCount
-    anys.push(...context.typeCheckResult.anys)
+    anys.push(...context.typeCheckResult.anys.map((a) => ({ file, ...a })))
     if (enableCache) {
-      const resultCache = typeCheckResult.cache.find((c) => c.file === file)
+      const resultCache = typeCheckResult.cache[file]
       if (resultCache) {
         resultCache.hash = hash
         resultCache.correctCount = context.typeCheckResult.correctCount
         resultCache.totalCount = context.typeCheckResult.totalCount
         resultCache.anys = context.typeCheckResult.anys
       } else {
-        typeCheckResult.cache.push({
-          file,
+        typeCheckResult.cache[file] = {
           hash,
           ...context.typeCheckResult
-        })
+        }
       }
     }
   }
