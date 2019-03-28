@@ -14,7 +14,7 @@ export async function getFileHash(file: string, enableCache: boolean) {
 }
 
 function calculateHash(str: string): string {
-  return crypto.createHash('sha256').update(str).digest('hex')
+  return crypto.createHash('sha1').update(str).digest('hex')
 }
 
 export async function saveCache(typeCheckResult: TypeCheckResult) {
@@ -43,19 +43,23 @@ async function mkdirIfmissing() {
   }
 }
 
-export async function readCache(enableCache: boolean) {
+export async function readCache(enableCache: boolean): Promise<TypeCheckResult> {
   if (!enableCache) {
     return {
-      cache: []
+      cache: {}
     }
   }
   const filepath = path.resolve(dirName, 'result.json')
   const stats = await statAsync(filepath)
   if (stats && stats.isFile()) {
     const text = (await readFileAsync(filepath)).toString()
-    return JSON.parse(text) as TypeCheckResult
+    const typeCheckResult = JSON.parse(text) as TypeCheckResult
+    if (typeCheckResult && Array.isArray(typeCheckResult.cache)) {
+      typeCheckResult.cache = {}
+    }
+    return typeCheckResult
   }
   return {
-    cache: []
+    cache: {}
   }
 }

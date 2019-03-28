@@ -10,7 +10,7 @@ function collectAny(node: ts.Node, { file, sourceFile, typeCheckResult, ingoreMa
   if (debug) {
     console.log(`type === any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
   } else if (detail) {
-    typeCheckResult.anys.push({ file, line, character, text: node.getText(sourceFile) })
+    typeCheckResult.anys.push({ line, character, text: node.getText(sourceFile) })
   }
   return true
 }

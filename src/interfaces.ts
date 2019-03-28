@@ -3,11 +3,14 @@ import ts from 'typescript'
 interface FileTypeCheckResult {
   correctCount: number
   totalCount: number
-  anys: AnyInfo[]
+  anys: FileAnyInfo[]
 }
 
-export interface AnyInfo {
+export interface AnyInfo extends FileAnyInfo {
   file: string
+}
+
+interface FileAnyInfo {
   line: number
   character: number
   text: string
@@ -25,12 +28,11 @@ export interface FileContext {
 }
 
 interface TypeCheckCache extends FileTypeCheckResult {
-  file: string
   hash: string
 }
 
 export interface TypeCheckResult {
-  cache: TypeCheckCache[]
+  cache: { [file: string]: TypeCheckCache }
 }
 
 export interface SourceFileInfo {
