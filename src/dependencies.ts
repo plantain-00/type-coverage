@@ -3,7 +3,7 @@ import * as path from 'path'
 
 import { SourceFileInfo } from './interfaces'
 
-export function collectDependencies(sourceFileInfos: SourceFileInfo[], allFiles: {[file: string]: boolean}) {
+export function collectDependencies(sourceFileInfos: SourceFileInfo[], allFiles: Set<string>) {
   const dependencies: [string, string][] = []
   for (const { sourceFile, file } of sourceFileInfos) {
     sourceFile.forEachChild(node => {
@@ -26,34 +26,34 @@ export function collectDependencies(sourceFileInfos: SourceFileInfo[], allFiles:
   return dependencies
 }
 
-function resolveImport(moduleName: string, allFiles: {[file: string]: boolean}) {
+function resolveImport(moduleName: string, allFiles: Set<string>) {
   let resolveResult = moduleName + '.ts'
-  if (allFiles[resolveResult]) {
+  if (allFiles.has(resolveResult)) {
     return resolveResult
   }
 
   resolveResult = moduleName + '.tsx'
-  if (allFiles[resolveResult]) {
+  if (allFiles.has(resolveResult)) {
     return resolveResult
   }
 
   resolveResult = moduleName + '.d.ts'
-  if (allFiles[resolveResult]) {
+  if (allFiles.has(resolveResult)) {
     return resolveResult
   }
 
   resolveResult = path.resolve(moduleName, 'index.ts')
-  if (allFiles[resolveResult]) {
+  if (allFiles.has(resolveResult)) {
     return resolveResult
   }
 
   resolveResult = path.resolve(moduleName, 'index.tsx')
-  if (allFiles[resolveResult]) {
+  if (allFiles.has(resolveResult)) {
     return resolveResult
   }
 
   resolveResult = path.resolve(moduleName, 'index.d.ts')
-  if (allFiles[resolveResult]) {
+  if (allFiles.has(resolveResult)) {
     return resolveResult
   }
 

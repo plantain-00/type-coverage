@@ -31,14 +31,14 @@ export async function lint(
   const program = ts.createProgram(rootNames, compilerOptions, undefined, oldProgram)
   const checker = program.getTypeChecker()
 
-  const allFiles = {} as {[file: string]: boolean}
+  const allFiles = new Set<string>()
   const sourceFileInfos: SourceFileInfo[] = []
   const typeCheckResult = await readCache(enableCache)
   for (const sourceFile of program.getSourceFiles()) {
     let file = sourceFile.fileName
     if (!file.includes('node_modules') && (!files || files.includes(file))) {
       file = path.relative(process.cwd(), file)
-      allFiles[file] = true
+      allFiles.add(file)
       const hash = await getFileHash(file, enableCache)
       const cache = typeCheckResult.cache[file]
       sourceFileInfos.push({
