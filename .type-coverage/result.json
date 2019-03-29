@@ -36,9 +36,9 @@
       ]
     },
     "src/dependencies.ts": {
-      "hash": "0a369c18020a01196f8e5cab9a7bf1b38e1cb669",
-      "correctCount": 140,
-      "totalCount": 140,
+      "hash": "0e342763afb3bc5d34b75c26d2e91aeda50451e4",
+      "correctCount": 142,
+      "totalCount": 142,
       "anys": []
     },
     "src/ignore.ts": {
@@ -54,9 +54,9 @@
       "anys": []
     },
     "src/core.ts": {
-      "hash": "245ee919a07db928793efa29983d52a1702e5f0e",
-      "correctCount": 220,
-      "totalCount": 220,
+      "hash": "eee1df4d1d8684b5595f7c7532f0baaa7d29603d",
+      "correctCount": 221,
+      "totalCount": 221,
       "anys": []
     },
     "src/index.ts": {
