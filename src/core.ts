@@ -16,7 +16,8 @@ export async function lint(
   files?: string[],
   oldProgram?: ts.Program,
   strict = false,
-  enableCache = false
+  enableCache = false,
+  ignoreCatch = false
 ) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
   const config = getTsConfig(configFilePath, dirname)
@@ -80,6 +81,8 @@ export async function lint(
         totalCount: 0,
         anys: []
       },
+      ignoreCatch,
+      catchVariables: {},
       debug,
       detail,
       strict,
