@@ -150,6 +150,10 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     case ts.SyntaxKind.CaretEqualsToken:
       break
     case ts.SyntaxKind.Identifier:
+      const id = node as ts.Identifier
+      if (context.catchVariables[id.escapedText as string]) {
+        return
+      }
       collectData(node, context)
       break
     case ts.SyntaxKind.BreakKeyword:
@@ -840,8 +844,24 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
       break
     case ts.SyntaxKind.CatchClause:
       const catchClause = node as ts.CatchClause
-      checkNode(catchClause.variableDeclaration, context)
-      checkNode(catchClause.block, context)
+
+      if (context.ignoreCatch) {
+        const copyContext = Object.assign({}, context)
+        copyContext.catchVariables = Object.assign({}, context.catchVariables)
+        if (catchClause.variableDeclaration) {
+          const decl = catchClause.variableDeclaration
+          if (decl.name.kind === ts.SyntaxKind.Identifier) {
+            copyContext.catchVariables[
+              decl.name.escapedText as string
+            ] = true
+          }
+        }
+
+        checkNode(catchClause.variableDeclaration, copyContext)
+      } else {
+        checkNode(catchClause.block, context)
+        checkNode(catchClause.variableDeclaration, context)
+      }
       break
     case ts.SyntaxKind.PropertyAssignment:
       const propertyAssignmentExpression = node as ts.PropertyAssignment

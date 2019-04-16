@@ -29,6 +29,7 @@ name | type | description
 `--at-least` | number? | fail if coverage rate < this value
 `--debug` | boolean? | show debug info
 `--strict` | boolean? | [strict mode](#strict-mode)
+`--ignoreCatch` | boolean? | [ignore catch](#ignore-catch)
 `--cache` | boolean? | [enable cache](#enable-cache)
 
 ### strict mode
@@ -40,6 +41,26 @@ Also, future minor release may introduce stricter type check in this mode, which
 ### enable cache
 
 save and reuse type check result of files that is unchanged and independent of changed files in `.type-coverage` directory, to improve speed
+
+### ignore catch
+
+If you want to get 100% type coverage then `try {} catch {}` is
+the largest blocked towards that.
+
+This can be fixed in typescript with [Allow type annotation on catch clause variable](https://github.com/Microsoft/TypeScript/issues/20024)
+but until then you can turn on `--ignoreCatch --at-least 100`.
+
+Your catch blocks should look like
+
+```ts
+try {
+  await ...
+} catch (anyErr) {
+  const err = <Error> anyErr
+}
+```
+
+To have the highest type coverage.
 
 ## config in package.json
 

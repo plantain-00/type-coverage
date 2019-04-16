@@ -24,6 +24,8 @@ export interface FileContext {
   detail: boolean
   strict: boolean
   checker: ts.TypeChecker
+  ignoreCatch: boolean
+  catchVariables: { [variable: string]: boolean }
   ingoreMap: { [file: string]: Set<number> }
 }
 
