@@ -13,15 +13,15 @@
       ]
     },
     "src/interfaces.ts": {
-      "hash": "8148a2398fd296027e0685617bbe40552a53975d",
-      "correctCount": 44,
-      "totalCount": 44,
+      "hash": "7715bcc147c954dce510985eb9c9b224215b0510",
+      "correctCount": 47,
+      "totalCount": 47,
       "anys": []
     },
     "src/checker.ts": {
-      "hash": "fc598a81318c5a6a321b8f481d603b27454b442c",
-      "correctCount": 2634,
-      "totalCount": 2636,
+      "hash": "fab3ea8e1cca14f219b6958a9c8f146345172824",
+      "correctCount": 2674,
+      "totalCount": 2676,
       "anys": [
         {
           "line": 21,
@@ -49,18 +49,18 @@
     },
     "src/cache.ts": {
       "hash": "8ff65e5859ffb69974319bb63a599a1dbd4f9506",
-      "correctCount": 101,
-      "totalCount": 101,
+      "correctCount": 99,
+      "totalCount": 99,
       "anys": []
     },
     "src/core.ts": {
-      "hash": "eee1df4d1d8684b5595f7c7532f0baaa7d29603d",
-      "correctCount": 221,
-      "totalCount": 221,
+      "hash": "8c86df1cc8bf52c3950c13cb4710d5c100987ce2",
+      "correctCount": 224,
+      "totalCount": 224,
       "anys": []
     },
     "src/index.ts": {
-      "hash": "a261a5eaa4bde81f7afce7265526efad8454b32f",
+      "hash": "61aab3522714d3a55baff2c3a21a2c9bb40226ff",
       "correctCount": 134,
       "totalCount": 145,
       "anys": [
@@ -105,17 +105,17 @@
           "text": "cache"
         },
         {
-          "line": 40,
+          "line": 41,
           "character": 11,
           "text": "detail"
         },
         {
-          "line": 73,
+          "line": 74,
           "character": 6,
           "text": "error"
         },
         {
-          "line": 76,
+          "line": 77,
           "character": 16,
           "text": "error"
         }

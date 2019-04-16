@@ -29,7 +29,7 @@ name | type | description
 `--at-least` | number? | fail if coverage rate < this value
 `--debug` | boolean? | show debug info
 `--strict` | boolean? | [strict mode](#strict-mode)
-`--ignoreCatch` | boolean? | [ignore catch](#ignore-catch)
+`--ignore-catch` | boolean? | [ignore catch](#ignore-catch)
 `--cache` | boolean? | [enable cache](#enable-cache)
 
 ### strict mode
@@ -48,7 +48,7 @@ If you want to get 100% type coverage then `try {} catch {}` is
 the largest blocked towards that.
 
 This can be fixed in typescript with [Allow type annotation on catch clause variable](https://github.com/Microsoft/TypeScript/issues/20024)
-but until then you can turn on `--ignoreCatch --at-least 100`.
+but until then you can turn on `--ignore-catch --at-least 100`.
 
 Your catch blocks should look like
 
@@ -103,7 +103,8 @@ export function lint(
   files?: string[],
   oldProgram?: ts.Program,
   strict = false,
-  enableCache = false
+  enableCache = false,
+  ignoreCatch = false
 ): Promise<{
   correctCount: number
   totalCount: number
