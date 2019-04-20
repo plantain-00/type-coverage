@@ -34,7 +34,8 @@ async function executeCommandLine() {
     undefined,
     argv.strict,
     argv.cache,
-    argv['ignore-catch']
+    argv['ignore-catch'],
+    argv['ignore-files']
   )
   const percent = Math.round(10000 * correctCount / totalCount) / 100
   const atLeast = await getAtLeast(argv)

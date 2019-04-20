@@ -54,15 +54,15 @@
       "anys": []
     },
     "src/core.ts": {
-      "hash": "8c86df1cc8bf52c3950c13cb4710d5c100987ce2",
-      "correctCount": 224,
-      "totalCount": 224,
+      "hash": "ca555b72f807442219aeab2e1f204885b85bf902",
+      "correctCount": 239,
+      "totalCount": 239,
       "anys": []
     },
     "src/index.ts": {
-      "hash": "61aab3522714d3a55baff2c3a21a2c9bb40226ff",
-      "correctCount": 134,
-      "totalCount": 145,
+      "hash": "b18172434b17ec4f694be9c0ff11dadc8d30fd35",
+      "correctCount": 135,
+      "totalCount": 146,
       "anys": [
         {
           "line": 20,
@@ -105,17 +105,17 @@
           "text": "cache"
         },
         {
-          "line": 41,
+          "line": 42,
           "character": 11,
           "text": "detail"
         },
         {
-          "line": 74,
+          "line": 75,
           "character": 6,
           "text": "error"
         },
         {
-          "line": 77,
+          "line": 78,
           "character": 16,
           "text": "error"
         }

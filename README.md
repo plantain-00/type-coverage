@@ -31,6 +31,7 @@ name | type | description
 `--strict` | boolean? | [strict mode](#strict-mode)
 `--ignore-catch` | boolean? | [ignore catch](#ignore-catch)
 `--cache` | boolean? | [enable cache](#enable-cache)
+`--ignore-files` | string[]? | [ignore files](#ignore-files)
 
 ### strict mode
 
@@ -61,6 +62,10 @@ try {
 ```
 
 To have the highest type coverage.
+
+### ignore files
+
+This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files "demo2/foo.ts"`
 
 ## config in package.json
 
@@ -104,7 +109,8 @@ export function lint(
   oldProgram?: ts.Program,
   strict = false,
   enableCache = false,
-  ignoreCatch = false
+  ignoreCatch = false,
+  ignoreFiles?: string | string[]
 ): Promise<{
   correctCount: number
   totalCount: number
