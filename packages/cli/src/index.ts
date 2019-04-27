@@ -4,7 +4,7 @@ import * as util from 'util'
 import * as path from 'path'
 
 import * as packageJson from '../package.json'
-import { lint } from './core'
+import { lint } from 'type-coverage-core'
 
 let suppressError = false
 const existsAsync = util.promisify(fs.exists)
@@ -28,14 +28,13 @@ async function executeCommandLine() {
 
   const { correctCount, totalCount, anys } = await lint(
     argv.p || argv.project || '.',
-    true,
-    argv.debug,
-    undefined,
-    undefined,
-    argv.strict,
-    argv.cache,
-    argv['ignore-catch'],
-    argv['ignore-files']
+    {
+      debug: argv.debug as boolean,
+      strict: argv.strict as boolean,
+      enableCache: argv.cache as boolean,
+      ignoreCatch: argv['ignore-catch'] as boolean,
+      ignoreFiles: argv['ignore-files'] as string | string[] | undefined
+    }
   )
   const percent = Math.round(10000 * correctCount / totalCount) / 100
   const atLeast = await getAtLeast(argv)

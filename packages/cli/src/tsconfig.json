@@ -1,13 +1,11 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../dist",
-    "module": "commonjs",
-    "declaration": true
+    "module": "commonjs"
   },
   "files": [
     "index.ts",
-    "core.ts",
     "lib.d.ts"
   ]
 }

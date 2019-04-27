@@ -1,6 +1,9 @@
 import ts from 'typescript'
 
-interface FileTypeCheckResult {
+/**
+ * @public
+ */
+export interface FileTypeCheckResult {
   correctCount: number
   totalCount: number
   anys: FileAnyInfo[]
@@ -16,12 +19,21 @@ interface FileAnyInfo {
   text: string
 }
 
+export interface LintOptions {
+  debug: boolean,
+  files?: string[],
+  oldProgram?: ts.Program,
+  strict: boolean,
+  enableCache: boolean,
+  ignoreCatch: boolean,
+  ignoreFiles?: string | string[]
+}
+
 export interface FileContext {
   file: string
   sourceFile: ts.SourceFile
   typeCheckResult: FileTypeCheckResult
   debug: boolean
-  detail: boolean
   strict: boolean
   checker: ts.TypeChecker
   ignoreCatch: boolean

@@ -1,9 +1,9 @@
 {
   "cache": {
-    "src/tsconfig.ts": {
+    "packages/core/src/tsconfig.ts": {
       "hash": "f2a57da880ef82f3802357e3e784ab3a11c06dc8",
-      "correctCount": 197,
-      "totalCount": 198,
+      "correctCount": 196,
+      "totalCount": 197,
       "anys": [
         {
           "line": 42,
@@ -12,16 +12,16 @@
         }
       ]
     },
-    "src/interfaces.ts": {
-      "hash": "7715bcc147c954dce510985eb9c9b224215b0510",
-      "correctCount": 47,
-      "totalCount": 47,
+    "packages/core/src/interfaces.ts": {
+      "hash": "cbaab643d42a0f3f5c62f4205d9eaf69cb7d865c",
+      "correctCount": 56,
+      "totalCount": 56,
       "anys": []
     },
-    "src/checker.ts": {
-      "hash": "fab3ea8e1cca14f219b6958a9c8f146345172824",
-      "correctCount": 2674,
-      "totalCount": 2676,
+    "packages/core/src/checker.ts": {
+      "hash": "a4ac9d3781c610631520a22418792d4efe77b2fd",
+      "correctCount": 2672,
+      "totalCount": 2674,
       "anys": [
         {
           "line": 21,
@@ -35,34 +35,58 @@
         }
       ]
     },
-    "src/dependencies.ts": {
+    "packages/core/src/dependencies.ts": {
       "hash": "0e342763afb3bc5d34b75c26d2e91aeda50451e4",
       "correctCount": 142,
       "totalCount": 142,
       "anys": []
     },
-    "src/ignore.ts": {
+    "packages/core/src/ignore.ts": {
       "hash": "ba489c29dd2cad7b5375f2819a49b2809bb8779e",
       "correctCount": 74,
       "totalCount": 74,
       "anys": []
     },
-    "src/cache.ts": {
+    "packages/core/src/cache.ts": {
       "hash": "8ff65e5859ffb69974319bb63a599a1dbd4f9506",
       "correctCount": 99,
       "totalCount": 99,
       "anys": []
     },
-    "src/core.ts": {
-      "hash": "ca555b72f807442219aeab2e1f204885b85bf902",
-      "correctCount": 239,
-      "totalCount": 239,
+    "packages/core/src/core.ts": {
+      "hash": "5f90af2aa7b164480b1d771741a698c15ba900d4",
+      "correctCount": 265,
+      "totalCount": 265,
       "anys": []
     },
-    "src/index.ts": {
-      "hash": "b18172434b17ec4f694be9c0ff11dadc8d30fd35",
-      "correctCount": 135,
-      "totalCount": 146,
+    "packages/core/src/index.ts": {
+      "hash": "09914ee50bb44d3ff9ddc02796f69e01813c5cb6",
+      "correctCount": 0,
+      "totalCount": 0,
+      "anys": []
+    },
+    "packages/core/dist/interfaces.d.ts": {
+      "hash": "119b971bcc974f20998a05accac8d882aeff3d01",
+      "correctCount": 56,
+      "totalCount": 56,
+      "anys": []
+    },
+    "packages/core/dist/core.d.ts": {
+      "hash": "fe46e26fec872deaa7e54bd484fa1f5a7e3f0dce",
+      "correctCount": 16,
+      "totalCount": 16,
+      "anys": []
+    },
+    "packages/core/dist/index.d.ts": {
+      "hash": "4adc0ace687826e586d83196f3ceb55314b2d377",
+      "correctCount": 0,
+      "totalCount": 0,
+      "anys": []
+    },
+    "packages/cli/src/index.ts": {
+      "hash": "55caaec0669173d3d747a26a7118b591600efe21",
+      "correctCount": 138,
+      "totalCount": 149,
       "anys": [
         {
           "line": 20,
@@ -91,37 +115,37 @@
         },
         {
           "line": 31,
-          "character": 9,
+          "character": 18,
           "text": "debug"
         },
         {
-          "line": 34,
-          "character": 9,
+          "line": 32,
+          "character": 19,
           "text": "strict"
         },
         {
-          "line": 35,
-          "character": 9,
+          "line": 33,
+          "character": 24,
           "text": "cache"
         },
         {
-          "line": 42,
+          "line": 41,
           "character": 11,
           "text": "detail"
         },
         {
-          "line": 75,
+          "line": 74,
           "character": 6,
           "text": "error"
         },
         {
-          "line": 78,
+          "line": 77,
           "character": 16,
           "text": "error"
         }
       ]
     },
-    "src/lib.d.ts": {
+    "packages/cli/src/lib.d.ts": {
       "hash": "fadc7978a4bb193f869db0272ce19e1d20228eb6",
       "correctCount": 1,
       "totalCount": 1,
