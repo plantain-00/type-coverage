@@ -1,0 +1,21 @@
+{
+  "name": "type-coverage-core",
+  "version": "1.14.0",
+  "description": "A library to check type coverage for typescript code",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/plantain-00/type-coverage.git",
+  "author": "york yao <yaoao12306@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "glob": "7.1.3",
+    "tslib": "1",
+    "tsutils": "3"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "typescript": "2 || 3"
+  }
+}

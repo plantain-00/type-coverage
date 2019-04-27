@@ -1,11 +1,14 @@
-const tsFiles = `"src/**/*.ts" "spec/**/*.ts"`
+const tsFiles = `"packages/**/src/**/*.ts" "spec/**/*.ts"`
 const jsFiles = `"*.config.js"`
 
 module.exports = {
   build: [
-    'rimraf dist/',
-    'tsc -p src/',
-    'node dist/index.js -p src --detail --strict --cache --supressError'
+    'rimraf packages/core/dist/',
+    'tsc -p packages/core/src/',
+    'rimraf packages/cli/dist/',
+    'tsc -p packages/cli/src/',
+    'node packages/cli/dist/index.js -p packages/core/src --detail --strict --cache --supressError',
+    'node packages/cli/dist/index.js -p packages/cli/src --detail --strict --cache --supressError'
   ],
   lint: {
     ts: `tslint ${tsFiles}`,
@@ -16,7 +19,6 @@ module.exports = {
   },
   test: [
     'tsc -p spec',
-    'clean-release --config clean-run.config.js',
     'jasmine'
   ],
   fix: {

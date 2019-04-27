@@ -101,27 +101,29 @@ Use your own project url:
 ## API
 
 ```ts
-export function lint(
-  project: string,
-  detail: boolean,
+import { lint } from 'type-coverage-core'
+
+const result = await lint('.', { strict: true })
+```
+
+```ts
+export function lint(project: string, options?: Partial<LintOptions>): Promise<FileTypeCheckResult & { program: ts.Program }>
+
+export interface LintOptions {
   debug: boolean,
   files?: string[],
   oldProgram?: ts.Program,
-  strict = false,
-  enableCache = false,
-  ignoreCatch = false,
+  strict: boolean,
+  enableCache: boolean,
+  ignoreCatch: boolean,
   ignoreFiles?: string | string[]
-): Promise<{
+}
+
+export interface FileTypeCheckResult {
   correctCount: number
   totalCount: number
-  anys: {
-    file: string
-    line: number
-    character: number
-    text: string
-  }[]
-  program: ts.Program
-}>
+  anys: FileAnyInfo[]
+}
 ```
 
 ## FAQ
@@ -129,3 +131,20 @@ export function lint(
 > Q: Does this count JavaScript files?
 
 Yes, This package calls Typescript API, Typescript can parse Javascript file(with `allowJs`), then this package can too.
+
+## Changelogs
+
+### v2
+
+1. Move `typescript` from `dependencies` to `peerDependencies`
+2. Move API from package `type-coverage` to package `type-coverage-core`
+
+```ts
+// v1
+import { lint } from 'type-coverage'
+lint('.', false, false, undefined, undefined, true)
+
+// v2
+import { lint } from 'type-coverage-core'
+lint('.', { strict: true })
+```

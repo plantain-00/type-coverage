@@ -3,24 +3,18 @@ import * as path from 'path'
 import minimatch from 'minimatch'
 
 import { getTsConfigFilePath, getTsConfig, getRootNames } from './tsconfig'
-import { FileContext, AnyInfo, SourceFileInfo } from './interfaces'
+import { FileContext, AnyInfo, SourceFileInfo, LintOptions } from './interfaces'
 import { checkNode } from './checker'
 import { clearCacheOfDependencies, collectDependencies } from './dependencies'
 import { collectIgnoreMap } from './ignore'
 import { readCache, getFileHash, saveCache } from './cache'
 
+/**
+ * @public
+ */
 // tslint:disable-next-line:no-big-function cognitive-complexity
-export async function lint(
-  project: string,
-  detail: boolean,
-  debug: boolean,
-  files?: string[],
-  oldProgram?: ts.Program,
-  strict = false,
-  enableCache = false,
-  ignoreCatch = false,
-  ignoreFiles?: string | string[]
-) {
+export async function lint(project: string, options?: Partial<LintOptions>) {
+  const lintOptions = { ...defaultLintOptions, ...options }
   const { configFilePath, dirname } = getTsConfigFilePath(project)
   const config = getTsConfig(configFilePath, dirname)
 
@@ -31,26 +25,26 @@ export async function lint(
 
   const rootNames = await getRootNames(config, dirname)
 
-  const program = ts.createProgram(rootNames, compilerOptions, undefined, oldProgram)
+  const program = ts.createProgram(rootNames, compilerOptions, undefined, lintOptions.oldProgram)
   const checker = program.getTypeChecker()
 
   const allFiles = new Set<string>()
   const sourceFileInfos: SourceFileInfo[] = []
-  const typeCheckResult = await readCache(enableCache)
-  const ignoreFileGlobs = ignoreFiles
-    ? (typeof ignoreFiles === 'string'
-      ? [ignoreFiles]
-      : ignoreFiles)
+  const typeCheckResult = await readCache(lintOptions.enableCache)
+  const ignoreFileGlobs = lintOptions.ignoreFiles
+    ? (typeof lintOptions.ignoreFiles === 'string'
+      ? [lintOptions.ignoreFiles]
+      : lintOptions.ignoreFiles)
     : undefined
   for (const sourceFile of program.getSourceFiles()) {
     let file = sourceFile.fileName
-    if (!file.includes('node_modules') && (!files || files.includes(file))) {
+    if (!file.includes('node_modules') && (!lintOptions.files || lintOptions.files.includes(file))) {
       file = path.relative(process.cwd(), file)
       if (ignoreFileGlobs && ignoreFileGlobs.some((f) => minimatch(file, f))) {
         continue
       }
       allFiles.add(file)
-      const hash = await getFileHash(file, enableCache)
+      const hash = await getFileHash(file, lintOptions.enableCache)
       const cache = typeCheckResult.cache[file]
       sourceFileInfos.push({
         file,
@@ -61,7 +55,7 @@ export async function lint(
     }
   }
 
-  if (enableCache) {
+  if (lintOptions.enableCache) {
     const dependencies = collectDependencies(sourceFileInfos, allFiles)
 
     for (const sourceFileInfo of sourceFileInfos) {
@@ -91,11 +85,10 @@ export async function lint(
         totalCount: 0,
         anys: []
       },
-      ignoreCatch,
+      ignoreCatch: lintOptions.ignoreCatch,
       catchVariables: {},
-      debug,
-      detail,
-      strict,
+      debug: lintOptions.debug,
+      strict: lintOptions.strict,
       checker,
       ingoreMap
     }
@@ -107,7 +100,7 @@ export async function lint(
     correctCount += context.typeCheckResult.correctCount
     totalCount += context.typeCheckResult.totalCount
     anys.push(...context.typeCheckResult.anys.map((a) => ({ file, ...a })))
-    if (enableCache) {
+    if (lintOptions.enableCache) {
       const resultCache = typeCheckResult.cache[file]
       if (resultCache) {
         resultCache.hash = hash
@@ -123,9 +116,19 @@ export async function lint(
     }
   }
 
-  if (enableCache) {
+  if (lintOptions.enableCache) {
     await saveCache(typeCheckResult)
   }
 
   return { correctCount, totalCount, anys, program }
+}
+
+const defaultLintOptions: LintOptions = {
+  debug: false,
+  files: undefined,
+  oldProgram: undefined,
+  strict: false,
+  enableCache: false,
+  ignoreCatch: false,
+  ignoreFiles: undefined
 }

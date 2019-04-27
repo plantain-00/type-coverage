@@ -2,14 +2,14 @@ import ts from 'typescript'
 
 import { FileContext } from './interfaces'
 
-function collectAny(node: ts.Node, { file, sourceFile, typeCheckResult, ingoreMap, debug, detail }: FileContext) {
+function collectAny(node: ts.Node, { file, sourceFile, typeCheckResult, ingoreMap, debug }: FileContext) {
   const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
   if (ingoreMap[file] && ingoreMap[file].has(line)) {
     return false
   }
   if (debug) {
     console.log(`type === any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
-  } else if (detail) {
+  } else {
     typeCheckResult.anys.push({ line, character, text: node.getText(sourceFile) })
   }
   return true
