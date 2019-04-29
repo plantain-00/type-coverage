@@ -48,9 +48,9 @@
       "anys": []
     },
     "packages/core/src/cache.ts": {
-      "hash": "8ff65e5859ffb69974319bb63a599a1dbd4f9506",
-      "correctCount": 99,
-      "totalCount": 99,
+      "hash": "9a471abce6b33ccfa88e24c1e90c53671f65bc9f",
+      "correctCount": 98,
+      "totalCount": 98,
       "anys": []
     },
     "packages/core/src/core.ts": {

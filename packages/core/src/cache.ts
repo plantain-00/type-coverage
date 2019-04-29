@@ -1,7 +1,7 @@
 import * as path from 'path'
 import * as fs from 'fs'
 import { promisify } from 'util'
-import * as crypto from 'crypto'
+import { createHash } from 'crypto'
 
 import { TypeCheckResult } from './interfaces'
 
@@ -14,7 +14,7 @@ export async function getFileHash(file: string, enableCache: boolean) {
 }
 
 function calculateHash(str: string): string {
-  return crypto.createHash('sha1').update(str).digest('hex')
+  return createHash('sha1').update(str).digest('hex')
 }
 
 export async function saveCache(typeCheckResult: TypeCheckResult) {
