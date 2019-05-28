@@ -36,7 +36,7 @@ async function executeCommandLine() {
       ignoreFiles: argv['ignore-files'] as string | string[] | undefined
     }
   )
-  const percent = Math.round(10000 * correctCount / totalCount) / 100
+  const percent = Math.floor(10000 * correctCount / totalCount) / 100
   const atLeast = await getAtLeast(argv)
   const failed = atLeast && percent < atLeast
   if (argv.detail || failed) {
