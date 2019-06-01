@@ -46,7 +46,7 @@ async function executeCommandLine() {
   }
   console.log(`${correctCount} / ${totalCount} ${percent.toFixed(2)}%`)
   if (failed) {
-    throw new Error(`The type coverage rate(${percent.toFixed(2)}%) is lower than the target(${atLeast}%). \nYou can add '--detail' or use VSCode plugin to show detailed informations.`)
+    throw new Error(`The type coverage rate(${percent.toFixed(2)}%) is lower than the target(${atLeast}%).`)
   }
 }
 

@@ -86,10 +86,6 @@ try {
 }
 ```
 
-## vscode plugin
-
-<https://marketplace.visualstudio.com/items?itemName=york-yao.vscode-type-coverage>
-
 ## add dynamic badges of type coverage rate
 
 Use your own project url:
