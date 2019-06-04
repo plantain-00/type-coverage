@@ -19,7 +19,7 @@ function collectNotAny(node: ts.Node, { file, sourceFile, typeCheckResult, debug
   typeCheckResult.correctCount++
   if (debug) {
     const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
-    console.log(`type !== any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind) ${type.flags}(flag) ${(type as any).intrinsicName || ''}`)
+    console.log(`type !== any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)} ${node.kind}(kind) ${type.flags}(flag) ${(type as unknown as { intrinsicName: string }).intrinsicName || ''}`)
   }
 }
 
@@ -40,7 +40,7 @@ function collectData(node: ts.Node, context: FileContext) {
 
 function typeIsStrictAny(type: ts.Type, strict: boolean): boolean {
   if (type.flags === ts.TypeFlags.Any) {
-    return (type as any).intrinsicName === 'any'
+    return (type as unknown as { intrinsicName: string }).intrinsicName === 'any'
   }
   if (strict && type.flags === ts.TypeFlags.Object) {
     const typeArguments = (type as ts.TypeReference).typeArguments

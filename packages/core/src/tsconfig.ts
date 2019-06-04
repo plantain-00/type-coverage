@@ -21,7 +21,7 @@ export function getTsConfigFilePath(project: string) {
 
 type JsonConfig = {
   extends?: string
-  compilerOptions?: { [name: string]: any }
+  compilerOptions?: { [name: string]: unknown }
   include?: string[]
   exclude?: string[]
   files?: string[]
@@ -30,6 +30,7 @@ type JsonConfig = {
 export function getTsConfig(configFilePath: string, dirname: string): JsonConfig {
   const configResult = ts.readConfigFile(configFilePath, p => fs.readFileSync(p).toString())
   const config = configResult.error ? {
+    extends: undefined,
     compilerOptions: {
       lib: [
         'dom',

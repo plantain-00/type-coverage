@@ -1,12 +1,12 @@
 {
   "cache": {
     "packages/core/src/tsconfig.ts": {
-      "hash": "f2a57da880ef82f3802357e3e784ab3a11c06dc8",
-      "correctCount": 196,
-      "totalCount": 197,
+      "hash": "9eff38c750038c71c37aaa6ba8eda530bc3c64e4",
+      "correctCount": 198,
+      "totalCount": 199,
       "anys": [
         {
-          "line": 42,
+          "line": 43,
           "character": 19,
           "text": "config"
         }
@@ -19,21 +19,10 @@
       "anys": []
     },
     "packages/core/src/checker.ts": {
-      "hash": "a4ac9d3781c610631520a22418792d4efe77b2fd",
-      "correctCount": 2672,
-      "totalCount": 2674,
-      "anys": [
-        {
-          "line": 21,
-          "character": 152,
-          "text": "intrinsicName"
-        },
-        {
-          "line": 42,
-          "character": 25,
-          "text": "intrinsicName"
-        }
-      ]
+      "hash": "90dc12569f72a459882dadd445a9d76de624daa7",
+      "correctCount": 2676,
+      "totalCount": 2676,
+      "anys": []
     },
     "packages/core/src/dependencies.ts": {
       "hash": "0e342763afb3bc5d34b75c26d2e91aeda50451e4",
@@ -84,66 +73,10 @@
       "anys": []
     },
     "packages/cli/src/index.ts": {
-      "hash": "cf6ef2ed31d5fe6ea35e45c1f0fd2c6ff1c7cd1b",
-      "correctCount": 138,
-      "totalCount": 149,
-      "anys": [
-        {
-          "line": 20,
-          "character": 36,
-          "text": "v"
-        },
-        {
-          "line": 20,
-          "character": 46,
-          "text": "version"
-        },
-        {
-          "line": 26,
-          "character": 23,
-          "text": "suppressError"
-        },
-        {
-          "line": 29,
-          "character": 9,
-          "text": "p"
-        },
-        {
-          "line": 29,
-          "character": 19,
-          "text": "project"
-        },
-        {
-          "line": 31,
-          "character": 18,
-          "text": "debug"
-        },
-        {
-          "line": 32,
-          "character": 19,
-          "text": "strict"
-        },
-        {
-          "line": 33,
-          "character": 24,
-          "text": "cache"
-        },
-        {
-          "line": 41,
-          "character": 11,
-          "text": "detail"
-        },
-        {
-          "line": 74,
-          "character": 6,
-          "text": "error"
-        },
-        {
-          "line": 77,
-          "character": 16,
-          "text": "error"
-        }
-      ]
+      "hash": "6aff6c50ea4d769f2b307e7db8e1c92409bf6907",
+      "correctCount": 160,
+      "totalCount": 160,
+      "anys": []
     },
     "packages/cli/src/lib.d.ts": {
       "hash": "fadc7978a4bb193f869db0272ce19e1d20228eb6",

@@ -32,6 +32,6 @@
     "fix": "clean-scripts fix"
   },
   "typeCoverage": {
-    "atLeast": 95
+    "atLeast": 99.97
   }
 }

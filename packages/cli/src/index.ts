@@ -16,9 +16,9 @@ function showToolVersion() {
 
 // tslint:disable-next-line:cognitive-complexity no-big-function
 async function executeCommandLine() {
-  const argv = minimist(process.argv.slice(2), { '--': true })
+  const argv = minimist(process.argv.slice(2), { '--': true }) as unknown as ParsedArgs
 
-  const showVersion: boolean = argv.v || argv.version
+  const showVersion = argv.v || argv.version
   if (showVersion) {
     showToolVersion()
     return
@@ -29,11 +29,11 @@ async function executeCommandLine() {
   const { correctCount, totalCount, anys } = await lint(
     argv.p || argv.project || '.',
     {
-      debug: argv.debug as boolean,
-      strict: argv.strict as boolean,
-      enableCache: argv.cache as boolean,
-      ignoreCatch: argv['ignore-catch'] as boolean,
-      ignoreFiles: argv['ignore-files'] as string | string[] | undefined
+      debug: argv.debug,
+      strict: argv.strict,
+      enableCache: argv.cache,
+      ignoreCatch: argv['ignore-catch'],
+      ignoreFiles: argv['ignore-files']
     }
   )
   const percent = Math.floor(10000 * correctCount / totalCount) / 100
@@ -50,7 +50,22 @@ async function executeCommandLine() {
   }
 }
 
-async function getAtLeast(argv: minimist.ParsedArgs) {
+interface ParsedArgs {
+  v: boolean
+  version: boolean
+  suppressError: boolean
+  p: string
+  project: string
+  debug: boolean
+  strict: boolean
+  cache: boolean
+  detail: boolean
+  ['ignore-catch']: boolean
+  ['ignore-files']?: string | string[]
+  ['at-least']: number
+}
+
+async function getAtLeast(argv: ParsedArgs) {
   let atLeast: number | undefined
   const packageJsonPath = path.resolve(process.cwd(), 'package.json')
   if (await existsAsync(packageJsonPath)) {
@@ -71,7 +86,7 @@ async function getAtLeast(argv: minimist.ParsedArgs) {
 
 executeCommandLine().then(() => {
   console.log('type-coverage success.')
-}, error => { // type-coverage:ignore-line
+}, (error: Error | string) => {
   if (error instanceof Error) {
     console.log(error.message)
   } else {
