@@ -11,7 +11,7 @@
     "@types/glob": "7.1.1",
     "@types/jasmine": "3.3.13",
     "@types/minimist": "1.2.0",
-    "@types/node": "12.0.4",
+    "@types/node": "12.0.7",
     "clean-scripts": "1.11.1",
     "jasmine": "3.4.0",
     "lerna": "3.14.1",
