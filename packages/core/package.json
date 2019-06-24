@@ -8,7 +8,8 @@
   "author": "york yao <yaoao12306@outlook.com>",
   "license": "MIT",
   "dependencies": {
-    "glob": "7.1.4",
+    "glob": "7",
+    "minimatch": "3",
     "tslib": "1",
     "tsutils": "3"
   },
