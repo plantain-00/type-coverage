@@ -4002,10 +4002,10 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-no-unused-export@1.8.0-alpha.3:
-  version "1.8.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/no-unused-export/-/no-unused-export-1.8.0-alpha.3.tgz#3dd1d3aef38db45025cc0d50ea390ba7f0a1a6b0"
-  integrity sha512-ORSGXWEKOZL+JT1Z97I0gU2mH9MZMQycV+nQKXDmDuKc2b4LBVNf4bYFcRm9Sb9743P5FF6maGuTsrEt0P2QnA==
+no-unused-export@1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/no-unused-export/-/no-unused-export-1.9.0.tgz#700ac9fda704512c6e96f3a3870cca7661c5d612"
+  integrity sha512-yoPwFTo4AaQVGs9TFTo0Op9MYjjDfp920DYsneDEY8Hn+0ItuHj+EYgd8RBJ+kBtGLcKGF/seMwU/BamGlpLIQ==
   dependencies:
     glob "7.1.4"
     minimist "1.2.0"
