@@ -61,7 +61,6 @@ function checkNodes(nodes: ts.NodeArray<ts.Node> | undefined, context: FileConte
   }
 }
 
-// tslint:disable-next-line:no-big-function
 export function checkNode(node: ts.Node | undefined, context: FileContext): void {
   if (node === undefined) {
     return
@@ -75,7 +74,6 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
   checkNodes(node.decorators, context)
   checkNodes(node.modifiers, context)
 
-  // tslint:disable-next-line:max-switch-cases
   switch (node.kind) {
     case ts.SyntaxKind.Unknown:
     case ts.SyntaxKind.EndOfFileToken:

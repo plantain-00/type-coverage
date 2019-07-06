@@ -14,7 +14,6 @@ function showToolVersion() {
   console.log(`Version: ${packageJson.version}`)
 }
 
-// tslint:disable-next-line:cognitive-complexity no-big-function
 async function executeCommandLine() {
   const argv = minimist(process.argv.slice(2), { '--': true }) as unknown as ParsedArgs
 

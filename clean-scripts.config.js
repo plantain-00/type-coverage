@@ -11,7 +11,7 @@ module.exports = {
     'node packages/cli/dist/index.js -p packages/cli/src --detail --strict --cache --ignore-catch --supressError'
   ],
   lint: {
-    ts: `tslint ${tsFiles}`,
+    ts: `eslint --ext .js,.ts ${tsFiles}`,
     js: `standard ${jsFiles}`,
     export: `no-unused-export ${tsFiles} --need-module tslib --strict`,
     commit: `commitlint --from=HEAD~1`,
@@ -22,7 +22,7 @@ module.exports = {
     'jasmine'
   ],
   fix: {
-    ts: `tslint --fix ${tsFiles}`,
+    ts: `eslint --ext .js,.ts ${tsFiles} --fix`,
     js: `standard --fix ${jsFiles}`
   }
 }

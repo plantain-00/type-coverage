@@ -1,9 +1,9 @@
 {
   "cache": {
     "packages/core/src/tsconfig.ts": {
-      "hash": "9eff38c750038c71c37aaa6ba8eda530bc3c64e4",
-      "correctCount": 198,
-      "totalCount": 199,
+      "hash": "99567bbe103df6a44e07fb1b431b033b5ff1daf2",
+      "correctCount": 197,
+      "totalCount": 198,
       "anys": [
         {
           "line": 43,
@@ -19,7 +19,7 @@
       "anys": []
     },
     "packages/core/src/checker.ts": {
-      "hash": "90dc12569f72a459882dadd445a9d76de624daa7",
+      "hash": "94aabb0f30bc7b4180eb2f3d6e8a2284672421cb",
       "correctCount": 2676,
       "totalCount": 2676,
       "anys": []
@@ -43,7 +43,7 @@
       "anys": []
     },
     "packages/core/src/core.ts": {
-      "hash": "5f90af2aa7b164480b1d771741a698c15ba900d4",
+      "hash": "e87f1c967507768f20cb057a188cd466dc7fbfed",
       "correctCount": 265,
       "totalCount": 265,
       "anys": []
@@ -73,7 +73,7 @@
       "anys": []
     },
     "packages/cli/src/index.ts": {
-      "hash": "6aff6c50ea4d769f2b307e7db8e1c92409bf6907",
+      "hash": "39b0d90288726f0a7ee6474931ebf15528890c92",
       "correctCount": 160,
       "totalCount": 160,
       "anys": []

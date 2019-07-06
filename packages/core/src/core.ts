@@ -12,7 +12,6 @@ import { readCache, getFileHash, saveCache } from './cache'
 /**
  * @public
  */
-// tslint:disable-next-line:no-big-function cognitive-complexity
 export async function lint(project: string, options?: Partial<LintOptions>) {
   const lintOptions = { ...defaultLintOptions, ...options }
   const { configFilePath, dirname } = getTsConfigFilePath(project)
@@ -67,7 +66,7 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
 
   let correctCount = 0
   let totalCount = 0
-  let anys: AnyInfo[] = []
+  const anys: AnyInfo[] = []
   for (const { sourceFile, file, hash, cache } of sourceFileInfos) {
     if (cache) {
       correctCount += cache.correctCount

@@ -19,7 +19,7 @@ export function getTsConfigFilePath(project: string) {
   return { configFilePath, dirname }
 }
 
-type JsonConfig = {
+interface JsonConfig {
   extends?: string
   compilerOptions?: { [name: string]: unknown }
   include?: string[]
@@ -51,7 +51,6 @@ export function getTsConfig(configFilePath: string, dirname: string): JsonConfig
   return config
 }
 
-// tslint:disable-next-line:cognitive-complexity
 export async function getRootNames(config: JsonConfig, dirname: string) {
   const include: string[] | undefined = config.include
   const exclude: string[] | undefined = config.exclude || ['node_modules/**']
@@ -79,7 +78,7 @@ export async function getRootNames(config: JsonConfig, dirname: string) {
 }
 
 function statAsync(file: string) {
-  return new Promise<fs.Stats | undefined>((resolve, reject) => {
+  return new Promise<fs.Stats | undefined>((resolve) => {
     fs.stat(file, (error, stats) => {
       if (error) {
         resolve(undefined)
