@@ -1007,7 +1007,7 @@
     regexpp "^2.0.1"
     tsutils "^3.7.0"
 
-"@typescript-eslint/experimental-utils@1.11.0":
+"@typescript-eslint/experimental-utils@1.11.0", "@typescript-eslint/experimental-utils@^1.11.0":
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-1.11.0.tgz#594abe47091cbeabac1d6f9cfed06d0ad99eb7e3"
   integrity sha512-7LbfaqF6B8oa8cp/315zxKk8FFzosRzzhF8Kn/ZRsRsnpm7Qcu25cR/9RnAQo5utZ2KIWVgaALr+ZmcbG47ruw==
@@ -2224,6 +2224,13 @@ eslint-plugin-node@~7.0.1:
     minimatch "^3.0.4"
     resolve "^1.8.1"
     semver "^5.5.0"
+
+eslint-plugin-plantain@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-plantain/-/eslint-plugin-plantain-0.1.0.tgz#ce4c18b7b1607fe6690980f91590f4868c63f4fa"
+  integrity sha512-XJyAqL9QrkHNoIijBBU2AvptGaLw7Pdzs3OqdZv+PayNNI0b2DwIdDCsmdpXkkbvAVGEq/8WMp9fAGORqd965A==
+  dependencies:
+    "@typescript-eslint/experimental-utils" "^1.11.0"
 
 eslint-plugin-promise@~4.0.0:
   version "4.0.1"
