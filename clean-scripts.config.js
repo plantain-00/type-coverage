@@ -11,8 +11,7 @@ module.exports = {
     'node packages/cli/dist/index.js -p packages/cli/src --detail --strict --cache --ignore-catch --supressError'
   ],
   lint: {
-    ts: `eslint --ext .js,.ts ${tsFiles}`,
-    js: `standard ${jsFiles}`,
+    ts: `eslint --ext .js,.ts ${tsFiles} ${jsFiles}`,
     export: `no-unused-export ${tsFiles} --need-module tslib --strict`,
     commit: `commitlint --from=HEAD~1`,
     markdown: `markdownlint README.md`
@@ -21,8 +20,5 @@ module.exports = {
     'tsc -p spec',
     'jasmine'
   ],
-  fix: {
-    ts: `eslint --ext .js,.ts ${tsFiles} --fix`,
-    js: `standard --fix ${jsFiles}`
-  }
+  fix: `eslint --ext .js,.ts ${tsFiles} ${jsFiles} --fix`
 }

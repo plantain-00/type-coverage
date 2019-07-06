@@ -18,5 +18,8 @@
     "no-case-declarations": "off",
     "no-console": "off",
     "plantain/promise-not-await": "error"
+  },
+  "env": {
+    "node": true
   }
 }
