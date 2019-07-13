@@ -17,6 +17,7 @@
     "@typescript-eslint/no-use-before-define": "off",
     "no-case-declarations": "off",
     "no-console": "off",
+    "require-atomic-updates": "off",
     "plantain/promise-not-await": "error"
   },
   "env": {
