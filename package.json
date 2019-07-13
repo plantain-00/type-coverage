@@ -1,6 +1,5 @@
 {
   "name": "type-coverage",
-  "version": "1.14.0",
   "description": "A CLI tool to check type coverage for typescript code",
   "repository": "https://github.com/plantain-00/type-coverage.git",
   "author": "york yao <yaoao12306@outlook.com>",
@@ -11,19 +10,19 @@
     "@types/glob": "7.1.1",
     "@types/jasmine": "3.3.13",
     "@types/minimist": "1.2.0",
-    "@types/node": "12.0.12",
-    "@typescript-eslint/eslint-plugin": "^1.9.0",
-    "@typescript-eslint/parser": "^1.9.0",
+    "@types/node": "12.6.2",
+    "@typescript-eslint/eslint-plugin": "1.12.0",
+    "@typescript-eslint/parser": "1.12.0",
     "clean-scripts": "1.11.2",
-    "eslint": "5.16.0",
+    "eslint": "6.0.1",
     "eslint-config-prettier": "6.0.0",
-    "eslint-plugin-plantain": "0.1.0",
+    "eslint-plugin-plantain": "0.1.2",
     "jasmine": "3.4.0",
     "lerna": "3.15.0",
     "markdownlint-cli": "0.17.0",
     "no-unused-export": "1.9.0",
     "rimraf": "2.6.3",
-    "typescript": "3.5.2"
+    "typescript": "3.5.3"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap -- --frozen-lockfile",
