@@ -1,16 +1,22 @@
 {
   "cache": {
-    "packages/core/src/tsconfig.ts": {
-      "hash": "99567bbe103df6a44e07fb1b431b033b5ff1daf2",
-      "correctCount": 197,
-      "totalCount": 198,
-      "anys": [
-        {
-          "line": 43,
-          "character": 19,
-          "text": "config"
-        }
-      ]
+    "packages/utils/dist/tsconfig.d.ts": {
+      "hash": "f28e646098e51d7b7bc3fe40ba89d1a545bd66dc",
+      "correctCount": 8,
+      "totalCount": 8,
+      "anys": []
+    },
+    "packages/utils/dist/language-service.d.ts": {
+      "hash": "31da16d74f2d6da0dcc625dbabb3da90f0d1dd41",
+      "correctCount": 5,
+      "totalCount": 5,
+      "anys": []
+    },
+    "packages/utils/dist/index.d.ts": {
+      "hash": "75fad9cc470a5ee5b325fc4d3c9ccc56893589e2",
+      "correctCount": 0,
+      "totalCount": 0,
+      "anys": []
     },
     "packages/core/src/interfaces.ts": {
       "hash": "cbaab643d42a0f3f5c62f4205d9eaf69cb7d865c",
@@ -43,9 +49,9 @@
       "anys": []
     },
     "packages/core/src/core.ts": {
-      "hash": "e87f1c967507768f20cb057a188cd466dc7fbfed",
-      "correctCount": 265,
-      "totalCount": 265,
+      "hash": "a8ae742fc265dc691a07d941262d3bfb44dd1fd5",
+      "correctCount": 243,
+      "totalCount": 243,
       "anys": []
     },
     "packages/core/src/index.ts": {

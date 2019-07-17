@@ -3,6 +3,8 @@ const jsFiles = `"*.config.js"`
 
 module.exports = {
   build: [
+    'rimraf packages/utils/dist/',
+    'tsc -p packages/utils/src/',
     'rimraf packages/core/dist/',
     'tsc -p packages/core/src/',
     'rimraf packages/cli/dist/',

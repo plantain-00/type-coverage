@@ -3,7 +3,23 @@ import * as fs from 'fs'
 import * as path from 'path'
 import glob from 'glob'
 
-export function getTsConfigFilePath(project: string) {
+/**
+ * @public
+ */
+export async function getProjectRootNamesAndCompilerOptions(project: string) {
+  const { configFilePath, dirname } = getTsConfigFilePath(project)
+  const config = getTsConfig(configFilePath, dirname)
+
+  const { options: compilerOptions, errors } = ts.convertCompilerOptionsFromJson(config.compilerOptions, dirname)
+  if (errors && errors.length > 0) {
+    throw errors
+  }
+
+  const rootNames = await getRootNames(config, dirname)
+  return { rootNames, compilerOptions }
+}
+
+function getTsConfigFilePath(project: string) {
   let configFilePath: string
   let dirname: string
   const projectStats = fs.statSync(project)
@@ -14,7 +30,7 @@ export function getTsConfigFilePath(project: string) {
     configFilePath = project
     dirname = path.dirname(project)
   } else {
-    throw new Error("paramter '-p' should be a file or directory.")
+    throw new Error("paramter 'project' should be a file or directory.")
   }
   return { configFilePath, dirname }
 }
@@ -27,7 +43,7 @@ interface JsonConfig {
   files?: string[]
 }
 
-export function getTsConfig(configFilePath: string, dirname: string): JsonConfig {
+function getTsConfig(configFilePath: string, dirname: string): JsonConfig {
   const configResult = ts.readConfigFile(configFilePath, p => fs.readFileSync(p).toString())
   const config = configResult.error ? {
     extends: undefined,
@@ -51,7 +67,7 @@ export function getTsConfig(configFilePath: string, dirname: string): JsonConfig
   return config
 }
 
-export async function getRootNames(config: JsonConfig, dirname: string) {
+async function getRootNames(config: JsonConfig, dirname: string) {
   const include: string[] | undefined = config.include
   const exclude: string[] | undefined = config.exclude || ['node_modules/**']
 

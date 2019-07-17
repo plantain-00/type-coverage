@@ -1,8 +1,8 @@
 import ts from 'typescript'
 import * as path from 'path'
 import minimatch from 'minimatch'
+import { getProjectRootNamesAndCompilerOptions } from 'ts-lib-utils'
 
-import { getTsConfigFilePath, getTsConfig, getRootNames } from './tsconfig'
 import { FileContext, AnyInfo, SourceFileInfo, LintOptions } from './interfaces'
 import { checkNode } from './checker'
 import { clearCacheOfDependencies, collectDependencies } from './dependencies'
@@ -14,15 +14,7 @@ import { readCache, getFileHash, saveCache } from './cache'
  */
 export async function lint(project: string, options?: Partial<LintOptions>) {
   const lintOptions = { ...defaultLintOptions, ...options }
-  const { configFilePath, dirname } = getTsConfigFilePath(project)
-  const config = getTsConfig(configFilePath, dirname)
-
-  const { options: compilerOptions, errors } = ts.convertCompilerOptionsFromJson(config.compilerOptions, dirname)
-  if (errors && errors.length > 0) {
-    throw errors
-  }
-
-  const rootNames = await getRootNames(config, dirname)
+  const { rootNames, compilerOptions } = await getProjectRootNamesAndCompilerOptions(project)
 
   const program = ts.createProgram(rootNames, compilerOptions, undefined, lintOptions.oldProgram)
   const checker = program.getTypeChecker()

@@ -1,0 +1,11 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../dist",
+    "module": "commonjs",
+    "declaration": true
+  },
+  "files": [
+    "index.ts"
+  ]
+}
