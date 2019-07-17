@@ -1,6 +1,6 @@
 {
   "name": "ts-lib-utils",
-  "version": "0.0.1",
+  "version": "2.1.0",
   "description": "Utils to develop library using typescript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
