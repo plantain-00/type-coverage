@@ -13,7 +13,7 @@
       "anys": []
     },
     "packages/utils/dist/index.d.ts": {
-      "hash": "75fad9cc470a5ee5b325fc4d3c9ccc56893589e2",
+      "hash": "0fe531971c6d1cab60c0ad0227f3b3d9590bcdb1",
       "correctCount": 0,
       "totalCount": 0,
       "anys": []
@@ -88,6 +88,12 @@
       "hash": "fadc7978a4bb193f869db0272ce19e1d20228eb6",
       "correctCount": 1,
       "totalCount": 1,
+      "anys": []
+    },
+    "packages/utils/dist/js-doc.d.ts": {
+      "hash": "e7993826247b40d5a17761b0d0b493bf89b085a4",
+      "correctCount": 14,
+      "totalCount": 14,
       "anys": []
     }
   }
