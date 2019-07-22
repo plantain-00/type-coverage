@@ -72,3 +72,4 @@ service-worker.js
 #**/*-*.png
 #index.html
 *.data
+es

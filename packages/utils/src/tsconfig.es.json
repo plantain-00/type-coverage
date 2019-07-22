@@ -1,0 +1,11 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../es",
+    "target": "es5",
+    "declaration": true
+  },
+  "files": [
+    "index.ts"
+  ]
+}

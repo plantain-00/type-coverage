@@ -4,7 +4,9 @@ const jsFiles = `"*.config.js"`
 module.exports = {
   build: [
     'rimraf packages/utils/dist/',
+    'rimraf packages/utils/es/',
     'tsc -p packages/utils/src/',
+    'tsc -p packages/utils/src/tsconfig.es.json',
     'rimraf packages/core/dist/',
     'tsc -p packages/core/src/',
     'rimraf packages/cli/dist/',

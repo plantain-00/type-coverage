@@ -3,6 +3,7 @@
   "version": "2.2.0-alpha.0",
   "description": "Utils to develop library using typescript",
   "main": "dist/index.js",
+  "module": "es/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/plantain-00/type-coverage.git",
   "author": "york yao <yaoao12306@outlook.com>",
