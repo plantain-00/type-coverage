@@ -13,7 +13,8 @@
     "tslib": "1"
   },
   "files": [
-    "dist"
+    "dist",
+    "es"
   ],
   "peerDependencies": {
     "typescript": "2 || 3"
