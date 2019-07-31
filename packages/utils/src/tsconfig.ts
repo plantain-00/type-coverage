@@ -59,7 +59,22 @@ function getTsConfig(configFilePath: string, dirname: string): JsonConfig {
     }
   } : configResult.config as JsonConfig
   if (config.extends) {
-    const project = path.resolve(dirname, config.extends)
+    let project: string
+    if (path.isAbsolute(config.extends)) {
+      project = config.extends
+    } else if (config.extends === '.'
+      || config.extends === '..'
+      || config.extends.startsWith(`.${path.sep}`)
+      || config.extends.startsWith(`..${path.sep}`)
+      || config.extends.startsWith('./')
+      || config.extends.startsWith('../')
+    ) {
+      project = path.resolve(dirname, config.extends)
+    } else if (config.extends.endsWith('.json')) {
+      project = path.resolve(dirname, 'node_modules', config.extends)
+    } else {
+      project = path.resolve(dirname, 'node_modules', config.extends + '.json')
+    }
     const { configFilePath, dirname: extendsBasename } = getTsConfigFilePath(project)
     const extendsConfig = getTsConfig(configFilePath, extendsBasename)
     config.compilerOptions = { ...extendsConfig.compilerOptions, ...config.compilerOptions }
