@@ -7,7 +7,7 @@
     "prettier/@typescript-eslint"
   ],
   "parserOptions": {
-    "project": "./tsconfig.base.json"
+    "project": "./tsconfig.eslint.json"
   },
   "plugins": [
     "plantain"
