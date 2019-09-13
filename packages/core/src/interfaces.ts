@@ -27,6 +27,7 @@ export interface LintOptions {
   enableCache: boolean,
   ignoreCatch: boolean,
   ignoreFiles?: string | string[]
+  fileCounts: boolean,
 }
 
 export interface FileContext {
