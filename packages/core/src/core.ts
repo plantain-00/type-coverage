@@ -3,7 +3,13 @@ import * as path from 'path'
 import minimatch from 'minimatch'
 import { getProjectRootNamesAndCompilerOptions } from 'ts-lib-utils'
 
-import { FileContext, AnyInfo, SourceFileInfo, LintOptions } from './interfaces'
+import {
+  FileContext,
+  AnyInfo,
+  SourceFileInfo,
+  LintOptions,
+  FileTypeCheckResult
+} from './interfaces'
 import { checkNode } from './checker'
 import { clearCacheOfDependencies, collectDependencies } from './dependencies'
 import { collectIgnoreMap } from './ignore'
@@ -59,11 +65,20 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
   let correctCount = 0
   let totalCount = 0
   const anys: AnyInfo[] = []
+  const fileCounts =
+    new Map<string, Pick<FileTypeCheckResult, 'correctCount' | 'totalCount'>>()
   for (const { sourceFile, file, hash, cache } of sourceFileInfos) {
     if (cache) {
       correctCount += cache.correctCount
       totalCount += cache.totalCount
       anys.push(...cache.anys.map((a) => ({ file, ...a })))
+
+      if (lintOptions.fileCounts) {
+        fileCounts.set(file, {
+          correctCount: cache.correctCount,
+          totalCount: cache.totalCount,
+        })
+      }
       continue
     }
 
@@ -91,6 +106,14 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
     correctCount += context.typeCheckResult.correctCount
     totalCount += context.typeCheckResult.totalCount
     anys.push(...context.typeCheckResult.anys.map((a) => ({ file, ...a })))
+
+    if (lintOptions.fileCounts) {
+      fileCounts.set(file, {
+        correctCount: context.typeCheckResult.correctCount,
+        totalCount: context.typeCheckResult.totalCount
+      })
+    }
+
     if (lintOptions.enableCache) {
       const resultCache = typeCheckResult.cache[file]
       if (resultCache) {
@@ -111,7 +134,7 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
     await saveCache(typeCheckResult)
   }
 
-  return { correctCount, totalCount, anys, program }
+  return { correctCount, totalCount, anys, program, fileCounts }
 }
 
 const defaultLintOptions: LintOptions = {
@@ -121,5 +144,6 @@ const defaultLintOptions: LintOptions = {
   strict: false,
   enableCache: false,
   ignoreCatch: false,
-  ignoreFiles: undefined
+  ignoreFiles: undefined,
+  fileCounts: false,
 }

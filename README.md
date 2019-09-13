@@ -119,13 +119,18 @@ export interface LintOptions {
   strict: boolean,
   enableCache: boolean,
   ignoreCatch: boolean,
-  ignoreFiles?: string | string[]
+  ignoreFiles?: string | string[],
+  fileCounts: boolean,
 }
 
 export interface FileTypeCheckResult {
   correctCount: number
   totalCount: number
   anys: FileAnyInfo[]
+  fileCounts: {
+    correctCount: number,
+    totalCount: number,
+  }[]
 }
 ```
 
