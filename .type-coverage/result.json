@@ -19,9 +19,9 @@
       "anys": []
     },
     "packages/core/src/interfaces.ts": {
-      "hash": "cbaab643d42a0f3f5c62f4205d9eaf69cb7d865c",
-      "correctCount": 56,
-      "totalCount": 56,
+      "hash": "ad1bd73abc5d388045b3d8573b43b59efba8b7c5",
+      "correctCount": 57,
+      "totalCount": 57,
       "anys": []
     },
     "packages/core/src/checker.ts": {
@@ -49,9 +49,9 @@
       "anys": []
     },
     "packages/core/src/core.ts": {
-      "hash": "a8ae742fc265dc691a07d941262d3bfb44dd1fd5",
-      "correctCount": 243,
-      "totalCount": 243,
+      "hash": "1526ff53da6dc1db13eaf1642bfc05877a6ef10e",
+      "correctCount": 274,
+      "totalCount": 274,
       "anys": []
     },
     "packages/core/src/index.ts": {
@@ -61,15 +61,15 @@
       "anys": []
     },
     "packages/core/dist/interfaces.d.ts": {
-      "hash": "119b971bcc974f20998a05accac8d882aeff3d01",
-      "correctCount": 56,
-      "totalCount": 56,
+      "hash": "fca7bb379027c36052b9c96a36c5bc3ee3ec026f",
+      "correctCount": 57,
+      "totalCount": 57,
       "anys": []
     },
     "packages/core/dist/core.d.ts": {
-      "hash": "fe46e26fec872deaa7e54bd484fa1f5a7e3f0dce",
-      "correctCount": 16,
-      "totalCount": 16,
+      "hash": "2b460e2a2ca95563e8e1479d2220b314b8b9be30",
+      "correctCount": 21,
+      "totalCount": 21,
       "anys": []
     },
     "packages/core/dist/index.d.ts": {
