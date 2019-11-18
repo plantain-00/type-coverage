@@ -25,9 +25,9 @@
       "anys": []
     },
     "packages/core/src/checker.ts": {
-      "hash": "94aabb0f30bc7b4180eb2f3d6e8a2284672421cb",
-      "correctCount": 2676,
-      "totalCount": 2676,
+      "hash": "1a913aafde8f499085791b2349f084aa7219de5c",
+      "correctCount": 2679,
+      "totalCount": 2679,
       "anys": []
     },
     "packages/core/src/dependencies.ts": {

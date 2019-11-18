@@ -133,6 +133,7 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     case ts.SyntaxKind.QuestionToken:
     case ts.SyntaxKind.ColonToken:
     case ts.SyntaxKind.AtToken:
+    case ts.SyntaxKind.QuestionQuestionToken:
     case ts.SyntaxKind.EqualsToken:
     case ts.SyntaxKind.PlusEqualsToken:
     case ts.SyntaxKind.MinusEqualsToken:
