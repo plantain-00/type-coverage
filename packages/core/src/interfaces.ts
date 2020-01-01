@@ -28,6 +28,7 @@ export interface LintOptions {
   ignoreCatch: boolean,
   ignoreFiles?: string | string[]
   fileCounts: boolean,
+  absolutePath?: boolean,
 }
 
 export interface FileContext {
