@@ -1,5 +1,4 @@
 import ts from 'typescript'
-import * as path from 'path'
 import minimatch from 'minimatch'
 import { getProjectRootNamesAndCompilerOptions } from 'ts-lib-utils'
 
@@ -36,7 +35,6 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
   for (const sourceFile of program.getSourceFiles()) {
     let file = sourceFile.fileName
     if (!file.includes('node_modules') && (!lintOptions.files || lintOptions.files.includes(file))) {
-      file = path.relative(process.cwd(), file)
       if (ignoreFileGlobs && ignoreFileGlobs.some((f) => minimatch(file, f))) {
         continue
       }
