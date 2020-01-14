@@ -76,7 +76,7 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
   },
 ```
 
-## ingore line
+## ignore line
 
 Use `type-coverage:ignore-next-line` or `type-coverage:ignore-line` in comment(`//` or `/*  */`) to ignore `any` in a line.
 
