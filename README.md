@@ -13,6 +13,11 @@ This tool will check type of all identifiers, `the type coverage rate` = `the co
 [![type-coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fplantain-00%2Ftype-coverage%2Fmaster%2Fpackage.json)](https://github.com/plantain-00/type-coverage)
 [![Codechecks](https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true)](https://codechecks.io)
 
+## use cases
+
++ Show progress of long-term progressive migration from existing js code to typescript code.
++ Avoid introducing accidental `any` by running in CI.
+
 ## install
 
 `yarn global add type-coverage`
