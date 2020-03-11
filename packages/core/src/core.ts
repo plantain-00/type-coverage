@@ -38,6 +38,9 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
     if (!file.includes('node_modules') && (!lintOptions.files || lintOptions.files.includes(file))) {
       if (!lintOptions.absolutePath) {
         file = path.relative(process.cwd(), file)
+        if (file.startsWith('..')) {
+          continue
+        }
       }
       if (ignoreFileGlobs && ignoreFileGlobs.some((f) => minimatch(file, f))) {
         continue
