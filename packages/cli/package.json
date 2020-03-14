@@ -6,7 +6,7 @@
   "author": "york yao <yaoao12306@outlook.com>",
   "license": "MIT",
   "dependencies": {
-    "minimist": "1.2.0",
+    "minimist": "1.2.2",
     "type-coverage-core": "^2.4.1"
   },
   "files": [
