@@ -106,6 +106,12 @@ Using [codechecks](https://codechecks.io) you can integrate `type-coverage` with
 
 [![type-coverage-watcher](https://github.com/codechecks/type-coverage-watcher/raw/master/meta/check.png "type-coverage-watcher")](https://github.com/codechecks/type-coverage-watcher)
 
+## typescript coverage report
+
+Using [typescript-coverage-report](https://github.com/alexcanessa/typescript-coverage-report) you can generate typescript coverage report.
+
+[![typescript-coverage-report](https://github.com/alexcanessa/typescript-coverage-report/raw/master/docs/screenshot-table.png "typescript-coverage-report")](https://github.com/alexcanessa/typescript-coverage-report)
+
 ## API
 
 ```ts
