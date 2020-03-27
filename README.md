@@ -110,7 +110,7 @@ Using [codechecks](https://codechecks.io) you can integrate `type-coverage` with
 
 Using [typescript-coverage-report](https://github.com/alexcanessa/typescript-coverage-report) you can generate typescript coverage report.
 
-[![typescript-coverage-report](https://github.com/alexcanessa/typescript-coverage-report/raw/master/docs/screenshot-table.png "typescript-coverage-report")](https://github.com/alexcanessa/typescript-coverage-report)
+[![typescript-coverage-report](https://raw.githubusercontent.com/alexcanessa/typescript-coverage-report/master/images/screenshot-table.png "typescript-coverage-report")](https://github.com/alexcanessa/typescript-coverage-report)
 
 ## API
 
