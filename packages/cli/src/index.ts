@@ -25,6 +25,7 @@ function printHelp() {
 --ignore-catch  boolean?  ignore catch
 --cache         boolean?  enable cache
 --ignore-files  string[]? ignore files
+-h,--help       boolean?  show help
   `)
 }
 
@@ -39,7 +40,7 @@ async function executeCommandLine() {
 
   if (argv.h || argv.help) {
     printHelp()
-    return process.exit(0)
+    process.exit(0)
   }
 
   suppressError = argv.suppressError
