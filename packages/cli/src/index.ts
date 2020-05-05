@@ -14,6 +14,20 @@ function showToolVersion() {
   console.log(`Version: ${packageJson.version}`)
 }
 
+function printHelp() {
+  console.log(`type-coverage [options]
+
+-p, --project   string?   tell the CLI where is the tsconfig.json
+--detail        boolean?  show detail
+--at-least      number?   fail if coverage rate < this value
+--debug         boolean?  show debug info
+--strict        boolean?  strict mode
+--ignore-catch  boolean?  ignore catch
+--cache         boolean?  enable cache
+--ignore-files  string[]? ignore files
+  `)
+}
+
 async function executeCommandLine() {
   const argv = minimist(process.argv.slice(2), { '--': true }) as unknown as ParsedArgs
 
@@ -21,6 +35,11 @@ async function executeCommandLine() {
   if (showVersion) {
     showToolVersion()
     return
+  }
+
+  if (argv.h || argv.help) {
+    printHelp()
+    return process.exit(0)
   }
 
   suppressError = argv.suppressError
@@ -52,6 +71,8 @@ async function executeCommandLine() {
 interface ParsedArgs {
   v: boolean
   version: boolean
+  h: boolean
+  help: boolean
   suppressError: boolean
   p: string
   project: string
