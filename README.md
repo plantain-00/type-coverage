@@ -38,6 +38,7 @@ name | type | description
 `--ignore-catch` | boolean? | [ignore catch](#ignore-catch)
 `--cache` | boolean? | [enable cache](#enable-cache)
 `--ignore-files` | string[]? | [ignore files](#ignore-files)
+`-h`, `--help` | boolean? | show help
 
 ### strict mode
 
