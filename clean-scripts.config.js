@@ -11,8 +11,8 @@ module.exports = {
     'tsc -p packages/core/src/',
     'rimraf packages/cli/dist/',
     'tsc -p packages/cli/src/',
-    'node packages/cli/dist/index.js -p packages/core/src --detail --strict --cache --ignore-catch --supressError',
-    'node packages/cli/dist/index.js -p packages/cli/src --detail --strict --cache --ignore-catch --supressError'
+    'node packages/cli/dist/index.js -p packages/core/src --detail --strict --cache --ignore-catch --update --supressError',
+    'node packages/cli/dist/index.js -p packages/cli/src --detail --strict --cache --ignore-catch --update --supressError'
   ],
   lint: {
     ts: `eslint --ext .js,.ts ${tsFiles} ${jsFiles}`,

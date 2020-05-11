@@ -39,6 +39,8 @@ name | type | description
 `--cache` | boolean? | [enable cache](#enable-cache)
 `--ignore-files` | string[]? | [ignore files](#ignore-files)
 `-h`, `--help` | boolean? | show help
+`--is` | number? | fail if coverage rate !== this value
+`--update` | boolean? | update "typeCoverage" in package.json to current result
 
 ### strict mode
 
@@ -78,7 +80,8 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
 
 ```json
   "typeCoverage": {
-    "atLeast": 99 // same as --at-least
+    "atLeast": 99, // same as --at-least
+    "is": 99 // same as --is
   },
 ```
 

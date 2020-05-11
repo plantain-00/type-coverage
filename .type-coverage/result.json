@@ -79,9 +79,9 @@
       "anys": []
     },
     "packages/cli/src/index.ts": {
-      "hash": "63dc238ed233b9c453553d676387627cf18fde3f",
-      "correctCount": 172,
-      "totalCount": 172,
+      "hash": "982c56ebfd1ce95bd44d8e0fdc0c627ec4f011ec",
+      "correctCount": 247,
+      "totalCount": 247,
       "anys": []
     },
     "packages/cli/src/lib.d.ts": {
