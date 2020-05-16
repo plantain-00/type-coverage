@@ -10,7 +10,7 @@
   "dependencies": {
     "minimatch": "3",
     "ts-lib-utils": "^2.2.0",
-    "tslib": "1",
+    "tslib": "1 || 2",
     "tsutils": "3"
   },
   "files": [
