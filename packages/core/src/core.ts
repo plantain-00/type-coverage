@@ -100,8 +100,9 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
       catchVariables: {},
       debug: lintOptions.debug,
       strict: lintOptions.strict,
+      processAny: lintOptions.processAny,
       checker,
-      ingoreMap
+      ingoreMap,
     }
 
     sourceFile.forEachChild(node => {

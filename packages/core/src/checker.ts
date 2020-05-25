@@ -2,7 +2,11 @@ import ts from 'typescript'
 
 import { FileContext } from './interfaces'
 
-function collectAny(node: ts.Node, { file, sourceFile, typeCheckResult, ingoreMap, debug }: FileContext) {
+function collectAny(node: ts.Node, context: FileContext) {
+  const { file, sourceFile, typeCheckResult, ingoreMap, debug, processAny } = context
+  if (processAny !== undefined) {
+    return processAny(node, context)
+  }
   const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
   if (ingoreMap[file] && ingoreMap[file].has(line)) {
     return false
