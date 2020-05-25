@@ -19,7 +19,7 @@
       "anys": []
     },
     "packages/core/src/interfaces.ts": {
-      "hash": "16753950d12128f4647034b941a5af4ed4bae3e5",
+      "hash": "a6dde1d2e0ea770f69131b6ba7445e2fd7b1b964",
       "correctCount": 68,
       "totalCount": 68,
       "anys": []
@@ -61,7 +61,7 @@
       "anys": []
     },
     "packages/core/dist/interfaces.d.ts": {
-      "hash": "340bc4d89d07361d4904d936c2f9a71b01d4ca08",
+      "hash": "1d05457770d84d82854ea4bf90c5d712583b114d",
       "correctCount": 68,
       "totalCount": 68,
       "anys": []

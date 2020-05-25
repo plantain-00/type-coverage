@@ -137,6 +137,7 @@ export interface LintOptions {
   ignoreFiles?: string | string[],
   fileCounts: boolean,
   absolutePath?: boolean,
+  processAny?: ProccessAny,
 }
 
 export interface FileTypeCheckResult {
@@ -148,6 +149,8 @@ export interface FileTypeCheckResult {
     totalCount: number,
   }[]
 }
+
+export type ProccessAny = (node: ts.Node, context: FileContext) => boolean
 ```
 
 ## FAQ
