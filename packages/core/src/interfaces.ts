@@ -19,6 +19,11 @@ interface FileAnyInfo {
   text: string
 }
 
+/**
+ * @public
+ */
+export type ProccessAny = (node: ts.Node, context: FileContext) => boolean
+
 export interface LintOptions {
   debug: boolean,
   files?: string[],
@@ -29,6 +34,7 @@ export interface LintOptions {
   ignoreFiles?: string | string[]
   fileCounts: boolean,
   absolutePath?: boolean,
+  processAny?: ProccessAny,
 }
 
 export interface FileContext {
@@ -41,6 +47,7 @@ export interface FileContext {
   ignoreCatch: boolean
   catchVariables: { [variable: string]: boolean }
   ingoreMap: { [file: string]: Set<number> }
+  processAny?: ProccessAny
 }
 
 interface TypeCheckCache extends FileTypeCheckResult {
