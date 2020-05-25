@@ -1,7 +1,7 @@
 const tsFiles = `"packages/**/src/**/*.ts"`
 const jsFiles = `"*.config.js"`
 
-module.exports = {
+export default {
   build: [
     'rimraf packages/utils/dist/',
     'rimraf packages/utils/es/',

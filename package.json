@@ -20,6 +20,7 @@
     "markdownlint-cli": "0.23.1",
     "no-unused-export": "1.10.3",
     "rimraf": "3.0.2",
+    "ts-node": "8.10.1",
     "typescript": "3.9.3"
   },
   "scripts": {
