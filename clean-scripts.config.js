@@ -1,4 +1,4 @@
-const tsFiles = `"packages/**/src/**/*.ts" "spec/**/*.ts"`
+const tsFiles = `"packages/**/src/**/*.ts"`
 const jsFiles = `"*.config.js"`
 
 module.exports = {
@@ -20,9 +20,6 @@ module.exports = {
     commit: `commitlint --from=HEAD~1`,
     markdown: `markdownlint README.md`
   },
-  test: [
-    'tsc -p spec',
-    'jasmine'
-  ],
+  test: [],
   fix: `eslint --ext .js,.ts ${tsFiles} ${jsFiles} --fix`
 }
