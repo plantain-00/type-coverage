@@ -10,7 +10,7 @@ export async function getProjectRootNamesAndCompilerOptions(project: string) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
   const config = getTsConfig(configFilePath, dirname)
 
-  const { options: compilerOptions, errors } = ts.convertCompilerOptionsFromJson(config.compilerOptions, dirname)
+  const { options: compilerOptions, errors } = ts.convertCompilerOptionsFromJson(config.compilerOptions, config.basePath || dirname)
   if (errors && errors.length > 0) {
     throw errors
   }
@@ -51,6 +51,7 @@ interface JsonConfig {
   include?: string[]
   exclude?: string[]
   files?: string[]
+  basePath?: string
 }
 
 function getTsConfig(configFilePath: string, dirname: string): JsonConfig {
@@ -88,6 +89,7 @@ function getTsConfig(configFilePath: string, dirname: string): JsonConfig {
     const { configFilePath, dirname: extendsBasename } = getTsConfigFilePath(project, fallbackProject)
     const extendsConfig = getTsConfig(configFilePath, extendsBasename)
     config.compilerOptions = { ...extendsConfig.compilerOptions, ...config.compilerOptions }
+    config.basePath = extendsBasename
   }
   return config
 }
