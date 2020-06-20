@@ -25,10 +25,631 @@
       "anys": []
     },
     "packages/core/src/checker.ts": {
-      "hash": "28e7e09f3709203a1a3388982a83dd5d76d0b42c",
-      "correctCount": 2687,
-      "totalCount": 2687,
-      "anys": []
+      "hash": "ba435471dca445bebc3365246566c9a705498ebf",
+      "correctCount": 2711,
+      "totalCount": 2835,
+      "anys": [
+        {
+          "line": 25,
+          "character": 139,
+          "text": "type as unknown as { intrinsicName: string }"
+        },
+        {
+          "line": 25,
+          "character": 139,
+          "text": "type as unknown"
+        },
+        {
+          "line": 46,
+          "character": 12,
+          "text": "type as unknown as { intrinsicName: string }"
+        },
+        {
+          "line": 46,
+          "character": 12,
+          "text": "type as unknown"
+        },
+        {
+          "line": 49,
+          "character": 27,
+          "text": "type as ts.TypeReference"
+        },
+        {
+          "line": 155,
+          "character": 17,
+          "text": "node as ts.Identifier"
+        },
+        {
+          "line": 156,
+          "character": 33,
+          "text": "id.escapedText as string"
+        },
+        {
+          "line": 240,
+          "character": 28,
+          "text": "node as ts.QualifiedName"
+        },
+        {
+          "line": 245,
+          "character": 35,
+          "text": "node as ts.ComputedPropertyName"
+        },
+        {
+          "line": 249,
+          "character": 39,
+          "text": "node as ts.TypeParameterDeclaration"
+        },
+        {
+          "line": 256,
+          "character": 35,
+          "text": "node as ts.ParameterDeclaration"
+        },
+        {
+          "line": 264,
+          "character": 24,
+          "text": "node as ts.Decorator"
+        },
+        {
+          "line": 268,
+          "character": 32,
+          "text": "node as ts.PropertySignature"
+        },
+        {
+          "line": 275,
+          "character": 34,
+          "text": "node as ts.PropertyDeclaration"
+        },
+        {
+          "line": 282,
+          "character": 30,
+          "text": "node as ts.MethodSignature"
+        },
+        {
+          "line": 293,
+          "character": 42,
+          "text": "node as ts.FunctionLikeDeclarationBase"
+        },
+        {
+          "line": 303,
+          "character": 39,
+          "text": "node as ts.CallSignatureDeclaration"
+        },
+        {
+          "line": 311,
+          "character": 44,
+          "text": "node as ts.ConstructSignatureDeclaration"
+        },
+        {
+          "line": 319,
+          "character": 40,
+          "text": "node as ts.IndexSignatureDeclaration"
+        },
+        {
+          "line": 327,
+          "character": 32,
+          "text": "node as ts.TypePredicateNode"
+        },
+        {
+          "line": 332,
+          "character": 32,
+          "text": "node as ts.TypeReferenceNode"
+        },
+        {
+          "line": 338,
+          "character": 39,
+          "text": "node as ts.SignatureDeclarationBase"
+        },
+        {
+          "line": 345,
+          "character": 28,
+          "text": "node as ts.TypeQueryNode"
+        },
+        {
+          "line": 349,
+          "character": 30,
+          "text": "node as ts.TypeLiteralNode"
+        },
+        {
+          "line": 353,
+          "character": 28,
+          "text": "node as ts.ArrayTypeNode"
+        },
+        {
+          "line": 357,
+          "character": 28,
+          "text": "node as ts.TupleTypeNode"
+        },
+        {
+          "line": 363,
+          "character": 27,
+          "text": "node as ts.RestTypeNode"
+        },
+        {
+          "line": 367,
+          "character": 28,
+          "text": "node as ts.UnionTypeNode"
+        },
+        {
+          "line": 371,
+          "character": 35,
+          "text": "node as ts.IntersectionTypeNode"
+        },
+        {
+          "line": 375,
+          "character": 34,
+          "text": "node as ts.ConditionalTypeNode"
+        },
+        {
+          "line": 382,
+          "character": 28,
+          "text": "node as ts.InferTypeNode"
+        },
+        {
+          "line": 386,
+          "character": 36,
+          "text": "node as ts.ParenthesizedTypeNode"
+        },
+        {
+          "line": 392,
+          "character": 31,
+          "text": "node as ts.TypeOperatorNode"
+        },
+        {
+          "line": 396,
+          "character": 36,
+          "text": "node as ts.IndexedAccessTypeNode"
+        },
+        {
+          "line": 401,
+          "character": 29,
+          "text": "node as ts.MappedTypeNode"
+        },
+        {
+          "line": 408,
+          "character": 30,
+          "text": "node as ts.LiteralTypeNode"
+        },
+        {
+          "line": 412,
+          "character": 29,
+          "text": "node as ts.ImportTypeNode"
+        },
+        {
+          "line": 418,
+          "character": 35,
+          "text": "node as ts.ObjectBindingPattern"
+        },
+        {
+          "line": 422,
+          "character": 34,
+          "text": "node as ts.ArrayBindingPattern"
+        },
+        {
+          "line": 426,
+          "character": 29,
+          "text": "node as ts.BindingElement"
+        },
+        {
+          "line": 433,
+          "character": 37,
+          "text": "node as ts.ArrayLiteralExpression"
+        },
+        {
+          "line": 437,
+          "character": 38,
+          "text": "node as ts.ObjectLiteralExpression"
+        },
+        {
+          "line": 441,
+          "character": 39,
+          "text": "node as ts.PropertyAccessExpression"
+        },
+        {
+          "line": 446,
+          "character": 38,
+          "text": "node as ts.ElementAccessExpression"
+        },
+        {
+          "line": 451,
+          "character": 29,
+          "text": "node as ts.CallExpression"
+        },
+        {
+          "line": 457,
+          "character": 28,
+          "text": "node as ts.NewExpression"
+        },
+        {
+          "line": 463,
+          "character": 39,
+          "text": "node as ts.TaggedTemplateExpression"
+        },
+        {
+          "line": 467,
+          "character": 28,
+          "text": "node as ts.TypeAssertion"
+        },
+        {
+          "line": 476,
+          "character": 38,
+          "text": "node as ts.ParenthesizedExpression"
+        },
+        {
+          "line": 480,
+          "character": 33,
+          "text": "node as ts.FunctionExpression"
+        },
+        {
+          "line": 490,
+          "character": 28,
+          "text": "node as ts.ArrowFunction"
+        },
+        {
+          "line": 501,
+          "character": 31,
+          "text": "node as ts.DeleteExpression"
+        },
+        {
+          "line": 505,
+          "character": 31,
+          "text": "node as ts.TypeOfExpression"
+        },
+        {
+          "line": 509,
+          "character": 29,
+          "text": "node as ts.VoidExpression"
+        },
+        {
+          "line": 513,
+          "character": 30,
+          "text": "node as ts.AwaitExpression"
+        },
+        {
+          "line": 517,
+          "character": 36,
+          "text": "node as ts.PrefixUnaryExpression"
+        },
+        {
+          "line": 521,
+          "character": 37,
+          "text": "node as ts.PostfixUnaryExpression"
+        },
+        {
+          "line": 525,
+          "character": 31,
+          "text": "node as ts.BinaryExpression"
+        },
+        {
+          "line": 531,
+          "character": 36,
+          "text": "node as ts.ConditionalExpression"
+        },
+        {
+          "line": 539,
+          "character": 33,
+          "text": "node as ts.TemplateExpression"
+        },
+        {
+          "line": 543,
+          "character": 30,
+          "text": "node as ts.YieldExpression"
+        },
+        {
+          "line": 548,
+          "character": 28,
+          "text": "node as ts.SpreadElement"
+        },
+        {
+          "line": 552,
+          "character": 30,
+          "text": "node as ts.ClassExpression"
+        },
+        {
+          "line": 561,
+          "character": 42,
+          "text": "node as ts.ExpressionWithTypeArguments"
+        },
+        {
+          "line": 566,
+          "character": 27,
+          "text": "node as ts.AsExpression"
+        },
+        {
+          "line": 575,
+          "character": 32,
+          "text": "node as ts.NonNullExpression"
+        },
+        {
+          "line": 583,
+          "character": 27,
+          "text": "node as ts.MetaProperty"
+        },
+        {
+          "line": 587,
+          "character": 27,
+          "text": "node as ts.TemplateSpan"
+        },
+        {
+          "line": 592,
+          "character": 36,
+          "text": "node as ts.SemicolonClassElement"
+        },
+        {
+          "line": 596,
+          "character": 20,
+          "text": "node as ts.Block"
+        },
+        {
+          "line": 600,
+          "character": 32,
+          "text": "node as ts.VariableStatement"
+        },
+        {
+          "line": 606,
+          "character": 34,
+          "text": "node as ts.ExpressionStatement"
+        },
+        {
+          "line": 610,
+          "character": 26,
+          "text": "node as ts.IfStatement"
+        },
+        {
+          "line": 616,
+          "character": 26,
+          "text": "node as ts.DoStatement"
+        },
+        {
+          "line": 621,
+          "character": 29,
+          "text": "node as ts.WhileStatement"
+        },
+        {
+          "line": 626,
+          "character": 27,
+          "text": "node as ts.ForStatement"
+        },
+        {
+          "line": 633,
+          "character": 29,
+          "text": "node as ts.ForInStatement"
+        },
+        {
+          "line": 639,
+          "character": 29,
+          "text": "node as ts.ForOfStatement"
+        },
+        {
+          "line": 649,
+          "character": 30,
+          "text": "node as ts.ReturnStatement"
+        },
+        {
+          "line": 653,
+          "character": 28,
+          "text": "node as ts.WithStatement"
+        },
+        {
+          "line": 658,
+          "character": 30,
+          "text": "node as ts.SwitchStatement"
+        },
+        {
+          "line": 663,
+          "character": 31,
+          "text": "node as ts.LabeledStatement"
+        },
+        {
+          "line": 668,
+          "character": 29,
+          "text": "node as ts.ThrowStatement"
+        },
+        {
+          "line": 672,
+          "character": 27,
+          "text": "node as ts.TryStatement"
+        },
+        {
+          "line": 680,
+          "character": 34,
+          "text": "node as ts.VariableDeclaration"
+        },
+        {
+          "line": 686,
+          "character": 30,
+          "text": "node as ts.VariableDeclarationList"
+        },
+        {
+          "line": 690,
+          "character": 34,
+          "text": "node as ts.FunctionDeclaration"
+        },
+        {
+          "line": 700,
+          "character": 31,
+          "text": "node as ts.ClassDeclaration"
+        },
+        {
+          "line": 707,
+          "character": 35,
+          "text": "node as ts.InterfaceDeclaration"
+        },
+        {
+          "line": 714,
+          "character": 35,
+          "text": "node as ts.TypeAliasDeclaration"
+        },
+        {
+          "line": 720,
+          "character": 30,
+          "text": "node as ts.EnumDeclaration"
+        },
+        {
+          "line": 725,
+          "character": 32,
+          "text": "node as ts.ModuleDeclaration"
+        },
+        {
+          "line": 730,
+          "character": 26,
+          "text": "node as ts.ModuleBlock"
+        },
+        {
+          "line": 734,
+          "character": 24,
+          "text": "node as ts.CaseBlock"
+        },
+        {
+          "line": 738,
+          "character": 41,
+          "text": "node as ts.NamespaceExportDeclaration"
+        },
+        {
+          "line": 742,
+          "character": 38,
+          "text": "node as ts.ImportEqualsDeclaration"
+        },
+        {
+          "line": 747,
+          "character": 32,
+          "text": "node as ts.ImportDeclaration"
+        },
+        {
+          "line": 752,
+          "character": 27,
+          "text": "node as ts.ImportClause"
+        },
+        {
+          "line": 757,
+          "character": 30,
+          "text": "node as ts.NamespaceImport"
+        },
+        {
+          "line": 761,
+          "character": 27,
+          "text": "node as ts.NamedImports"
+        },
+        {
+          "line": 765,
+          "character": 30,
+          "text": "node as ts.ImportSpecifier"
+        },
+        {
+          "line": 770,
+          "character": 31,
+          "text": "node as ts.ExportAssignment"
+        },
+        {
+          "line": 775,
+          "character": 32,
+          "text": "node as ts.ExportDeclaration"
+        },
+        {
+          "line": 781,
+          "character": 27,
+          "text": "node as ts.NamedExports"
+        },
+        {
+          "line": 785,
+          "character": 30,
+          "text": "node as ts.ExportSpecifier"
+        },
+        {
+          "line": 790,
+          "character": 33,
+          "text": "node as ts.MissingDeclaration"
+        },
+        {
+          "line": 794,
+          "character": 38,
+          "text": "node as ts.ExternalModuleReference"
+        },
+        {
+          "line": 798,
+          "character": 25,
+          "text": "node as ts.JsxElement"
+        },
+        {
+          "line": 804,
+          "character": 36,
+          "text": "node as ts.JsxSelfClosingElement"
+        },
+        {
+          "line": 809,
+          "character": 32,
+          "text": "node as ts.JsxOpeningElement"
+        },
+        {
+          "line": 814,
+          "character": 32,
+          "text": "node as ts.JsxClosingElement"
+        },
+        {
+          "line": 818,
+          "character": 26,
+          "text": "node as ts.JsxFragment"
+        },
+        {
+          "line": 828,
+          "character": 27,
+          "text": "node as ts.JsxAttribute"
+        },
+        {
+          "line": 833,
+          "character": 28,
+          "text": "node as ts.JsxAttributes"
+        },
+        {
+          "line": 837,
+          "character": 33,
+          "text": "node as ts.JsxSpreadAttribute"
+        },
+        {
+          "line": 842,
+          "character": 28,
+          "text": "node as ts.JsxExpression"
+        },
+        {
+          "line": 847,
+          "character": 25,
+          "text": "node as ts.CaseClause"
+        },
+        {
+          "line": 852,
+          "character": 28,
+          "text": "node as ts.DefaultClause"
+        },
+        {
+          "line": 856,
+          "character": 29,
+          "text": "node as ts.HeritageClause"
+        },
+        {
+          "line": 860,
+          "character": 26,
+          "text": "node as ts.CatchClause"
+        },
+        {
+          "line": 869,
+          "character": 14,
+          "text": "decl.name.escapedText as string"
+        },
+        {
+          "line": 881,
+          "character": 43,
+          "text": "node as ts.PropertyAssignment"
+        },
+        {
+          "line": 887,
+          "character": 42,
+          "text": "node as ts.ShorthandPropertyAssignment"
+        },
+        {
+          "line": 894,
+          "character": 31,
+          "text": "node as ts.SpreadAssignment"
+        }
+      ]
     },
     "packages/core/src/dependencies.ts": {
       "hash": "0e342763afb3bc5d34b75c26d2e91aeda50451e4",
@@ -81,8 +702,19 @@
     "packages/cli/src/index.ts": {
       "hash": "982c56ebfd1ce95bd44d8e0fdc0c627ec4f011ec",
       "correctCount": 247,
-      "totalCount": 247,
-      "anys": []
+      "totalCount": 249,
+      "anys": [
+        {
+          "line": 35,
+          "character": 15,
+          "text": "minimist(process.argv.slice(2), { '--': true }) as unknown as ParsedArgs"
+        },
+        {
+          "line": 35,
+          "character": 15,
+          "text": "minimist(process.argv.slice(2), { '--': true }) as unknown"
+        }
+      ]
     },
     "packages/cli/src/lib.d.ts": {
       "hash": "fadc7978a4bb193f869db0272ce19e1d20228eb6",
@@ -190,6 +822,88 @@
       "hash": "fadc7978a4bb193f869db0272ce19e1d20228eb6",
       "correctCount": 1,
       "totalCount": 1,
+      "anys": []
+    },
+    "packages/a/index.ts": {
+      "hash": "8a7a748184dacf5e2b7e4a80654f88c0fa982b1f",
+      "correctCount": 5,
+      "totalCount": 8,
+      "anys": []
+    },
+    "packages/utils/src/tsconfig.ts": {
+      "hash": "d855ddff2038ea49542eb2fcb13b15d44f260e6a",
+      "correctCount": 278,
+      "totalCount": 280,
+      "anys": [
+        {
+          "line": 70,
+          "character": 6,
+          "text": "configResult.config as JsonConfig"
+        },
+        {
+          "line": 70,
+          "character": 19,
+          "text": "config"
+        }
+      ]
+    },
+    "packages/utils/src/language-service.ts": {
+      "hash": "5ba341873c9e6016bc9d955f4cf90d5c98728770",
+      "correctCount": 47,
+      "totalCount": 47,
+      "anys": []
+    },
+    "packages/utils/src/js-doc.ts": {
+      "hash": "172c3e4aeb902702c6b6b2e29eead06617fc0bdf",
+      "correctCount": 80,
+      "totalCount": 88,
+      "anys": [
+        {
+          "line": 6,
+          "character": 18,
+          "text": "node as unknown as { jsDoc?: ts.JSDoc[] }"
+        },
+        {
+          "line": 6,
+          "character": 18,
+          "text": "node as unknown"
+        },
+        {
+          "line": 25,
+          "character": 52,
+          "text": "tag as unknown as { typeExpression: ts.JSDocTypeExpression }"
+        },
+        {
+          "line": 25,
+          "character": 52,
+          "text": "tag as unknown"
+        },
+        {
+          "line": 27,
+          "character": 17,
+          "text": "tag as unknown as { name: ts.Identifier }"
+        },
+        {
+          "line": 27,
+          "character": 17,
+          "text": "tag as unknown"
+        },
+        {
+          "line": 28,
+          "character": 16,
+          "text": "tag as unknown as { isBracketed?: boolean }"
+        },
+        {
+          "line": 28,
+          "character": 16,
+          "text": "tag as unknown"
+        }
+      ]
+    },
+    "packages/utils/src/index.ts": {
+      "hash": "1735157be383f01756c88f0e552a56b1b8c9b3dd",
+      "correctCount": 0,
+      "totalCount": 0,
       "anys": []
     }
   }

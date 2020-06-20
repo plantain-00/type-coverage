@@ -46,6 +46,8 @@ name | type | description
 
 If the identifiers' type arguments exist and contain at least one `any`, like `any[]`, `ReadonlyArray<any>`, `Promise<any>`, `Foo<number, any>`, it will be considered as `any` too
 
+Type assertion, like `a as string`, `a!`, `<string>a` will be considered as uncovered
+
 Also, future minor release may introduce stricter type check in this mode, which may lower the type coverage rate
 
 ### enable cache

@@ -35,6 +35,6 @@
   ],
   "private": true,
   "typeCoverage": {
-    "atLeast": 100
+    "atLeast": 96.48
   }
 }
