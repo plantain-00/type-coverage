@@ -67,11 +67,15 @@ function checkNodes(nodes: ts.NodeArray<ts.Node> | undefined, context: FileConte
 
 function checkTypeAssertion(node: ts.Node, context: FileContext) {
   if (context.strict) {
-    // exclude `foo as const` and `<const>foo`
-    if ((ts.isAsExpression(node) || ts.isTypeAssertion(node))
-      && ts.isTypeReferenceNode(node.type)
-      && node.type.getText() === 'const') {
-      return
+    if ((ts.isAsExpression(node) || ts.isTypeAssertion(node))) {
+      // exclude `foo as const` and `<const>foo`
+      if (ts.isTypeReferenceNode(node.type) && node.type.getText() === 'const') {
+        return
+      }
+      // exclude `foo as unknown` and `<unknown>foo`
+      if (node.type.kind === ts.SyntaxKind.UnknownKeyword) {
+        return
+      }
     }
     const success = collectAny(node, context)
     if (success) {
