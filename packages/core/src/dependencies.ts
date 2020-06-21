@@ -8,10 +8,10 @@ export function collectDependencies(sourceFileInfos: SourceFileInfo[], allFiles:
   for (const { sourceFile, file } of sourceFileInfos) {
     sourceFile.forEachChild(node => {
       let source: string | undefined
-      if (node.kind === ts.SyntaxKind.ImportEqualsDeclaration) {
-        source = (node as ts.ImportEqualsDeclaration).name.text
-      } else if (node.kind === ts.SyntaxKind.ImportDeclaration) {
-        source = ((node as ts.ImportDeclaration).moduleSpecifier as ts.Identifier).text
+      if (ts.isImportEqualsDeclaration(node)) {
+        source = node.name.text
+      } else if (ts.isImportDeclaration(node) && ts.isIdentifier(node.moduleSpecifier)) {
+        source = node.moduleSpecifier.text
       }
       if (source
         && (source.startsWith('.') || source.startsWith('/'))

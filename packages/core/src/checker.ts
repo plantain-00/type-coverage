@@ -97,6 +97,466 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
   checkNodes(node.decorators, context)
   checkNodes(node.modifiers, context)
 
+  if (ts.isIdentifier(node)) {
+    if (context.catchVariables[node.escapedText as string]) {
+      return
+    }
+    collectData(node, context)
+    return
+  }
+  if (ts.isQualifiedName(node)) {
+    checkNode(node.left, context)
+    checkNode(node.right, context)
+    return
+  }
+  if (ts.isComputedPropertyName(node)) {
+    checkNode(node.expression, context)
+    return
+  }
+  if (ts.isTypeParameterDeclaration(node)) {
+    checkNode(node.name, context)
+    checkNode(node.default, context)
+    checkNode(node.expression, context)
+    checkNode(node.constraint, context)
+    return
+  }
+  if (ts.isParameter(node)) {
+    checkNode(node.dotDotDotToken, context)
+    checkNode(node.name, context)
+    checkNode(node.initializer, context)
+    checkNode(node.type, context)
+    checkNode(node.questionToken, context)
+    return
+  }
+  if (ts.isDecorator(node)) {
+    checkNode(node.expression, context)
+    return
+  }
+  if (ts.isPropertySignature(node)
+    || ts.isPropertyDeclaration(node)) {
+    checkNode(node.name, context)
+    checkNode(node.questionToken, context)
+    checkNode(node.type, context)
+    checkNode(node.initializer, context)
+    return
+  }
+  if (ts.isMethodSignature(node)
+    || ts.isCallSignatureDeclaration(node)
+    || ts.isConstructSignatureDeclaration(node)
+    || ts.isIndexSignatureDeclaration(node)) {
+    checkNode(node.name, context)
+    checkNodes(node.parameters, context)
+    checkNode(node.questionToken, context)
+    checkNode(node.type, context)
+    checkNodes(node.typeParameters, context)
+    return
+  }
+  if (ts.isFunctionTypeNode(node)
+    || ts.isConstructorTypeNode(node)) {
+    checkNode(node.name, context)
+    checkNodes(node.parameters, context)
+    checkNode(node.type, context)
+    checkNodes(node.typeParameters, context)
+    return
+  }
+  if (ts.isMethodDeclaration(node)
+    || ts.isConstructorDeclaration(node)
+    || ts.isGetAccessorDeclaration(node)
+    || ts.isSetAccessorDeclaration(node)
+    || ts.isFunctionExpression(node)
+    || ts.isArrowFunction(node)
+    || ts.isFunctionDeclaration(node)) {
+    checkNode(node.name, context)
+    checkNodes(node.parameters, context)
+    checkNode(node.body, context)
+    checkNode(node.asteriskToken, context)
+    checkNode(node.questionToken, context)
+    checkNode(node.type, context)
+    checkNodes(node.typeParameters, context)
+    return
+  }
+  if (ts.isTypePredicateNode(node)) {
+    checkNode(node.type, context)
+    checkNode(node.parameterName, context)
+    return
+  }
+  if (ts.isTypeReferenceNode(node)) {
+    checkNode(node.typeName, context)
+    checkNodes(node.typeArguments, context)
+    return
+  }
+  if (ts.isTypeQueryNode(node)) {
+    checkNode(node.exprName, context)
+    return
+  }
+  if (ts.isTypeLiteralNode(node)) {
+    checkNodes(node.members, context)
+    return
+  }
+  if (ts.isArrayTypeNode(node)) {
+    checkNode(node.elementType, context)
+    return
+  }
+  if (ts.isTupleTypeNode(node)) {
+    checkNodes(node.elementTypes, context)
+    return
+  }
+  if (ts.isUnionTypeNode(node)
+    || ts.isIntersectionTypeNode(node)
+    || ts.isHeritageClause(node)) {
+    checkNodes(node.types, context)
+    return
+  }
+  if (ts.isConditionalTypeNode(node)) {
+    checkNode(node.checkType, context)
+    checkNode(node.extendsType, context)
+    checkNode(node.trueType, context)
+    checkNode(node.falseType, context)
+    return
+  }
+  if (ts.isInferTypeNode(node)) {
+    checkNode(node.typeParameter, context)
+    return
+  }
+  if (ts.isParenthesizedTypeNode(node)
+    || ts.isTypeOperatorNode(node)) {
+    checkNode(node.type, context)
+    return
+  }
+  if (ts.isIndexedAccessTypeNode(node)) {
+    checkNode(node.objectType, context)
+    checkNode(node.indexType, context)
+    return
+  }
+  if (ts.isMappedTypeNode(node)) {
+    checkNode(node.questionToken, context)
+    checkNode(node.readonlyToken, context)
+    checkNode(node.type, context)
+    checkNode(node.typeParameter, context)
+    return
+  }
+  if (ts.isLiteralTypeNode(node)) {
+    checkNode(node.literal, context)
+    return
+  }
+  if (ts.isImportTypeNode(node)) {
+    checkNode(node.qualifier, context)
+    checkNode(node.argument, context)
+    checkNodes(node.typeArguments, context)
+    return
+  }
+  if (ts.isObjectBindingPattern(node)
+    || ts.isArrayBindingPattern(node)
+    || ts.isArrayLiteralExpression(node)
+    || ts.isNamedImports(node)
+    || ts.isNamedExports(node)) {
+    checkNodes(node.elements, context)
+    return
+  }
+  if (ts.isBindingElement(node)) {
+    checkNode(node.name, context)
+    checkNode(node.initializer, context)
+    checkNode(node.dotDotDotToken, context)
+    checkNode(node.propertyName, context)
+    return
+  }
+  if (ts.isObjectLiteralExpression(node)
+    || ts.isJsxAttributes(node)) {
+    checkNodes(node.properties, context)
+    return
+  }
+  if (ts.isPropertyAccessExpression(node)
+    || ts.isExportAssignment(node)
+    || ts.isJsxSpreadAttribute(node)
+    || ts.isSpreadAssignment(node)) {
+    checkNode(node.expression, context)
+    checkNode(node.name, context)
+    return
+  }
+  if (ts.isElementAccessExpression(node)) {
+    checkNode(node.expression, context)
+    checkNode(node.argumentExpression, context)
+    return
+  }
+  if (ts.isCallExpression(node)
+    || ts.isNewExpression(node)) {
+    checkNode(node.expression, context)
+    checkNodes(node.arguments, context)
+    checkNodes(node.typeArguments, context)
+    return
+  }
+  if (ts.isTypeAssertion(node)) {
+    checkTypeAssertion(node, context)
+    checkNode(node.expression, context)
+    checkNode(node.type, context)
+    return
+  }
+  if (ts.isParenthesizedExpression(node)
+    || ts.isDeleteExpression(node)
+    || ts.isTypeOfExpression(node)
+    || ts.isVoidExpression(node)
+    || ts.isAwaitExpression(node)
+    || ts.isYieldExpression(node)
+    || ts.isSpreadElement(node)
+    || ts.isExpressionStatement(node)
+    || ts.isReturnStatement(node)
+    || ts.isThrowStatement(node)
+    || ts.isExternalModuleReference(node)) {
+    checkNode(node.expression, context)
+    return
+  }
+  if (ts.isTaggedTemplateExpression(node)) {
+    checkNode(node.template, context)
+    return
+  }
+  if (ts.isPrefixUnaryExpression(node)
+    || ts.isPostfixUnaryExpression(node)) {
+    checkNode(node.operand, context)
+    return
+  }
+  if (ts.isBinaryExpression(node)) {
+    checkNode(node.left, context)
+    checkNode(node.right, context)
+    checkNode(node.operatorToken, context)
+    return
+  }
+  if (ts.isConditionalExpression(node)) {
+    checkNode(node.condition, context)
+    checkNode(node.colonToken, context)
+    checkNode(node.questionToken, context)
+    checkNode(node.whenTrue, context)
+    checkNode(node.whenFalse, context)
+    return
+  }
+  if (ts.isTemplateExpression(node)) {
+    checkNodes(node.templateSpans, context)
+    return
+  }
+  if (ts.isClassExpression(node)
+    || ts.isClassDeclaration(node)
+    || ts.isInterfaceDeclaration(node)) {
+    checkNode(node.name, context)
+    checkNodes(node.typeParameters, context)
+    checkNodes(node.members, context)
+    checkNodes(node.heritageClauses, context)
+    return
+  }
+  if (ts.isExpressionWithTypeArguments(node)) {
+    checkNode(node.expression, context)
+    checkNodes(node.typeArguments, context)
+    return
+  }
+  if (ts.isAsExpression(node)) {
+    checkTypeAssertion(node, context)
+    checkNode(node.expression, context)
+    checkNode(node.type, context)
+    return
+  }
+  if (ts.isNonNullExpression(node)) {
+    checkTypeAssertion(node, context)
+    checkNode(node.expression, context)
+    return
+  }
+  if (ts.isMetaProperty(node)
+    || ts.isSemicolonClassElement(node)
+    || ts.isNamespaceExportDeclaration(node)
+    || ts.isNamespaceImport(node)
+    || ts.isMissingDeclaration(node)) {
+    checkNode(node.name, context)
+    return
+  }
+  if (ts.isTemplateSpan(node)) {
+    checkNode(node.expression, context)
+    checkNode(node.literal, context)
+    return
+  }
+  if (ts.isBlock(node)
+    || ts.isModuleBlock(node)
+    || ts.isDefaultClause(node)) {
+    checkNodes(node.statements, context)
+    return
+  }
+  if (ts.isVariableStatement(node)) {
+    checkNode(node.declarationList, context)
+    return
+  }
+  if (ts.isIfStatement(node)) {
+    checkNode(node.expression, context)
+    checkNode(node.thenStatement, context)
+    checkNode(node.elseStatement, context)
+    return
+  }
+  if (ts.isDoStatement(node)
+    || ts.isWhileStatement(node)
+    || ts.isWithStatement(node)) {
+    checkNode(node.expression, context)
+    checkNode(node.statement, context)
+    return
+  }
+  if (ts.isForStatement(node)) {
+    checkNode(node.initializer, context)
+    checkNode(node.condition, context)
+    checkNode(node.incrementor, context)
+    checkNode(node.statement, context)
+    return
+  }
+  if (ts.isForInStatement(node)) {
+    checkNode(node.initializer, context)
+    checkNode(node.expression, context)
+    checkNode(node.statement, context)
+    return
+  }
+  if (ts.isForOfStatement(node)) {
+    checkNode(node.initializer, context)
+    checkNode(node.statement, context)
+    checkNode(node.expression, context)
+    checkNode(node.awaitModifier, context)
+    return
+  }
+  if (ts.isSwitchStatement(node)) {
+    checkNode(node.expression, context)
+    checkNode(node.caseBlock, context)
+    return
+  }
+  if (ts.isLabeledStatement(node)) {
+    checkNode(node.label, context)
+    checkNode(node.statement, context)
+    return
+  }
+  if (ts.isTryStatement(node)) {
+    checkNode(node.tryBlock, context)
+    checkNode(node.catchClause, context)
+    checkNode(node.finallyBlock, context)
+    return
+  }
+  if (ts.isVariableDeclaration(node)) {
+    checkNode(node.name, context)
+    checkNode(node.type, context)
+    checkNode(node.initializer, context)
+    return
+  }
+  if (ts.isVariableDeclarationList(node)) {
+    checkNodes(node.declarations, context)
+    return
+  }
+  if (ts.isTypeAliasDeclaration(node)) {
+    checkNode(node.name, context)
+    checkNode(node.type, context)
+    checkNodes(node.typeParameters, context)
+    return
+  }
+  if (ts.isEnumDeclaration(node)) {
+    checkNode(node.name, context)
+    checkNodes(node.members, context)
+    return
+  }
+  if (ts.isModuleDeclaration(node)) {
+    checkNode(node.name, context)
+    checkNode(node.body, context)
+    return
+  }
+  if (ts.isCaseBlock(node)) {
+    checkNodes(node.clauses, context)
+    return
+  }
+  if (ts.isImportEqualsDeclaration(node)) {
+    checkNode(node.name, context)
+    checkNode(node.moduleReference, context)
+    return
+  }
+  if (ts.isImportDeclaration(node)) {
+    checkNode(node.importClause, context)
+    checkNode(node.moduleSpecifier, context)
+    return
+  }
+  if (ts.isImportClause(node)) {
+    checkNode(node.name, context)
+    checkNode(node.namedBindings, context)
+    return
+  }
+  if (ts.isImportSpecifier(node)
+    || ts.isExportSpecifier(node)) {
+    checkNode(node.name, context)
+    checkNode(node.propertyName, context)
+    return
+  }
+  if (ts.isExportDeclaration(node)) {
+    checkNode(node.exportClause, context)
+    checkNode(node.name, context)
+    checkNode(node.moduleSpecifier, context)
+    return
+  }
+  if (ts.isJsxElement(node)) {
+    checkNode(node.openingElement, context)
+    checkNode(node.closingElement, context)
+    checkNodes(node.children, context)
+    return
+  }
+  if (ts.isJsxSelfClosingElement(node)
+    || ts.isJsxOpeningElement(node)) {
+    checkNode(node.attributes, context)
+    checkNode(node.tagName, context)
+    return
+  }
+  if (ts.isJsxClosingElement(node)) {
+    checkNode(node.tagName, context)
+    return
+  }
+  if (ts.isJsxFragment(node)) {
+    checkNode(node.openingFragment, context)
+    checkNode(node.closingFragment, context)
+    checkNodes(node.children, context)
+    return
+  }
+  if (ts.isJsxAttribute(node)) {
+    checkNode(node.name, context)
+    checkNode(node.initializer, context)
+    return
+  }
+  if (ts.isJsxExpression(node)) {
+    checkNode(node.dotDotDotToken, context)
+    checkNode(node.expression, context)
+    return
+  }
+  if (ts.isCaseClause(node)) {
+    checkNodes(node.statements, context)
+    checkNode(node.expression, context)
+    return
+  }
+  if (ts.isCatchClause(node)) {
+    if (context.ignoreCatch) {
+      const copyContext = Object.assign({}, context)
+      copyContext.catchVariables = Object.assign({}, context.catchVariables)
+      if (node.variableDeclaration) {
+        const decl = node.variableDeclaration
+        if (decl.name.kind === ts.SyntaxKind.Identifier) {
+          copyContext.catchVariables[
+            decl.name.escapedText as string
+          ] = true
+        }
+      }
+
+      checkNode(node.variableDeclaration, copyContext)
+    } else {
+      checkNode(node.block, context)
+      checkNode(node.variableDeclaration, context)
+    }
+    return
+  }
+  if (ts.isPropertyAssignment(node)) {
+    checkNode(node.name, context)
+    checkNode(node.questionToken, context)
+    checkNode(node.initializer, context)
+    return
+  }
+  if (ts.isShorthandPropertyAssignment(node)) {
+    checkNode(node.name, context)
+    checkNode(node.questionToken, context)
+    checkNode(node.equalsToken, context)
+    checkNode(node.objectAssignmentInitializer, context)
+    return
+  }
+
   switch (node.kind) {
     case ts.SyntaxKind.Unknown:
     case ts.SyntaxKind.EndOfFileToken:
@@ -170,14 +630,6 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     case ts.SyntaxKind.AmpersandEqualsToken:
     case ts.SyntaxKind.BarEqualsToken:
     case ts.SyntaxKind.CaretEqualsToken:
-      break
-    case ts.SyntaxKind.Identifier:
-      const id = node as ts.Identifier
-      if (context.catchVariables[id.escapedText as string]) {
-        return
-      }
-      collectData(node, context)
-      break
     case ts.SyntaxKind.BreakKeyword:
     case ts.SyntaxKind.CaseKeyword:
     case ts.SyntaxKind.CatchKeyword:
@@ -255,657 +707,20 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     case ts.SyntaxKind.GlobalKeyword:
     case ts.SyntaxKind.BigIntKeyword:
     case ts.SyntaxKind.OfKeyword:
-      break
-    case ts.SyntaxKind.QualifiedName:
-      const qualifiedName = node as ts.QualifiedName
-      checkNode(qualifiedName.left, context)
-      checkNode(qualifiedName.right, context)
-      break
-    case ts.SyntaxKind.ComputedPropertyName:
-      const computedPropertyName = node as ts.ComputedPropertyName
-      checkNode(computedPropertyName.expression, context)
-      break
-    case ts.SyntaxKind.TypeParameter:
-      const typeParameterDeclaration = node as ts.TypeParameterDeclaration
-      checkNode(typeParameterDeclaration.name, context)
-      checkNode(typeParameterDeclaration.default, context)
-      checkNode(typeParameterDeclaration.expression, context)
-      checkNode(typeParameterDeclaration.constraint, context)
-      break
-    case ts.SyntaxKind.Parameter:
-      const parameterDeclaration = node as ts.ParameterDeclaration
-      checkNode(parameterDeclaration.dotDotDotToken, context)
-      checkNode(parameterDeclaration.name, context)
-      checkNode(parameterDeclaration.initializer, context)
-      checkNode(parameterDeclaration.type, context)
-      checkNode(parameterDeclaration.questionToken, context)
-      break
-    case ts.SyntaxKind.Decorator:
-      const decorator = node as ts.Decorator
-      checkNode(decorator.expression, context)
-      break
-    case ts.SyntaxKind.PropertySignature:
-      const propertySignature = node as ts.PropertySignature
-      checkNode(propertySignature.name, context)
-      checkNode(propertySignature.questionToken, context)
-      checkNode(propertySignature.type, context)
-      checkNode(propertySignature.initializer, context)
-      break
-    case ts.SyntaxKind.PropertyDeclaration:
-      const propertyDeclaration = node as ts.PropertyDeclaration
-      checkNode(propertyDeclaration.name, context)
-      checkNode(propertyDeclaration.initializer, context)
-      checkNode(propertyDeclaration.type, context)
-      checkNode(propertyDeclaration.questionToken, context)
-      break
-    case ts.SyntaxKind.MethodSignature:
-      const methodSignature = node as ts.MethodSignature
-      checkNode(methodSignature.name, context)
-      checkNodes(methodSignature.parameters, context)
-      checkNode(methodSignature.questionToken, context)
-      checkNode(methodSignature.type, context)
-      checkNodes(methodSignature.typeParameters, context)
-      break
-    case ts.SyntaxKind.MethodDeclaration:
-    case ts.SyntaxKind.Constructor:
-    case ts.SyntaxKind.GetAccessor:
-    case ts.SyntaxKind.SetAccessor:
-      const functionLikeDeclarationBase = node as ts.FunctionLikeDeclarationBase
-      checkNode(functionLikeDeclarationBase.name, context)
-      checkNodes(functionLikeDeclarationBase.parameters, context)
-      checkNode(functionLikeDeclarationBase.body, context)
-      checkNode(functionLikeDeclarationBase.asteriskToken, context)
-      checkNode(functionLikeDeclarationBase.questionToken, context)
-      checkNode(functionLikeDeclarationBase.type, context)
-      checkNodes(functionLikeDeclarationBase.typeParameters, context)
-      break
-    case ts.SyntaxKind.CallSignature:
-      const callSignatureDeclaration = node as ts.CallSignatureDeclaration
-      checkNode(callSignatureDeclaration.name, context)
-      checkNodes(callSignatureDeclaration.parameters, context)
-      checkNode(callSignatureDeclaration.questionToken, context)
-      checkNode(callSignatureDeclaration.type, context)
-      checkNodes(callSignatureDeclaration.typeParameters, context)
-      break
-    case ts.SyntaxKind.ConstructSignature:
-      const constructSignatureDeclaration = node as ts.ConstructSignatureDeclaration
-      checkNode(constructSignatureDeclaration.name, context)
-      checkNodes(constructSignatureDeclaration.parameters, context)
-      checkNode(constructSignatureDeclaration.questionToken, context)
-      checkNode(constructSignatureDeclaration.type, context)
-      checkNodes(constructSignatureDeclaration.typeParameters, context)
-      break
-    case ts.SyntaxKind.IndexSignature:
-      const indexSignatureDeclaration = node as ts.IndexSignatureDeclaration
-      checkNode(indexSignatureDeclaration.name, context)
-      checkNodes(indexSignatureDeclaration.parameters, context)
-      checkNode(indexSignatureDeclaration.questionToken, context)
-      checkNode(indexSignatureDeclaration.type, context)
-      checkNodes(indexSignatureDeclaration.typeParameters, context)
-      break
-    case ts.SyntaxKind.TypePredicate:
-      const typePredicateNode = node as ts.TypePredicateNode
-      checkNode(typePredicateNode.type, context)
-      checkNode(typePredicateNode.parameterName, context)
-      break
-    case ts.SyntaxKind.TypeReference:
-      const typeReferenceNode = node as ts.TypeReferenceNode
-      checkNode(typeReferenceNode.typeName, context)
-      checkNodes(typeReferenceNode.typeArguments, context)
-      break
-    case ts.SyntaxKind.FunctionType:
-    case ts.SyntaxKind.ConstructorType:
-      const signatureDeclarationBase = node as ts.SignatureDeclarationBase
-      checkNode(signatureDeclarationBase.name, context)
-      checkNodes(signatureDeclarationBase.parameters, context)
-      checkNode(signatureDeclarationBase.type, context)
-      checkNodes(signatureDeclarationBase.typeParameters, context)
-      break
-    case ts.SyntaxKind.TypeQuery:
-      const typeQueryNode = node as ts.TypeQueryNode
-      checkNode(typeQueryNode.exprName, context)
-      break
-    case ts.SyntaxKind.TypeLiteral:
-      const typeLiteralNode = node as ts.TypeLiteralNode
-      checkNodes(typeLiteralNode.members, context)
-      break
-    case ts.SyntaxKind.ArrayType:
-      const arrayTypeNode = node as ts.ArrayTypeNode
-      checkNode(arrayTypeNode.elementType, context)
-      break
-    case ts.SyntaxKind.TupleType:
-      const tupleTypeNode = node as ts.TupleTypeNode
-      checkNodes(tupleTypeNode.elementTypes, context)
-      break
     case ts.SyntaxKind.OptionalType:
       break
     case ts.SyntaxKind.RestType:
       const restTypeNode = node as ts.RestTypeNode
       checkNode(restTypeNode.type, context)
       break
-    case ts.SyntaxKind.UnionType:
-      const unionTypeNode = node as ts.UnionTypeNode
-      checkNodes(unionTypeNode.types, context)
-      break
-    case ts.SyntaxKind.IntersectionType:
-      const intersectionTypeNode = node as ts.IntersectionTypeNode
-      checkNodes(intersectionTypeNode.types, context)
-      break
-    case ts.SyntaxKind.ConditionalType:
-      const conditionalTypeNode = node as ts.ConditionalTypeNode
-      checkNode(conditionalTypeNode.checkType, context)
-      checkNode(conditionalTypeNode.extendsType, context)
-      checkNode(conditionalTypeNode.trueType, context)
-      checkNode(conditionalTypeNode.falseType, context)
-      break
-    case ts.SyntaxKind.InferType:
-      const inferTypeNode = node as ts.InferTypeNode
-      checkNode(inferTypeNode.typeParameter, context)
-      break
-    case ts.SyntaxKind.ParenthesizedType:
-      const parenthesizedTypeNode = node as ts.ParenthesizedTypeNode
-      checkNode(parenthesizedTypeNode.type, context)
-      break
     case ts.SyntaxKind.ThisType:
-      break
-    case ts.SyntaxKind.TypeOperator:
-      const typeOperatorNode = node as ts.TypeOperatorNode
-      checkNode(typeOperatorNode.type, context)
-      break
-    case ts.SyntaxKind.IndexedAccessType:
-      const indexedAccessTypeNode = node as ts.IndexedAccessTypeNode
-      checkNode(indexedAccessTypeNode.objectType, context)
-      checkNode(indexedAccessTypeNode.indexType, context)
-      break
-    case ts.SyntaxKind.MappedType:
-      const mappedTypeNode = node as ts.MappedTypeNode
-      checkNode(mappedTypeNode.questionToken, context)
-      checkNode(mappedTypeNode.readonlyToken, context)
-      checkNode(mappedTypeNode.type, context)
-      checkNode(mappedTypeNode.typeParameter, context)
-      break
-    case ts.SyntaxKind.LiteralType:
-      const literalTypeNode = node as ts.LiteralTypeNode
-      checkNode(literalTypeNode.literal, context)
-      break
-    case ts.SyntaxKind.ImportType:
-      const importTypeNode = node as ts.ImportTypeNode
-      checkNode(importTypeNode.qualifier, context)
-      checkNode(importTypeNode.argument, context)
-      checkNodes(importTypeNode.typeArguments, context)
-      break
-    case ts.SyntaxKind.ObjectBindingPattern:
-      const objectBindingPattern = node as ts.ObjectBindingPattern
-      checkNodes(objectBindingPattern.elements, context)
-      break
-    case ts.SyntaxKind.ArrayBindingPattern:
-      const arrayBindingPattern = node as ts.ArrayBindingPattern
-      checkNodes(arrayBindingPattern.elements, context)
-      break
-    case ts.SyntaxKind.BindingElement:
-      const bindingElement = node as ts.BindingElement
-      checkNode(bindingElement.name, context)
-      checkNode(bindingElement.initializer, context)
-      checkNode(bindingElement.dotDotDotToken, context)
-      checkNode(bindingElement.propertyName, context)
-      break
-    case ts.SyntaxKind.ArrayLiteralExpression:
-      const arrayLiteralExpression = node as ts.ArrayLiteralExpression
-      checkNodes(arrayLiteralExpression.elements, context)
-      break
-    case ts.SyntaxKind.ObjectLiteralExpression:
-      const objectLiteralExpression = node as ts.ObjectLiteralExpression
-      checkNodes(objectLiteralExpression.properties, context)
-      break
-    case ts.SyntaxKind.PropertyAccessExpression:
-      const propertyAccessExpression = node as ts.PropertyAccessExpression
-      checkNode(propertyAccessExpression.expression, context)
-      checkNode(propertyAccessExpression.name, context)
-      break
-    case ts.SyntaxKind.ElementAccessExpression:
-      const elementAccessExpression = node as ts.ElementAccessExpression
-      checkNode(elementAccessExpression.expression, context)
-      checkNode(elementAccessExpression.argumentExpression, context)
-      break
-    case ts.SyntaxKind.CallExpression:
-      const callExpression = node as ts.CallExpression
-      checkNode(callExpression.expression, context)
-      checkNodes(callExpression.arguments, context)
-      checkNodes(callExpression.typeArguments, context)
-      break
-    case ts.SyntaxKind.NewExpression:
-      const newExpression = node as ts.NewExpression
-      checkNode(newExpression.expression, context)
-      checkNodes(newExpression.arguments, context)
-      checkNodes(newExpression.typeArguments, context)
-      break
-    case ts.SyntaxKind.TaggedTemplateExpression:
-      const taggedTemplateExpression = node as ts.TaggedTemplateExpression
-      checkNode(taggedTemplateExpression.template, context)
-      break
-    case ts.SyntaxKind.TypeAssertionExpression:
-      const typeAssertion = node as ts.TypeAssertion
-      checkTypeAssertion(typeAssertion, context)
-      checkNode(typeAssertion.expression, context)
-      checkNode(typeAssertion.type, context)
-      break
-    case ts.SyntaxKind.ParenthesizedExpression:
-      const parenthesizedExpression = node as ts.ParenthesizedExpression
-      checkNode(parenthesizedExpression.expression, context)
-      break
-    case ts.SyntaxKind.FunctionExpression:
-      const functionExpression = node as ts.FunctionExpression
-      checkNode(functionExpression.name, context)
-      checkNodes(functionExpression.parameters, context)
-      checkNode(functionExpression.body, context)
-      checkNode(functionExpression.asteriskToken, context)
-      checkNode(functionExpression.questionToken, context)
-      checkNode(functionExpression.type, context)
-      checkNodes(functionExpression.typeParameters, context)
-      break
-    case ts.SyntaxKind.ArrowFunction:
-      const arrowFunction = node as ts.ArrowFunction
-      checkNode(arrowFunction.name, context)
-      checkNodes(arrowFunction.parameters, context)
-      checkNode(arrowFunction.body, context)
-      checkNode(arrowFunction.asteriskToken, context)
-      checkNode(arrowFunction.questionToken, context)
-      checkNode(arrowFunction.type, context)
-      checkNodes(arrowFunction.typeParameters, context)
-      checkNode(arrowFunction.equalsGreaterThanToken, context)
-      break
-    case ts.SyntaxKind.DeleteExpression:
-      const deleteExpression = node as ts.DeleteExpression
-      checkNode(deleteExpression.expression, context)
-      break
-    case ts.SyntaxKind.TypeOfExpression:
-      const typeOfExpression = node as ts.TypeOfExpression
-      checkNode(typeOfExpression.expression, context)
-      break
-    case ts.SyntaxKind.VoidExpression:
-      const voidExpression = node as ts.VoidExpression
-      checkNode(voidExpression.expression, context)
-      break
-    case ts.SyntaxKind.AwaitExpression:
-      const awaitExpression = node as ts.AwaitExpression
-      checkNode(awaitExpression.expression, context)
-      break
-    case ts.SyntaxKind.PrefixUnaryExpression:
-      const prefixUnaryExpression = node as ts.PrefixUnaryExpression
-      checkNode(prefixUnaryExpression.operand, context)
-      break
-    case ts.SyntaxKind.PostfixUnaryExpression:
-      const postfixUnaryExpression = node as ts.PostfixUnaryExpression
-      checkNode(postfixUnaryExpression.operand, context)
-      break
-    case ts.SyntaxKind.BinaryExpression:
-      const binaryExpression = node as ts.BinaryExpression
-      checkNode(binaryExpression.left, context)
-      checkNode(binaryExpression.right, context)
-      checkNode(binaryExpression.operatorToken, context)
-      break
-    case ts.SyntaxKind.ConditionalExpression:
-      const conditionalExpression = node as ts.ConditionalExpression
-      checkNode(conditionalExpression.condition, context)
-      checkNode(conditionalExpression.colonToken, context)
-      checkNode(conditionalExpression.questionToken, context)
-      checkNode(conditionalExpression.whenTrue, context)
-      checkNode(conditionalExpression.whenFalse, context)
-      break
-    case ts.SyntaxKind.TemplateExpression:
-      const templateExpression = node as ts.TemplateExpression
-      checkNodes(templateExpression.templateSpans, context)
-      break
-    case ts.SyntaxKind.YieldExpression:
-      const yieldExpression = node as ts.YieldExpression
-      checkNode(yieldExpression.asteriskToken, context)
-      checkNode(yieldExpression.expression, context)
-      break
-    case ts.SyntaxKind.SpreadElement:
-      const spreadElement = node as ts.SpreadElement
-      checkNode(spreadElement.expression, context)
-      break
-    case ts.SyntaxKind.ClassExpression:
-      const classExpression = node as ts.ClassExpression
-      checkNode(classExpression.name, context)
-      checkNodes(classExpression.typeParameters, context)
-      checkNodes(classExpression.members, context)
-      checkNodes(classExpression.heritageClauses, context)
-      break
     case ts.SyntaxKind.OmittedExpression:
-      break
-    case ts.SyntaxKind.ExpressionWithTypeArguments:
-      const expressionWithTypeArguments = node as ts.ExpressionWithTypeArguments
-      checkNode(expressionWithTypeArguments.expression, context)
-      checkNodes(expressionWithTypeArguments.typeArguments, context)
-      break
-    case ts.SyntaxKind.AsExpression:
-      const asExpression = node as ts.AsExpression
-      checkTypeAssertion(asExpression, context)
-      checkNode(asExpression.expression, context)
-      checkNode(asExpression.type, context)
-      break
-    case ts.SyntaxKind.NonNullExpression:
-      const nonNullExpression = node as ts.NonNullExpression
-      checkTypeAssertion(nonNullExpression, context)
-      checkNode(nonNullExpression.expression, context)
-      break
-    case ts.SyntaxKind.MetaProperty:
-      const metaProperty = node as ts.MetaProperty
-      checkNode(metaProperty.name, context)
-      break
-    case ts.SyntaxKind.TemplateSpan:
-      const templateSpan = node as ts.TemplateSpan
-      checkNode(templateSpan.expression, context)
-      checkNode(templateSpan.literal, context)
-      break
-    case ts.SyntaxKind.SemicolonClassElement:
-      const semicolonClassElement = node as ts.SemicolonClassElement
-      checkNode(semicolonClassElement.name, context)
-      break
-    case ts.SyntaxKind.Block:
-      const block = node as ts.Block
-      checkNodes(block.statements, context)
-      break
-    case ts.SyntaxKind.VariableStatement:
-      const variableStatement = node as ts.VariableStatement
-      checkNode(variableStatement.declarationList, context)
-      break
     case ts.SyntaxKind.EmptyStatement:
-      break
-    case ts.SyntaxKind.ExpressionStatement:
-      const expressionStatement = node as ts.ExpressionStatement
-      checkNode(expressionStatement.expression, context)
-      break
-    case ts.SyntaxKind.IfStatement:
-      const ifStatement = node as ts.IfStatement
-      checkNode(ifStatement.expression, context)
-      checkNode(ifStatement.thenStatement, context)
-      checkNode(ifStatement.elseStatement, context)
-      break
-    case ts.SyntaxKind.DoStatement:
-      const doStatement = node as ts.DoStatement
-      checkNode(doStatement.expression, context)
-      checkNode(doStatement.statement, context)
-      break
-    case ts.SyntaxKind.WhileStatement:
-      const whileStatement = node as ts.WhileStatement
-      checkNode(whileStatement.statement, context)
-      checkNode(whileStatement.expression, context)
-      break
-    case ts.SyntaxKind.ForStatement:
-      const forStatement = node as ts.ForStatement
-      checkNode(forStatement.initializer, context)
-      checkNode(forStatement.condition, context)
-      checkNode(forStatement.incrementor, context)
-      checkNode(forStatement.statement, context)
-      break
-    case ts.SyntaxKind.ForInStatement:
-      const forInStatement = node as ts.ForInStatement
-      checkNode(forInStatement.initializer, context)
-      checkNode(forInStatement.expression, context)
-      checkNode(forInStatement.statement, context)
-      break
-    case ts.SyntaxKind.ForOfStatement:
-      const forOfStatement = node as ts.ForOfStatement
-      checkNode(forOfStatement.initializer, context)
-      checkNode(forOfStatement.statement, context)
-      checkNode(forOfStatement.expression, context)
-      checkNode(forOfStatement.awaitModifier, context)
-      break
     case ts.SyntaxKind.ContinueStatement:
     case ts.SyntaxKind.BreakStatement:
-      break
-    case ts.SyntaxKind.ReturnStatement:
-      const returnStatement = node as ts.ReturnStatement
-      checkNode(returnStatement.expression, context)
-      break
-    case ts.SyntaxKind.WithStatement:
-      const withStatement = node as ts.WithStatement
-      checkNode(withStatement.expression, context)
-      checkNode(withStatement.statement, context)
-      break
-    case ts.SyntaxKind.SwitchStatement:
-      const switchStatement = node as ts.SwitchStatement
-      checkNode(switchStatement.expression, context)
-      checkNode(switchStatement.caseBlock, context)
-      break
-    case ts.SyntaxKind.LabeledStatement:
-      const labeledStatement = node as ts.LabeledStatement
-      checkNode(labeledStatement.label, context)
-      checkNode(labeledStatement.statement, context)
-      break
-    case ts.SyntaxKind.ThrowStatement:
-      const throwStatement = node as ts.ThrowStatement
-      checkNode(throwStatement.expression, context)
-      break
-    case ts.SyntaxKind.TryStatement:
-      const tryStatement = node as ts.TryStatement
-      checkNode(tryStatement.tryBlock, context)
-      checkNode(tryStatement.catchClause, context)
-      checkNode(tryStatement.finallyBlock, context)
-      break
     case ts.SyntaxKind.DebuggerStatement:
-      break
-    case ts.SyntaxKind.VariableDeclaration:
-      const variableDeclaration = node as ts.VariableDeclaration
-      checkNode(variableDeclaration.name, context)
-      checkNode(variableDeclaration.type, context)
-      checkNode(variableDeclaration.initializer, context)
-      break
-    case ts.SyntaxKind.VariableDeclarationList:
-      const declarationList = node as ts.VariableDeclarationList
-      checkNodes(declarationList.declarations, context)
-      break
-    case ts.SyntaxKind.FunctionDeclaration:
-      const functionDeclaration = node as ts.FunctionDeclaration
-      checkNode(functionDeclaration.name, context)
-      checkNodes(functionDeclaration.parameters, context)
-      checkNode(functionDeclaration.body, context)
-      checkNode(functionDeclaration.asteriskToken, context)
-      checkNode(functionDeclaration.questionToken, context)
-      checkNode(functionDeclaration.type, context)
-      checkNodes(functionDeclaration.typeParameters, context)
-      break
-    case ts.SyntaxKind.ClassDeclaration:
-      const classDeclaration = node as ts.ClassDeclaration
-      checkNode(classDeclaration.name, context)
-      checkNodes(classDeclaration.members, context)
-      checkNodes(classDeclaration.typeParameters, context)
-      checkNodes(classDeclaration.heritageClauses, context)
-      break
-    case ts.SyntaxKind.InterfaceDeclaration:
-      const interfaceDeclaration = node as ts.InterfaceDeclaration
-      checkNode(interfaceDeclaration.name, context)
-      checkNodes(interfaceDeclaration.members, context)
-      checkNodes(interfaceDeclaration.typeParameters, context)
-      checkNodes(interfaceDeclaration.heritageClauses, context)
-      break
-    case ts.SyntaxKind.TypeAliasDeclaration:
-      const typeAliasDeclaration = node as ts.TypeAliasDeclaration
-      checkNode(typeAliasDeclaration.name, context)
-      checkNode(typeAliasDeclaration.type, context)
-      checkNodes(typeAliasDeclaration.typeParameters, context)
-      break
-    case ts.SyntaxKind.EnumDeclaration:
-      const enumDeclaration = node as ts.EnumDeclaration
-      checkNode(enumDeclaration.name, context)
-      checkNodes(enumDeclaration.members, context)
-      break
-    case ts.SyntaxKind.ModuleDeclaration:
-      const moduleDeclaration = node as ts.ModuleDeclaration
-      checkNode(moduleDeclaration.name, context)
-      checkNode(moduleDeclaration.body, context)
-      break
-    case ts.SyntaxKind.ModuleBlock:
-      const moduleBlock = node as ts.ModuleBlock
-      checkNodes(moduleBlock.statements, context)
-      break
-    case ts.SyntaxKind.CaseBlock:
-      const caseBlock = node as ts.CaseBlock
-      checkNodes(caseBlock.clauses, context)
-      break
-    case ts.SyntaxKind.NamespaceExportDeclaration:
-      const namespaceExportDeclaration = node as ts.NamespaceExportDeclaration
-      checkNode(namespaceExportDeclaration.name, context)
-      break
-    case ts.SyntaxKind.ImportEqualsDeclaration:
-      const importEqualsDeclaration = node as ts.ImportEqualsDeclaration
-      checkNode(importEqualsDeclaration.name, context)
-      checkNode(importEqualsDeclaration.moduleReference, context)
-      break
-    case ts.SyntaxKind.ImportDeclaration:
-      const importDeclaration = node as ts.ImportDeclaration
-      checkNode(importDeclaration.importClause, context)
-      checkNode(importDeclaration.moduleSpecifier, context)
-      break
-    case ts.SyntaxKind.ImportClause:
-      const importClause = node as ts.ImportClause
-      checkNode(importClause.name, context)
-      checkNode(importClause.namedBindings, context)
-      break
-    case ts.SyntaxKind.NamespaceImport:
-      const namespaceImport = node as ts.NamespaceImport
-      checkNode(namespaceImport.name, context)
-      break
-    case ts.SyntaxKind.NamedImports:
-      const namedImports = node as ts.NamedImports
-      checkNodes(namedImports.elements, context)
-      break
-    case ts.SyntaxKind.ImportSpecifier:
-      const importSpecifier = node as ts.ImportSpecifier
-      checkNode(importSpecifier.name, context)
-      checkNode(importSpecifier.propertyName, context)
-      break
-    case ts.SyntaxKind.ExportAssignment:
-      const exportAssignment = node as ts.ExportAssignment
-      checkNode(exportAssignment.name, context)
-      checkNode(exportAssignment.expression, context)
-      break
-    case ts.SyntaxKind.ExportDeclaration:
-      const exportDeclaration = node as ts.ExportDeclaration
-      checkNode(exportDeclaration.exportClause, context)
-      checkNode(exportDeclaration.name, context)
-      checkNode(exportDeclaration.moduleSpecifier, context)
-      break
-    case ts.SyntaxKind.NamedExports:
-      const namedExports = node as ts.NamedExports
-      checkNodes(namedExports.elements, context)
-      break
-    case ts.SyntaxKind.ExportSpecifier:
-      const exportSpecifier = node as ts.ExportSpecifier
-      checkNode(exportSpecifier.name, context)
-      checkNode(exportSpecifier.propertyName, context)
-      break
-    case ts.SyntaxKind.MissingDeclaration:
-      const missingDeclaration = node as ts.MissingDeclaration
-      checkNode(missingDeclaration.name, context)
-      break
-    case ts.SyntaxKind.ExternalModuleReference:
-      const externalModuleReference = node as ts.ExternalModuleReference
-      checkNode(externalModuleReference.expression, context)
-      break
-    case ts.SyntaxKind.JsxElement:
-      const jsxElement = node as ts.JsxElement
-      checkNode(jsxElement.openingElement, context)
-      checkNode(jsxElement.closingElement, context)
-      checkNodes(jsxElement.children, context)
-      break
-    case ts.SyntaxKind.JsxSelfClosingElement:
-      const jsxSelfClosingElement = node as ts.JsxSelfClosingElement
-      checkNode(jsxSelfClosingElement.attributes, context)
-      checkNode(jsxSelfClosingElement.tagName, context)
-      break
-    case ts.SyntaxKind.JsxOpeningElement:
-      const jsxOpeningElement = node as ts.JsxOpeningElement
-      checkNode(jsxOpeningElement.attributes, context)
-      checkNode(jsxOpeningElement.tagName, context)
-      break
-    case ts.SyntaxKind.JsxClosingElement:
-      const jsxClosingElement = node as ts.JsxClosingElement
-      checkNode(jsxClosingElement.tagName, context)
-      break
-    case ts.SyntaxKind.JsxFragment:
-      const jsxFragment = node as ts.JsxFragment
-      checkNode(jsxFragment.openingFragment, context)
-      checkNode(jsxFragment.closingFragment, context)
-      checkNodes(jsxFragment.children, context)
-      break
     case ts.SyntaxKind.JsxOpeningFragment:
-      break
     case ts.SyntaxKind.JsxClosingFragment:
-      break
-    case ts.SyntaxKind.JsxAttribute:
-      const jsxAttribute = node as ts.JsxAttribute
-      checkNode(jsxAttribute.name, context)
-      checkNode(jsxAttribute.initializer, context)
-      break
-    case ts.SyntaxKind.JsxAttributes:
-      const jsxAttributes = node as ts.JsxAttributes
-      checkNodes(jsxAttributes.properties, context)
-      break
-    case ts.SyntaxKind.JsxSpreadAttribute:
-      const jsxSpreadAttribute = node as ts.JsxSpreadAttribute
-      checkNode(jsxSpreadAttribute.name, context)
-      checkNode(jsxSpreadAttribute.expression, context)
-      break
-    case ts.SyntaxKind.JsxExpression:
-      const jsxExpression = node as ts.JsxExpression
-      checkNode(jsxExpression.dotDotDotToken, context)
-      checkNode(jsxExpression.expression, context)
-      break
-    case ts.SyntaxKind.CaseClause:
-      const caseClause = node as ts.CaseClause
-      checkNodes(caseClause.statements, context)
-      checkNode(caseClause.expression, context)
-      break
-    case ts.SyntaxKind.DefaultClause:
-      const defaultClause = node as ts.DefaultClause
-      checkNodes(defaultClause.statements, context)
-      break
-    case ts.SyntaxKind.HeritageClause:
-      const heritageClause = node as ts.HeritageClause
-      checkNodes(heritageClause.types, context)
-      break
-    case ts.SyntaxKind.CatchClause:
-      const catchClause = node as ts.CatchClause
-
-      if (context.ignoreCatch) {
-        const copyContext = Object.assign({}, context)
-        copyContext.catchVariables = Object.assign({}, context.catchVariables)
-        if (catchClause.variableDeclaration) {
-          const decl = catchClause.variableDeclaration
-          if (decl.name.kind === ts.SyntaxKind.Identifier) {
-            copyContext.catchVariables[
-              decl.name.escapedText as string
-            ] = true
-          }
-        }
-
-        checkNode(catchClause.variableDeclaration, copyContext)
-      } else {
-        checkNode(catchClause.block, context)
-        checkNode(catchClause.variableDeclaration, context)
-      }
-      break
-    case ts.SyntaxKind.PropertyAssignment:
-      const propertyAssignmentExpression = node as ts.PropertyAssignment
-      checkNode(propertyAssignmentExpression.name, context)
-      checkNode(propertyAssignmentExpression.questionToken, context)
-      checkNode(propertyAssignmentExpression.initializer, context)
-      break
-    case ts.SyntaxKind.ShorthandPropertyAssignment:
-      const shorthandPropertyAssignment = node as ts.ShorthandPropertyAssignment
-      checkNode(shorthandPropertyAssignment.name, context)
-      checkNode(shorthandPropertyAssignment.questionToken, context)
-      checkNode(shorthandPropertyAssignment.equalsToken, context)
-      checkNode(shorthandPropertyAssignment.objectAssignmentInitializer, context)
-      break
-    case ts.SyntaxKind.SpreadAssignment:
-      const spreadAssignment = node as ts.SpreadAssignment
-      checkNode(spreadAssignment.name, context)
-      checkNode(spreadAssignment.expression, context)
-      break
     case ts.SyntaxKind.EnumMember:
     case ts.SyntaxKind.SourceFile:
     case ts.SyntaxKind.Bundle:
