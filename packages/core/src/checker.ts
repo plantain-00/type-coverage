@@ -65,6 +65,21 @@ function checkNodes(nodes: ts.NodeArray<ts.Node> | undefined, context: FileConte
   }
 }
 
+function checkTypeAssertion(node: ts.Node, context: FileContext) {
+  if (context.strict) {
+    // exclude `foo as const` and `<const>foo`
+    if ((ts.isAsExpression(node) || ts.isTypeAssertion(node))
+      && ts.isTypeReferenceNode(node.type)
+      && node.type.getText() === 'const') {
+      return
+    }
+    const success = collectAny(node, context)
+    if (success) {
+      context.typeCheckResult.totalCount++
+    }
+  }
+}
+
 export function checkNode(node: ts.Node | undefined, context: FileContext): void {
   if (node === undefined) {
     return
@@ -466,10 +481,7 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
       break
     case ts.SyntaxKind.TypeAssertionExpression:
       const typeAssertion = node as ts.TypeAssertion
-      if (context.strict) {
-        context.typeCheckResult.totalCount++
-        collectAny(typeAssertion, context)
-      }
+      checkTypeAssertion(typeAssertion, context)
       checkNode(typeAssertion.expression, context)
       checkNode(typeAssertion.type, context)
       break
@@ -565,19 +577,13 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
       break
     case ts.SyntaxKind.AsExpression:
       const asExpression = node as ts.AsExpression
-      if (context.strict) {
-        context.typeCheckResult.totalCount++
-        collectAny(asExpression, context)
-      }
+      checkTypeAssertion(asExpression, context)
       checkNode(asExpression.expression, context)
       checkNode(asExpression.type, context)
       break
     case ts.SyntaxKind.NonNullExpression:
       const nonNullExpression = node as ts.NonNullExpression
-      if (context.strict) {
-        context.typeCheckResult.totalCount++
-        collectAny(nonNullExpression, context)
-      }
+      checkTypeAssertion(nonNullExpression, context)
       checkNode(nonNullExpression.expression, context)
       break
     case ts.SyntaxKind.MetaProperty:
