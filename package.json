@@ -5,8 +5,6 @@
   "author": "york yao <yaoao12306@outlook.com>",
   "license": "MIT",
   "devDependencies": {
-    "@commitlint/cli": "9.0.1",
-    "@commitlint/config-conventional": "9.0.1",
     "@types/glob": "7.1.2",
     "@types/minimist": "1.2.0",
     "@types/node": "14.0.14",
