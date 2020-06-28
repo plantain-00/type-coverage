@@ -28,10 +28,19 @@ function collectNotAny(node: ts.Node, { file, sourceFile, typeCheckResult, debug
 }
 
 function collectData(node: ts.Node, context: FileContext) {
+  const types: ts.Type[] = []
   const type = context.checker.getTypeAtLocation(node)
   if (type) {
+    types.push(type)
+  }
+  const contextualType = context.checker.getContextualType(node as ts.Expression)
+  if (contextualType) {
+    types.push(contextualType)
+  }
+
+  if (types.length > 0) {
     context.typeCheckResult.totalCount++
-    if (typeIsStrictAny(type, context.strict)) {
+    if (types.every((t) => typeIsStrictAny(t, context.strict))) {
       const success = collectAny(node, context)
       if (!success) {
         collectNotAny(node, context, type)
