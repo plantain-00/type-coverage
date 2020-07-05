@@ -1,5 +1,5 @@
 {
-  "extends": "../../../tsconfig.base.json",
+  "extends": "tsconfig-plantain",
   "compilerOptions": {
     "outDir": "../dist",
     "module": "commonjs"

@@ -5440,6 +5440,11 @@ ts-node@8.10.2:
     source-map-support "^0.5.17"
     yn "3.1.1"
 
+tsconfig-plantain@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/tsconfig-plantain/-/tsconfig-plantain-0.0.1.tgz#44ef6a8f3e3cada987377bedfe976d34165cac84"
+  integrity sha512-pxHR0SOmqyprd1LU1GMT09wWoJFIC5mIOKYwgoGfB1Q42MkDX8kEDAl7GjBqch/MY5FPn6ivS31Wku933l86Hw==
+
 "tslib@1 || 2", tslib@2:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.0.tgz#18d13fc2dce04051e20f074cc8387fd8089ce4f3"
