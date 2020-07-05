@@ -8,7 +8,7 @@ import glob from 'glob'
  */
 export async function getProjectRootNamesAndCompilerOptions(project: string) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
-  const config = getTsConfig(configFilePath, dirname)
+  const config = await getTsConfig(configFilePath, dirname)
 
   const { options: compilerOptions, errors } = ts.convertCompilerOptionsFromJson(config.compilerOptions, config.basePath || dirname)
   if (errors && errors.length > 0) {
@@ -19,24 +19,31 @@ export async function getProjectRootNamesAndCompilerOptions(project: string) {
   return { rootNames, compilerOptions }
 }
 
-function getTsConfigFilePath(project: string, fallbackProject?: string) {
+function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
   let configFilePath: string
   let dirname: string
-  let projectStats: fs.Stats
+  let projectStats: fs.Stats | undefined
   try {
     projectStats = fs.statSync(project)
   } catch (error) {
     if (fallbackProject) {
-      project = fallbackProject
-      projectStats = fs.statSync(project)
+      while (fallbackProject.length > 0) {
+        try {
+          project = fallbackProject[0]
+          projectStats = fs.statSync(project)
+          break
+        } catch {
+          fallbackProject.shift()
+        }
+      }
     } else {
       throw error
     }
   }
-  if (projectStats.isDirectory()) {
+  if (projectStats && projectStats.isDirectory()) {
     configFilePath = path.resolve(project, 'tsconfig.json')
     dirname = project
-  } else if (projectStats.isFile()) {
+  } else if (projectStats && projectStats.isFile()) {
     configFilePath = project
     dirname = path.dirname(project)
   } else {
@@ -54,7 +61,7 @@ interface JsonConfig {
   basePath?: string
 }
 
-function getTsConfig(configFilePath: string, dirname: string): JsonConfig {
+async function getTsConfig(configFilePath: string, dirname: string): Promise<JsonConfig> {
   const configResult = ts.readConfigFile(configFilePath, p => fs.readFileSync(p).toString())
   const config = configResult.error ? {
     extends: undefined,
@@ -71,7 +78,7 @@ function getTsConfig(configFilePath: string, dirname: string): JsonConfig {
   } : configResult.config as JsonConfig
   if (config.extends) {
     let project: string
-    let fallbackProject: string | undefined
+    let fallbackProjects: string[] = []
     if (path.isAbsolute(config.extends)) {
       project = config.extends
     } else if (config.extends === '.'
@@ -84,10 +91,11 @@ function getTsConfig(configFilePath: string, dirname: string): JsonConfig {
       project = path.resolve(dirname, config.extends)
     } else {
       project = path.resolve(dirname, 'node_modules', config.extends)
-      fallbackProject = path.resolve(process.cwd(), 'node_modules', config.extends)
+      const paths = await findParentsWithNodeModules(dirname)
+      fallbackProjects = paths.map(p => path.resolve(p, 'node_modules', config.extends || ''))
     }
-    const { configFilePath, dirname: extendsBasename } = getTsConfigFilePath(project, fallbackProject)
-    const extendsConfig = getTsConfig(configFilePath, extendsBasename)
+    const { configFilePath, dirname: extendsBasename } = getTsConfigFilePath(project, fallbackProjects)
+    const extendsConfig = await getTsConfig(configFilePath, extendsBasename)
     config.compilerOptions = { ...extendsConfig.compilerOptions, ...config.compilerOptions }
     config.basePath = extendsBasename
   }
@@ -142,4 +150,17 @@ function globAsync(pattern: string, ignore: string | string[], cwd?: string) {
       }
     })
   })
+}
+
+async function findParentsWithNodeModules(dir: string) {
+  const result = [process.cwd()]
+  dir = path.resolve(dir)
+  for (let i = 0; i < 3; i++) {
+    dir = path.dirname(dir)
+    const stats = await statAsync(path.resolve(dir, 'node_modules'))
+    if (stats && stats.isDirectory() && !result.includes(dir)) {
+      result.push(dir)
+    }
+  }
+  return result
 }
