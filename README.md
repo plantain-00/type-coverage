@@ -30,23 +30,23 @@ run `type-coverage`
 
 name | type | description
 --- | --- | ---
-`-p`, `--project` | string? | tell the CLI where is the `tsconfig.json`
-`--detail` | boolean? | show detail
-`--at-least` | number? | fail if coverage rate < this value
-`--debug` | boolean? | show debug info
-`--strict` | boolean? | [strict mode](#strict-mode)
-`--ignore-catch` | boolean? | [ignore catch](#ignore-catch)
-`--cache` | boolean? | [enable cache](#enable-cache)
-`--ignore-files` | string[]? | [ignore files](#ignore-files)
-`-h`, `--help` | boolean? | show help
-`--is` | number? | fail if coverage rate !== this value
-`--update` | boolean? | update "typeCoverage" in package.json to current result
+`-p`, `--project` | string? | tell the CLI where is the `tsconfig.json`(Added in `v1.0`)
+`--detail` | boolean? | show detail(Added in `v1.0`)
+`--at-least` | number? | fail if coverage rate < this value(Added in `v1.0`)
+`--debug` | boolean? | show debug info(Added in `v1.0`)
+`--strict` | boolean? | [strict mode](#strict-mode)(Added in `v1.7`)
+`--ignore-catch` | boolean? | [ignore catch](#ignore-catch)(Added in `v1.13`)
+`--cache` | boolean? | [enable cache](#enable-cache)(Added in `v1.10`)
+`--ignore-files` | string[]? | [ignore files](#ignore-files)(Added in `v1.14`)
+`-h`, `--help` | boolean? | show help(Added in `v2.5`)
+`--is` | number? | fail if coverage rate !== this value(Added in `v2.6`)
+`--update` | boolean? | update "typeCoverage" in package.json to current result(Added in `v2.6`)
 
 ### strict mode
 
-If the identifiers' type arguments exist and contain at least one `any`, like `any[]`, `ReadonlyArray<any>`, `Promise<any>`, `Foo<number, any>`, it will be considered as `any` too
+If the identifiers' type arguments exist and contain at least one `any`, like `any[]`, `ReadonlyArray<any>`, `Promise<any>`, `Foo<number, any>`, it will be considered as `any` too(Added in `v1.7`)
 
-Type assertion, like `foo as string`, `foo!`, `<string>foo` will be considered as uncovered, exclude `foo as const`, `<const>foo`, `foo as unknown`
+Type assertion, like `foo as string`, `foo!`, `<string>foo` will be considered as uncovered, exclude `foo as const`, `<const>foo`, `foo as unknown`(Added in `v2.8`)
 
 Also, future minor release may introduce stricter type check in this mode, which may lower the type coverage rate
 
@@ -89,7 +89,7 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
 
 ## ignore line
 
-Use `type-coverage:ignore-next-line` or `type-coverage:ignore-line` in comment(`//` or `/*  */`) to ignore `any` in a line.
+Use `type-coverage:ignore-next-line` or `type-coverage:ignore-line` in comment(`//` or `/*  */`) to ignore `any` in a line.(Added in `v1.9`)
 
 ```ts
 try {
@@ -118,7 +118,7 @@ Using [typescript-coverage-report](https://github.com/alexcanessa/typescript-cov
 
 [![typescript-coverage-report](https://raw.githubusercontent.com/alexcanessa/typescript-coverage-report/master/images/screenshot-table.png "typescript-coverage-report")](https://github.com/alexcanessa/typescript-coverage-report)
 
-## API
+## API(Added in `v1.3`)
 
 ```ts
 import { lint } from 'type-coverage-core'
@@ -133,20 +133,20 @@ export interface LintOptions {
   debug: boolean,
   files?: string[],
   oldProgram?: ts.Program,
-  strict: boolean,
-  enableCache: boolean,
-  ignoreCatch: boolean,
-  ignoreFiles?: string | string[],
-  fileCounts: boolean,
-  absolutePath?: boolean,
-  processAny?: ProccessAny,
+  strict: boolean, // Added in v1.7
+  enableCache: boolean, // Added in v1.10
+  ignoreCatch: boolean, // Added in v1.13
+  ignoreFiles?: string | string[], // Added in v1.14
+  fileCounts: boolean, // Added in v2.3
+  absolutePath?: boolean, // Added in v2.4
+  processAny?: ProccessAny, // Added in v2.7
 }
 
 export interface FileTypeCheckResult {
   correctCount: number
   totalCount: number
   anys: FileAnyInfo[]
-  fileCounts: {
+  fileCounts: { // Added in v2.3
     correctCount: number,
     totalCount: number,
   }[]
