@@ -163,6 +163,8 @@ Yes, This package calls Typescript API, Typescript can parse Javascript file(wit
 
 ## Changelogs
 
+[CHANGELOG for minor and patch release](./CHANGELOG.md)
+
 ### v2
 
 1. Move `typescript` from `dependencies` to `peerDependencies`
