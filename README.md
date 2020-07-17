@@ -47,7 +47,7 @@ name | type | description
 
 If the identifiers' type arguments exist and contain at least one `any`, like `any[]`, `ReadonlyArray<any>`, `Promise<any>`, `Foo<number, any>`, it will be considered as `any` too(Added in `v1.7`)
 
-Type assertion, like `foo as string`, `foo!`, `<string>foo` will be considered as uncovered, exclude `foo as const`, `<const>foo`, `foo as unknown`(Added in `v2.8`)
+Type assertion, like `foo as string`, `foo!`, `<string>foo` will be considered as uncovered, exclude `foo as const`, `<const>foo`, `foo as unknown`(Added in `v2.8`), and other safe type assertion powered by `isTypeAssignableTo`(Added in `v2.9`)
 
 Also, future minor release may introduce stricter type check in this mode, which may lower the type coverage rate
 

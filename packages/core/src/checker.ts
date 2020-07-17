@@ -85,6 +85,14 @@ function checkTypeAssertion(node: ts.Node, context: FileContext) {
       if (node.type.kind === ts.SyntaxKind.UnknownKeyword) {
         return
       }
+      // exclude safe type assertion powered by isTypeAssignableTo
+      const checker = context.checker as unknown as {
+        isTypeAssignableTo?: (type1: ts.Type, type2: ts.Type) => boolean
+      } & typeof context.checker
+      if (checker.isTypeAssignableTo
+        && checker.isTypeAssignableTo(checker.getTypeAtLocation(node.expression), checker.getTypeFromTypeNode(node.type))) {
+        return
+      }
     }
     const success = collectAny(node, context)
     if (success) {
@@ -110,7 +118,7 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     return
   }
 
-  if (node.kind === ts.SyntaxKind.ThisKeyword){
+  if (node.kind === ts.SyntaxKind.ThisKeyword) {
     collectData(node, context)
     return
   }
