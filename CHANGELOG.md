@@ -1,5 +1,16 @@
 # Change Log
 
+## [2.9.0](https://github.com/plantain-00/type-coverage/compare/v2.8.4...v2.9.0) (2020-07-17)
+  
+* feat: exclude safe type assertion in strict mode ([b76b2a3](https://github.com/plantain-00/type-coverage/commit/b76b2a36c5abc13959a3a04ef69811a526d3362a))
+* chore(deps): bump lodash from 4.17.15 to 4.17.19 ([c195487](https://github.com/plantain-00/type-coverage/commit/c19548744ae1c628f5be6ddf2336fb8557e5550a))
+* docs: add github ci badge ([7af9e04](https://github.com/plantain-00/type-coverage/commit/7af9e04ec1e4176abf08528fb8d6aceeabf9ff94))
+* chore: add CHANGELOG ([a0460d2](https://github.com/plantain-00/type-coverage/commit/a0460d2c0a0dd1bef513f3d0fde8dbd3d85322df))
+* chore: update dependencies ([41b0c73](https://github.com/plantain-00/type-coverage/commit/41b0c7392ddf881a5fb0802cde360ba73d8a2074))
+* chore: remove tsconfig.eslint.json ([b089d9d](https://github.com/plantain-00/type-coverage/commit/b089d9d335bb66d38e08851475d4e0107a375a3f))
+* docs: add features history ([127e567](https://github.com/plantain-00/type-coverage/commit/127e5678e268eb2f4911727e57bc1c1df32303f2))
+* chore: reuse tsconfig.json ([087435f](https://github.com/plantain-00/type-coverage/commit/087435f15a6cd0feb74cdaad59a05d50becd1822))
+
 ## [2.8.4](https://github.com/plantain-00/type-coverage/compare/v2.8.3...v2.8.4) (2020-07-05)
   
 * fix: extends baseUrl should be same behavior with tsc ([1de7f4c](https://github.com/plantain-00/type-coverage/commit/1de7f4c26ba2b4dff2966750f080cd8385714fff))

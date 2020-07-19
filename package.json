@@ -14,7 +14,6 @@
     "eslint": "7.4.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-plantain": "1.0.0",
-    "lerna": "3.22.1",
     "markdownlint-cli": "0.23.2",
     "no-unused-export": "1.11.1",
     "rimraf": "3.0.2",
@@ -23,7 +22,6 @@
     "typescript": "3.9.7"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap -- --frozen-lockfile",
     "build": "clean-scripts build",
     "lint": "clean-scripts lint",
     "test": "clean-scripts test",
