@@ -16,6 +16,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "peerDependencies": {
-    "typescript": "2 || 3"
+    "typescript": "2 || 3 || 4"
   }
 }

@@ -223,7 +223,9 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     return
   }
   if (ts.isTupleTypeNode(node)) {
-    checkNodes(node.elementTypes, context)
+    checkNodes(node.elements, context)
+    // for typescript < 4
+    checkNodes((node as { elementTypes?: ts.NodeArray<ts.Node> }).elementTypes, context)
     return
   }
   if (ts.isUnionTypeNode(node)

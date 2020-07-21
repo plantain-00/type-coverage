@@ -20,7 +20,7 @@
     "rimraf": "3.0.2",
     "ts-node": "8.10.2",
     "tsconfig-plantain": "0.0.1",
-    "typescript": "3.9.7"
+    "typescript": "4.0.2"
   },
   "scripts": {
     "build": "clean-scripts build",
@@ -34,6 +34,6 @@
   ],
   "private": true,
   "typeCoverage": {
-    "atLeast": 98.88
+    "atLeast": 98.91
   }
 }
