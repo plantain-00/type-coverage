@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.10.0-beta.0](https://github.com/plantain-00/type-coverage/compare/v2.9.0...v2.10.0-beta.0) (2020-07-21)
+  
+* feat: support typescript 4 ([b5632f0](https://github.com/plantain-00/type-coverage/commit/b5632f0b1eba1f723f7aa7a80f9857da4208c187))
+* chore: remove lerna and add changelog ([23111b3](https://github.com/plantain-00/type-coverage/commit/23111b3ed46e1b561ef0269e3cf096c0e9df7b54))
+* chore: update dependencies ([46ddedc](https://github.com/plantain-00/type-coverage/commit/46ddedcd515d8fc98ec01091e073f41f9d3953da))
+
 ## [2.9.0](https://github.com/plantain-00/type-coverage/compare/v2.8.4...v2.9.0) (2020-07-17)
   
 * feat: exclude safe type assertion in strict mode ([b76b2a3](https://github.com/plantain-00/type-coverage/commit/b76b2a36c5abc13959a3a04ef69811a526d3362a))
