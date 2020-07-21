@@ -10,9 +10,9 @@ export default {
     'tsc -p packages/core/src/',
     'rimraf packages/cli/dist/',
     'tsc -p packages/cli/src/',
-    'node packages/cli/dist/index.js -p packages/core/src --detail --strict --ignore-catch --supressError',
-    'node packages/cli/dist/index.js -p packages/cli/src --detail --strict --ignore-catch --supressError',
-    'node packages/cli/dist/index.js -p packages/utils/src --detail --strict --ignore-catch --supressError'
+    'node packages/cli/dist/index.js -p packages/core/src --detail --strict --supressError',
+    'node packages/cli/dist/index.js -p packages/cli/src --detail --strict --supressError',
+    'node packages/cli/dist/index.js -p packages/utils/src --detail --strict --supressError'
   ],
   lint: {
     ts: `eslint --ext .js,.ts ${tsFiles}`,

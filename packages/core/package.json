@@ -17,6 +17,6 @@
     "dist"
   ],
   "peerDependencies": {
-    "typescript": "2 || 3"
+    "typescript": "2 || 3 || 4"
   }
 }

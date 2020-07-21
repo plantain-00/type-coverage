@@ -25,7 +25,7 @@ function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
   let projectStats: fs.Stats | undefined
   try {
     projectStats = fs.statSync(project)
-  } catch (error) {
+  } catch (error: unknown) {
     if (fallbackProject) {
       while (fallbackProject.length > 0) {
         try {
