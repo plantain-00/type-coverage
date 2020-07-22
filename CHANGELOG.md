@@ -1,9 +1,14 @@
 # Change Log
 
+## [2.10.0-beta.0](https://github.com/plantain-00/type-coverage/compare/v2.9.0...v2.10.0-beta.0) (2020-07-21)
+  
+* feat: support typescript 4 ([b5632f0](https://github.com/plantain-00/type-coverage/commit/b5632f0b1eba1f723f7aa7a80f9857da4208c187))
+* chore: remove lerna and add changelog ([23111b3](https://github.com/plantain-00/type-coverage/commit/23111b3ed46e1b561ef0269e3cf096c0e9df7b54))
+* chore: update dependencies ([46ddedc](https://github.com/plantain-00/type-coverage/commit/46ddedcd515d8fc98ec01091e073f41f9d3953da))
+
 ## [2.9.0](https://github.com/plantain-00/type-coverage/compare/v2.8.4...v2.9.0) (2020-07-17)
   
 * feat: exclude safe type assertion in strict mode ([b76b2a3](https://github.com/plantain-00/type-coverage/commit/b76b2a36c5abc13959a3a04ef69811a526d3362a))
-* chore(deps): bump lodash from 4.17.15 to 4.17.19 ([c195487](https://github.com/plantain-00/type-coverage/commit/c19548744ae1c628f5be6ddf2336fb8557e5550a))
 * docs: add github ci badge ([7af9e04](https://github.com/plantain-00/type-coverage/commit/7af9e04ec1e4176abf08528fb8d6aceeabf9ff94))
 * chore: add CHANGELOG ([a0460d2](https://github.com/plantain-00/type-coverage/commit/a0460d2c0a0dd1bef513f3d0fde8dbd3d85322df))
 * chore: update dependencies ([41b0c73](https://github.com/plantain-00/type-coverage/commit/41b0c7392ddf881a5fb0802cde360ba73d8a2074))
@@ -166,7 +171,7 @@
 
 ## [2.0.0](https://github.com/plantain-00/type-coverage/compare/v1.14.0...v2.0.0) (2019-04-28)
   
-* feat: split into 2 packages ([90d2f5b](https://github.com/plantain-00/type-coverage/commit/90d2f5bd8084d88770ab039159988fde8d4f0737)) ([e2e9f7f](https://github.com/plantain-00/type-coverage/commit/e2e9f7f8815f665862aa0cc7d429c57247563b42))
+* feat: split into 2 packages ([90d2f5b](https://github.com/plantain-00/type-coverage/commit/90d2f5bd8084d88770ab039159988fde8d4f0737))
 * chore: update dependencies ([767aabc](https://github.com/plantain-00/type-coverage/commit/767aabc7a41e6b627956ac1b87e09ade726dc177))
 
 ## [1.14.0](https://github.com/plantain-00/type-coverage/compare/v1.13.0...v1.14.0) (2019-04-20)
@@ -191,7 +196,7 @@
 
 ## [1.11.0](https://github.com/plantain-00/type-coverage/compare/v1.10.0...v1.11.0) (2019-03-28)
   
-* feat: improve cache performance ([4b24df5](https://github.com/plantain-00/type-coverage/commit/4b24df5227ea26cff68dc3d79318c304c90adace)) ([0230e85](https://github.com/plantain-00/type-coverage/commit/0230e85a2b7d67b860971c9152d261d85eeeed2a))
+* feat: improve cache performance ([4b24df5](https://github.com/plantain-00/type-coverage/commit/4b24df5227ea26cff68dc3d79318c304c90adace))
 * chore: update dependencies ([1e6c786](https://github.com/plantain-00/type-coverage/commit/1e6c786ebe26895e2b69b9027579fd2aa18b8de5)) ([b3d7e69](https://github.com/plantain-00/type-coverage/commit/b3d7e69be67fd32be87fcc6aeed4f6a140b5a9b4)) ([a064bc3](https://github.com/plantain-00/type-coverage/commit/a064bc3a0756d798fa9c4364247823ac325b620f)) ([35763d6](https://github.com/plantain-00/type-coverage/commit/35763d6387c7e4bd9699963be8473325c33d939a))
 * fix: typo ([5844b63](https://github.com/plantain-00/type-coverage/commit/5844b63166a1ed47c1d233dde86b519fea704021))
 * docs: add exposed lint API ([3aac879](https://github.com/plantain-00/type-coverage/commit/3aac87991316b890e2a5d413732d38d04664da64))
