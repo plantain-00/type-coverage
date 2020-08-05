@@ -2,6 +2,7 @@ export default {
   include: [
     'packages/*/dist/*',
     'packages/*/es/*',
+    'packages/*/bin/*',
     'packages/*/package.json',
     'packages/*/README.md',
   ],
