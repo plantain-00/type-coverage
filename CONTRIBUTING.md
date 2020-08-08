@@ -11,3 +11,9 @@
 ## lint code
 
 `yarn lint`
+
+## release
+
+Make sure you have the permission to execute `git push` and `npm publish` first.
+
+`yarn release`
