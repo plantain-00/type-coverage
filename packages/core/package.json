@@ -13,9 +13,9 @@
     "tslib": "1 || 2",
     "tsutils": "3"
   },
-  "files": [
-    "dist"
-  ],
+  "publishConfig": {
+    "registry":"https://registry.npmjs.org/"
+  },
   "peerDependencies": {
     "typescript": "2 || 3"
   }

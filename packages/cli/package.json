@@ -9,10 +9,9 @@
     "minimist": "1",
     "type-coverage-core": "^2.9.0"
   },
-  "files": [
-    "dist",
-    "bin"
-  ],
+  "publishConfig": {
+    "registry":"https://registry.npmjs.org/"
+  },
   "bin": {
     "type-coverage": "bin/type-coverage"
   }

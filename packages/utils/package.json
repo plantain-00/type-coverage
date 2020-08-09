@@ -12,10 +12,9 @@
     "glob": "7",
     "tslib": "1 || 2"
   },
-  "files": [
-    "dist",
-    "es"
-  ],
+  "publishConfig": {
+    "registry":"https://registry.npmjs.org/"
+  },
   "peerDependencies": {
     "typescript": "2 || 3"
   }
