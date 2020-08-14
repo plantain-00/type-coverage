@@ -13,7 +13,7 @@
     "tslib": "1 || 2"
   },
   "publishConfig": {
-    "registry":"https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/"
   },
   "peerDependencies": {
     "typescript": "2 || 3"
