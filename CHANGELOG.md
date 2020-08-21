@@ -1,10 +1,15 @@
 # Change Log
 
-## [2.10.0-beta.0](https://github.com/plantain-00/type-coverage/compare/v2.9.0...v2.10.0-beta.0) (2020-07-21)
+## [2.10.0](https://github.com/plantain-00/type-coverage/compare/v2.9.0...v2.10.0) (2020-08-21)
   
-* feat: support typescript 4 ([b5632f0](https://github.com/plantain-00/type-coverage/commit/b5632f0b1eba1f723f7aa7a80f9857da4208c187))
+* feat: support typescript 4 ([af4e57e](https://github.com/plantain-00/type-coverage/commit/af4e57efb9c13d58f94c7e0a964baf54cc3d7ac1))
+* chore: update dependencies ([19cb081](https://github.com/plantain-00/type-coverage/commit/19cb0819e5c3c5cdccbed609fa2f0e62a68b7173)) ([4c97914](https://github.com/plantain-00/type-coverage/commit/4c9791405aa1c06ec5736d8d35e031dbc0bb3b46)) ([6a84c7f](https://github.com/plantain-00/type-coverage/commit/6a84c7fd1e7f5b46d98f41bf3029a087df8b545b)) ([a87ed3a](https://github.com/plantain-00/type-coverage/commit/a87ed3aa06b06bb9251bb94888211192715bdf81)) ([46ddedc](https://github.com/plantain-00/type-coverage/commit/46ddedcd515d8fc98ec01091e073f41f9d3953da))
+* build: set publishConfig in package.json ([1631f84](https://github.com/plantain-00/type-coverage/commit/1631f84d4d45f1b60c59591411fe253ff409c12a))
+* build: improve release script ([a0fdfb8](https://github.com/plantain-00/type-coverage/commit/a0fdfb83a767a6a26c3cdaa2f0352b84173c2042))
+* fix: missing releasing bin ([807389a](https://github.com/plantain-00/type-coverage/commit/807389a647e4000bac5bba41528257b6049abaa5))
+* docs: add contribute guide ([cd387c0](https://github.com/plantain-00/type-coverage/commit/cd387c08ea3d78d936493079c58a8621fd6a5b9d))
+* docs: update changelog ([c816e6f](https://github.com/plantain-00/type-coverage/commit/c816e6feb102517e832a292934439cc2bef93778))
 * chore: remove lerna and add changelog ([23111b3](https://github.com/plantain-00/type-coverage/commit/23111b3ed46e1b561ef0269e3cf096c0e9df7b54))
-* chore: update dependencies ([46ddedc](https://github.com/plantain-00/type-coverage/commit/46ddedcd515d8fc98ec01091e073f41f9d3953da))
 
 ## [2.9.0](https://github.com/plantain-00/type-coverage/compare/v2.8.4...v2.9.0) (2020-07-17)
   
@@ -72,8 +77,8 @@
 
 ## [2.5.0](https://github.com/plantain-00/type-coverage/compare/v2.4.3...v2.5.0) (2020-05-06)
   
-* docs: add help doc ([2fdd8da](https://github.com/plantain-00/type-coverage/commit/2fdd8dab689e7ce8a488ffa3af406221787ef333)) ([be90c8c](https://github.com/plantain-00/type-coverage/commit/be90c8cab42c4fb64ef23e8a02d152ce553367f7))
-* src: Add -h and --help ([91f4ff1](https://github.com/plantain-00/type-coverage/commit/91f4ff1186023a63df36b3f8a1e79748a8f030b7)) ([abe25ea](https://github.com/plantain-00/type-coverage/commit/abe25ea6310c785b320765a6b5ce12e1c992ea5a))
+* docs: add help doc ([2fdd8da](https://github.com/plantain-00/type-coverage/commit/2fdd8dab689e7ce8a488ffa3af406221787ef333))
+* src: Add -h and --help ([91f4ff1](https://github.com/plantain-00/type-coverage/commit/91f4ff1186023a63df36b3f8a1e79748a8f030b7))
 * chore: update dependencies ([3479efc](https://github.com/plantain-00/type-coverage/commit/3479efca409b9828a3496f5befab5e1c12befde3))
 
 ## [2.4.3](https://github.com/plantain-00/type-coverage/compare/v2.4.2...v2.4.3) (2020-05-01)
@@ -98,8 +103,8 @@
 
 ## [2.4.0](https://github.com/plantain-00/type-coverage/compare/v2.3.1...v2.4.0) (2020-01-01)
   
-* feat: add absolutePath option ([7dc2399](https://github.com/plantain-00/type-coverage/commit/7dc239907798859f0c5d9ce6a608c233faf543f5)) ([2b4fc99](https://github.com/plantain-00/type-coverage/commit/2b4fc99ffeec63cc2ca23b499f1d66fd36e17c64))
-* fix: remove file path change ([c8abe38](https://github.com/plantain-00/type-coverage/commit/c8abe3804ffa146a1be865076531ae852d124333)) ([7701664](https://github.com/plantain-00/type-coverage/commit/7701664f6250511a59f6d00f8d390ddb6cf46194))
+* feat: add absolutePath option ([7dc2399](https://github.com/plantain-00/type-coverage/commit/7dc239907798859f0c5d9ce6a608c233faf543f5))
+* fix: remove file path change ([c8abe38](https://github.com/plantain-00/type-coverage/commit/c8abe3804ffa146a1be865076531ae852d124333))
 * chore: update dependencies ([e5a9783](https://github.com/plantain-00/type-coverage/commit/e5a9783b73f1a81a8970cbadbc7e5b74f0058323)) ([f6cf99e](https://github.com/plantain-00/type-coverage/commit/f6cf99e9c8ce1120ada7214e5716637d22f3590e)) ([2ca5240](https://github.com/plantain-00/type-coverage/commit/2ca5240a34c9d95d23ccc28d0876dc70a9431e82)) ([d794423](https://github.com/plantain-00/type-coverage/commit/d7944233cfe223e28951eb73badc0f6fc9490c29)) ([5252c69](https://github.com/plantain-00/type-coverage/commit/5252c693b8c6cf2d09ba2dc070e069526493fb19)) ([78aa18e](https://github.com/plantain-00/type-coverage/commit/78aa18e36dd2d29961f5fd1101af65ef3537abd7))
 
 ## [2.3.1](https://github.com/plantain-00/type-coverage/compare/v2.3.0...v2.3.1) (2019-11-18)
@@ -109,25 +114,25 @@
 
 ## [2.3.0](https://github.com/plantain-00/type-coverage/compare/v2.2.0...v2.3.0) (2019-09-13)
   
-* feat(core api): added fileCounts with flag ([3019f48](https://github.com/plantain-00/type-coverage/commit/3019f48a4de3e98d8ced0f65708ccdacbaef4449)) ([71d473e](https://github.com/plantain-00/type-coverage/commit/71d473eb118723820be06b0d86671385b7002138))
+* feat(core api): added fileCounts with flag ([3019f48](https://github.com/plantain-00/type-coverage/commit/3019f48a4de3e98d8ced0f65708ccdacbaef4449))
 * chore: update dependencies ([b40465c](https://github.com/plantain-00/type-coverage/commit/b40465ce39df086c584a1f0c07c822724bcc9757)) ([0917564](https://github.com/plantain-00/type-coverage/commit/0917564e84c9607834f7f3a34e6fff795ed33ff3)) ([867cf74](https://github.com/plantain-00/type-coverage/commit/867cf74bc9876de0b850783e588b131eeb68fe90)) ([03980ac](https://github.com/plantain-00/type-coverage/commit/03980acb6b67cfee13406da059eedf54118ba395)) ([2d1efa3](https://github.com/plantain-00/type-coverage/commit/2d1efa33bfcd7d06f12b08423a7ea900124bb180)) ([43bf257](https://github.com/plantain-00/type-coverage/commit/43bf25737ae1ca5fd407c1be922097cc2336fa63))
 * chore: remove node-canvas dependencies ([0c30355](https://github.com/plantain-00/type-coverage/commit/0c30355e55e496ea98887416b3744cfd682019b8))
 
 ## [2.2.0](https://github.com/plantain-00/type-coverage/compare/v2.2.0-alpha.2...v2.2.0) (2019-07-31)
   
-* fix: wrong extends for tsconfig.json in node_modules ([3e9c564](https://github.com/plantain-00/type-coverage/commit/3e9c564912fc319eff923cd171b6d2caa5c325b6)) ([27b47fc](https://github.com/plantain-00/type-coverage/commit/27b47fcce3a516a018101b22dd85f05cd4772acf))
+* fix: wrong extends for tsconfig.json in node_modules ([3e9c564](https://github.com/plantain-00/type-coverage/commit/3e9c564912fc319eff923cd171b6d2caa5c325b6))
 * chore: update dependencies ([06b1c41](https://github.com/plantain-00/type-coverage/commit/06b1c41f8fc1c604710205254e68d9c2c0e02df6))
 * docs: fix link to codechecks.io in README ([11107ec](https://github.com/plantain-00/type-coverage/commit/11107ec57956cdd50a4dee33e191af52af72b87c))
 
-## [2.2.0-alpha.2](https://github.com/plantain-00/type-coverage/compare/v2.2.0-alpha.1...v2.2.0-alpha.2) (2019-07-23)
+### [2.2.0-alpha.2](https://github.com/plantain-00/type-coverage/compare/v2.2.0-alpha.1...v2.2.0-alpha.2) (2019-07-23)
   
 * fix: add missing publishing file ([d70f6a6](https://github.com/plantain-00/type-coverage/commit/d70f6a6179145f63fe396730a66c4e609fa70f8a))
 
-## [2.2.0-alpha.1](https://github.com/plantain-00/type-coverage/compare/v2.2.0-alpha.0...v2.2.0-alpha.1) (2019-07-23)
+### [2.2.0-alpha.1](https://github.com/plantain-00/type-coverage/compare/v2.2.0-alpha.0...v2.2.0-alpha.1) (2019-07-23)
   
 * feat: add es target ([bf189cd](https://github.com/plantain-00/type-coverage/commit/bf189cdb7b4b7916437816d1468ab4224a9e585a))
 
-## [2.2.0-alpha.0](https://github.com/plantain-00/type-coverage/compare/v2.1.0...v2.2.0-alpha.0) (2019-07-23)
+### [2.2.0-alpha.0](https://github.com/plantain-00/type-coverage/compare/v2.1.0...v2.2.0-alpha.0) (2019-07-23)
   
 * feat: add jsdoc util ([409c9e8](https://github.com/plantain-00/type-coverage/commit/409c9e8eddb89012628b7df1531d1c6b63cbdf47))
 * chore: update dependencies ([0a9c3e5](https://github.com/plantain-00/type-coverage/commit/0a9c3e5fb8ff44220f504083041d84bc9afa2c9c))
@@ -181,11 +186,8 @@
 
 ## [1.13.0](https://github.com/plantain-00/type-coverage/compare/v1.12.0...v1.13.0) (2019-04-17)
   
-* feat: change `--ignoreCatch` to `--ignore-cache` ([8aded79](https://github.com/plantain-00/type-coverage/commit/8aded79541721e239f7c5a96fe56b66510c4a603)) ([71248bb](https://github.com/plantain-00/type-coverage/commit/71248bbcefc397e2537d057f3e9bc529907f89c2))
-* feat: add --ignore-catch functionality ([2620a65](https://github.com/plantain-00/type-coverage/commit/2620a6520d484efa43fd8a2b1bf96caacef4208e)) ([86e7299](https://github.com/plantain-00/type-coverage/commit/86e729978e6492761e64f4d7bf71eb97da12df99))
-* gitignore do not ignore js ([64cd612](https://github.com/plantain-00/type-coverage/commit/64cd61253d6222230a7481e93ac7a9667949ce35))
-* check in dist for installing as release ([d744019](https://github.com/plantain-00/type-coverage/commit/d7440196b1c2e2486b7057d8f45434dcf8edd659))
-* add --ignore-catch functionality ([d86dd23](https://github.com/plantain-00/type-coverage/commit/d86dd232cd131034c3c2fa648d296a81240403d1))
+* feat: change `--ignoreCatch` to `--ignore-cache` ([8aded79](https://github.com/plantain-00/type-coverage/commit/8aded79541721e239f7c5a96fe56b66510c4a603))
+* feat: add --ignore-catch functionality ([2620a65](https://github.com/plantain-00/type-coverage/commit/2620a6520d484efa43fd8a2b1bf96caacef4208e))
 * chore: update dependencies ([1036002](https://github.com/plantain-00/type-coverage/commit/1036002c4ada562053cbcd98885ace9ee69536fd)) ([d335801](https://github.com/plantain-00/type-coverage/commit/d335801d1c1f1c4c33726bf612f489485d2b32a2)) ([bfd7cd5](https://github.com/plantain-00/type-coverage/commit/bfd7cd5d592509607c57653e4f9938a91dcb76ee))
 
 ## [1.12.0](https://github.com/plantain-00/type-coverage/compare/v1.11.0...v1.12.0) (2019-03-29)
@@ -299,15 +301,15 @@
 
 ## [1.3.0](https://github.com/plantain-00/type-coverage/compare/v1.3.0-alpha.2...v1.3.0) (2018-10-30)
 
-## [1.3.0-alpha.2](https://github.com/plantain-00/type-coverage/compare/v1.3.0-alpha.1...v1.3.0-alpha.2) (2018-10-30)
+### [1.3.0-alpha.2](https://github.com/plantain-00/type-coverage/compare/v1.3.0-alpha.1...v1.3.0-alpha.2) (2018-10-30)
   
 * fix: path resolve error ([5b0d6dc](https://github.com/plantain-00/type-coverage/commit/5b0d6dcdef47865e0333bdd2626a2081841d439f))
 
-## [1.3.0-alpha.1](https://github.com/plantain-00/type-coverage/compare/v1.3.0-alpha.0...v1.3.0-alpha.1) (2018-10-30)
+### [1.3.0-alpha.1](https://github.com/plantain-00/type-coverage/compare/v1.3.0-alpha.0...v1.3.0-alpha.1) (2018-10-30)
   
 * feat: export lint result object rather than in console ([c36d011](https://github.com/plantain-00/type-coverage/commit/c36d0115a13e4e2b3277ea6026c8926866032d13))
 
-## [1.3.0-alpha.0](https://github.com/plantain-00/type-coverage/compare/v1.2.1...v1.3.0-alpha.0) (2018-10-29)
+### [1.3.0-alpha.0](https://github.com/plantain-00/type-coverage/compare/v1.2.1...v1.3.0-alpha.0) (2018-10-29)
   
 * feat: export lint function ([af46cbf](https://github.com/plantain-00/type-coverage/commit/af46cbf820bd8a9d73f63ce9f5cab4f167c588d3))
 * chore: update dependencies ([6f5efdf](https://github.com/plantain-00/type-coverage/commit/6f5efdf52a9d52f3710923285a16ea3402520260)) ([5d315df](https://github.com/plantain-00/type-coverage/commit/5d315df0db0ad9c9bfc66f53cce23c8270ba03f4)) ([f7d85cf](https://github.com/plantain-00/type-coverage/commit/f7d85cf583e212daca54dff31b21f2ac08c2c97b)) ([cd60626](https://github.com/plantain-00/type-coverage/commit/cd6062624be6b4d5b7852da8c30e0b1750d5c221))
