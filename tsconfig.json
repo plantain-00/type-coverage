@@ -1,0 +1,6 @@
+{
+  "extends": "tsconfig-plantain",
+  "compilerOptions": {
+    "module": "commonjs"
+  }
+}
