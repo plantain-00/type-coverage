@@ -81,19 +81,19 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
 
 ## config in package.json
 
-```json
+```json5
   "typeCoverage": {
-    "atLeast": 99, // same as --at-least
-    "is": 99 // same as --is
-    "cache": true // same as --cache
-    "debug": true // same as --debug
-    "detail": true // same as --detail
-    "ignoreCatch": true // same as --ignore-catch
-    "ignoreFiles": ["demo1/*.ts", "demo2/foo.ts"] // same as --ignore-files "demo1/*.ts" --ignore-files "demo2/foo.ts"
-    "project": "tsconfig.json" // same as --project tsconfig.json or -p tsconfig.json
-    "strict": true // same as --strict
-    "suppressError": true // same as --suppressError
-    "update": true // same as --update
+    "atLeast": 99, // same as --at-least (Added in `v1.4`)
+    "is": 99, // same as --is (Added in `v2.6`)
+    "cache": true, // same as --cache (Added in `v2.11`)
+    "debug": true, // same as --debug (Added in `v2.11`)
+    "detail": true, // same as --detail (Added in `v2.11`)
+    "ignoreCatch": true, // same as --ignore-catch (Added in `v2.11`)
+    "ignoreFiles": ["demo1/*.ts", "demo2/foo.ts"], // same as --ignore-files "demo1/*.ts" --ignore-files "demo2/foo.ts" (Added in `v2.11`)
+    "project": "tsconfig.json", // same as --project tsconfig.json or -p tsconfig.json (Added in `v2.11`)
+    "strict": true, // same as --strict (Added in `v2.11`)
+    "suppressError": true, // same as --suppressError (Added in `v2.11`)
+    "update": true // same as --update (Added in `v2.11`)
   },
 ```
 
