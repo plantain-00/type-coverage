@@ -85,6 +85,15 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
   "typeCoverage": {
     "atLeast": 99, // same as --at-least
     "is": 99 // same as --is
+    "cache": true // same as --cache
+    "debug": true // same as --debug
+    "detail": true // same as --detail
+    "ignoreCatch": true // same as --ignore-catch
+    "ignoreFiles": ["demo1/*.ts", "demo2/foo.ts"] // same as --ignore-files "demo1/*.ts" --ignore-files "demo2/foo.ts"
+    "project": "tsconfig.json" // same as --project tsconfig.json or -p tsconfig.json
+    "strict": true // same as --strict
+    "suppressError": true // same as --suppressError
+    "update": true // same as --update
   },
 ```
 
