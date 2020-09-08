@@ -32,8 +32,41 @@ function printHelp() {
   `)
 }
 
+interface BaseArgs {
+  suppressError: boolean
+  project: string
+  debug: boolean
+  strict: boolean
+  cache: boolean
+  detail: boolean
+  is: number
+  update: boolean
+}
+interface CliArgs extends BaseArgs {
+  p: string
+  v: boolean
+  version: boolean
+  h: boolean
+  help: boolean
+  ['ignore-catch']: boolean
+  ['ignore-files']?: string | string[]
+  ['at-least']: number
+}
+
+interface PkgArgs extends BaseArgs {
+  ignoreCatch: boolean
+  ignoreFiles?: string | string[]
+  atLeast: boolean
+}
+
+interface PackageJson {
+  typeCoverage?: PkgArgs
+}
+
+type AllArgs = PkgArgs & CliArgs
+
 async function executeCommandLine() {
-  const argv = minimist(process.argv.slice(2), { '--': true }) as unknown as ParsedArgs
+  const argv = minimist(process.argv.slice(2), { '--': true }) as unknown as CliArgs
 
   const showVersion = argv.v || argv.version
   if (showVersion) {
@@ -45,26 +78,22 @@ async function executeCommandLine() {
     printHelp()
     process.exit(0)
   }
-
-  suppressError = argv.suppressError
-
-  const { correctCount, totalCount, anys } = await lint(
-    argv.p || argv.project || '.',
-    {
-      debug: argv.debug,
-      strict: argv.strict,
-      enableCache: argv.cache,
-      ignoreCatch: argv['ignore-catch'],
-      ignoreFiles: argv['ignore-files']
-    }
-  )
+  
+  const { atLeast, debug, detail, enableCache, ignoreCatch, ignoreFiles, is, project, strict, update  } = await getTarget(argv);
+  
+  const { correctCount, totalCount, anys } = await lint(project, {
+      debug: debug,
+      strict: strict,
+      enableCache: enableCache,
+      ignoreCatch: ignoreCatch,
+      ignoreFiles: ignoreFiles
+  });
+  
   const percent = Math.floor(10000 * correctCount / totalCount) / 100
-
-  const { atLeast, is } = await getTarget(argv)
   const atLeastFailed = atLeast && percent < atLeast
   const isFailed = is && percent !== is
 
-  if (argv.detail || atLeastFailed || isFailed) {
+  if (detail || atLeastFailed || isFailed) {
     for (const { file, line, character, text } of anys) {
       console.log(`${path.resolve(process.cwd(), file)}:${line + 1}:${character + 1}: ${text}`)
     }
@@ -72,7 +101,7 @@ async function executeCommandLine() {
   const percentString = percent.toFixed(2)
   console.log(`${correctCount} / ${totalCount} ${percentString}%`)
 
-  if (argv.update) {
+  if (update) {
     await saveTarget(+percentString)
   }
 
@@ -84,51 +113,48 @@ async function executeCommandLine() {
   }
 }
 
-interface ParsedArgs {
-  v: boolean
-  version: boolean
-  h: boolean
-  help: boolean
-  suppressError: boolean
-  p: string
-  project: string
-  debug: boolean
-  strict: boolean
-  cache: boolean
-  detail: boolean
-  ['ignore-catch']: boolean
-  ['ignore-files']?: string | string[]
-  ['at-least']: number
-  is: number
-  update: boolean
-}
 
-async function getTarget(argv: ParsedArgs) {
-  let atLeast: number | undefined
-  let is: number | undefined
-  const packageJsonPath = path.resolve(process.cwd(), 'package.json')
-  if (await existsAsync(packageJsonPath)) {
-    const currentPackageJson: {
-      typeCoverage?: {
-        atLeast?: number
-        is?: number
-      }
-    } = JSON.parse((await readFileAsync(packageJsonPath)).toString())
-    if (currentPackageJson.typeCoverage) {
-      if (currentPackageJson.typeCoverage.atLeast) {
-        atLeast = currentPackageJson.typeCoverage.atLeast
-      } else if (currentPackageJson.typeCoverage.is) {
-        is = currentPackageJson.typeCoverage.is
-      }
+async function getTarget(argv: CliArgs) {
+
+    let pkgCfg:PkgArgs | undefined;
+    const packageJsonPath = path.resolve(process.cwd(), 'package.json');
+    if (await existsAsync(packageJsonPath)) {
+        const currentPackageJson = JSON.parse((await readFileAsync(packageJsonPath)).toString()) as PackageJson;
+        const typeCoverage = currentPackageJson.typeCoverage
+        if (typeCoverage) {
+            pkgCfg = typeCoverage
+        }
     }
-  }
-  if (argv['at-least']) {
-    atLeast = argv['at-least']
-  }
-  if (argv.is) {
-    is = argv.is
-  }
-  return { atLeast, is }
+    
+    const isCliArg = (key:keyof AllArgs):key is keyof CliArgs => key in argv
+    const isPkgArg = (key:keyof AllArgs):key is keyof PkgArgs => pkgCfg ? key in pkgCfg : false
+
+    function getArgOrCfgVal<K extends keyof AllArgs>(keys:K[]) {
+        for (const key of keys) {
+            if (isCliArg(key)) {
+                return argv[key]
+            }
+            if (pkgCfg && isPkgArg(key)) {
+                return pkgCfg[key]
+            }            
+        }
+        return undefined   
+    }
+
+    suppressError = getArgOrCfgVal(['suppressError']) || false
+
+    const atLeast = getArgOrCfgVal(['at-least', 'atLeast'])
+    const debug = getArgOrCfgVal(['debug'])
+    const detail = getArgOrCfgVal(['detail'])
+    const enableCache = getArgOrCfgVal(['cache'])
+    const ignoreCatch = getArgOrCfgVal(['ignore-catch', 'ignoreCatch'])
+    const ignoreFiles = getArgOrCfgVal(['ignore-files', 'ignoreFiles'])
+    const is = getArgOrCfgVal(['is'])
+    const project = getArgOrCfgVal(['p', 'project']) || '.'
+    const strict = getArgOrCfgVal(['strict'])    
+    const update = getArgOrCfgVal(['update'])    
+
+    return { atLeast, debug, detail, enableCache, ignoreCatch, ignoreFiles, is, project, strict, update };
 }
 
 async function saveTarget(target: number) {
