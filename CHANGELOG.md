@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.11.0](https://github.com/plantain-00/type-coverage/compare/v2.10.0...v2.11.0) (2020-09-09)
+  
+* docs: improve docs for config in package.json ([1b618e2](https://github.com/plantain-00/type-coverage/commit/1b618e2f680a4cda5825f9ac9970382a51c4b077))
+* Allow full configuration from package.json ([6c923e0](https://github.com/plantain-00/type-coverage/commit/6c923e0a15733a262ad5368cc6d39c52b82bc73d))
+* chore: update dependencies ([dfe83b5](https://github.com/plantain-00/type-coverage/commit/dfe83b5886e2810e063b4581299a13962ef8141e)) ([49dd54a](https://github.com/plantain-00/type-coverage/commit/49dd54ac7f2e3bc1249c095eb5a86c105f62af3e))
+* fix: add missing parserOptions ([cc277b7](https://github.com/plantain-00/type-coverage/commit/cc277b7e9a30a6c77fd3435eef3521023b890120))
+
 ## [2.10.0](https://github.com/plantain-00/type-coverage/compare/v2.9.0...v2.10.0) (2020-08-21)
   
 * feat: support typescript 4 ([af4e57e](https://github.com/plantain-00/type-coverage/commit/af4e57efb9c13d58f94c7e0a964baf54cc3d7ac1))
