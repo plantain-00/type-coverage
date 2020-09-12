@@ -58,9 +58,12 @@ export interface TypeCheckResult {
   cache: { [file: string]: TypeCheckCache }
 }
 
-export interface SourceFileInfo {
-  file: string
-  sourceFile: ts.SourceFile
+export interface SourceFileInfo extends SourceFileInfoWithoutCache {
   hash: string
   cache?: TypeCheckCache
+}
+
+export interface SourceFileInfoWithoutCache {
+  file: string
+  sourceFile: ts.SourceFile
 }

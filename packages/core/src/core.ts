@@ -8,7 +8,8 @@ import {
   AnyInfo,
   SourceFileInfo,
   LintOptions,
-  FileTypeCheckResult
+  FileTypeCheckResult,
+  SourceFileInfoWithoutCache
 } from './interfaces'
 import { checkNode } from './checker'
 import { clearCacheOfDependencies, collectDependencies } from './dependencies'
@@ -152,4 +153,83 @@ const defaultLintOptions: LintOptions = {
   ignoreCatch: false,
   ignoreFiles: undefined,
   fileCounts: false,
+}
+
+/**
+ * @public
+ */
+export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[], options?: Partial<LintOptions>) {
+  const lintOptions = { ...defaultLintOptions, ...options }
+
+  const program = ts.createProgram(rootNames, compilerOptions, undefined, lintOptions.oldProgram)
+  const checker = program.getTypeChecker()
+
+  const allFiles = new Set<string>()
+  const sourceFileInfos: SourceFileInfoWithoutCache[] = []
+  const ignoreFileGlobs = lintOptions.ignoreFiles
+    ? (typeof lintOptions.ignoreFiles === 'string'
+      ? [lintOptions.ignoreFiles]
+      : lintOptions.ignoreFiles)
+    : undefined
+  for (const sourceFile of program.getSourceFiles()) {
+    let file = sourceFile.fileName
+    if (!file.includes('node_modules') && (!lintOptions.files || lintOptions.files.includes(file))) {
+      if (!lintOptions.absolutePath) {
+        file = path.relative(process.cwd(), file)
+        if (file.startsWith('..')) {
+          continue
+        }
+      }
+      if (ignoreFileGlobs && ignoreFileGlobs.some((f) => minimatch(file, f))) {
+        continue
+      }
+      allFiles.add(file)
+      sourceFileInfos.push({
+        file,
+        sourceFile,
+      })
+    }
+  }
+
+  let correctCount = 0
+  let totalCount = 0
+  const anys: Array<AnyInfo & { sourceFile: ts.SourceFile }> = []
+  const fileCounts =
+    new Map<string, Pick<FileTypeCheckResult, 'correctCount' | 'totalCount'>>()
+  for (const { sourceFile, file } of sourceFileInfos) {
+    const ingoreMap = collectIgnoreMap(sourceFile, file)
+    const context: FileContext = {
+      file,
+      sourceFile,
+      typeCheckResult: {
+        correctCount: 0,
+        totalCount: 0,
+        anys: []
+      },
+      ignoreCatch: lintOptions.ignoreCatch,
+      catchVariables: {},
+      debug: lintOptions.debug,
+      strict: lintOptions.strict,
+      processAny: lintOptions.processAny,
+      checker,
+      ingoreMap,
+    }
+
+    sourceFile.forEachChild(node => {
+      checkNode(node, context)
+    })
+
+    correctCount += context.typeCheckResult.correctCount
+    totalCount += context.typeCheckResult.totalCount
+    anys.push(...context.typeCheckResult.anys.map((a) => ({ file, ...a, sourceFile })))
+
+    if (lintOptions.fileCounts) {
+      fileCounts.set(file, {
+        correctCount: context.typeCheckResult.correctCount,
+        totalCount: context.typeCheckResult.totalCount
+      })
+    }
+  }
+
+  return { correctCount, totalCount, anys, program, fileCounts }
 }

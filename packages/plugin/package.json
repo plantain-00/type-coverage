@@ -1,0 +1,20 @@
+{
+  "name": "ts-plugin-type-coverage",
+  "version": "2.10.0",
+  "description": "A typescript language service plugin to check type coverage for typescript code",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/plantain-00/type-coverage.git",
+  "author": "york yao <yaoao12306@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "type-coverage-core": "^2.10.0",
+    "tslib": "1 || 2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "typescript": "2 || 3 || 4"
+  }
+}

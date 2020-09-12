@@ -138,6 +138,7 @@ const result = await lint('.', { strict: true })
 
 ```ts
 export function lint(project: string, options?: Partial<LintOptions>): Promise<FileTypeCheckResult & { program: ts.Program }>
+export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[], options?: Partial<LintOptions>): Promise<FileTypeCheckResult & { program: ts.Program }> // Added in `v2.12`
 
 export interface LintOptions {
   debug: boolean,
@@ -164,6 +165,28 @@ export interface FileTypeCheckResult {
 
 export type ProccessAny = (node: ts.Node, context: FileContext) => boolean
 ```
+
+## The typescript language service plugin of type-coverage(Added in `v2.12`)
+
+![ts-plugin demo](./demo/ts-plugin.png)
+
+`yarn add ts-plugin-type-coverage -D`
+
+```json5
+{
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "ts-plugin-type-coverage",
+        "strict": true, // for all configurations, see LintOptions above
+        "ignoreCatch": true,
+      }
+    ]
+  }
+}
+```
+
+For VSCode users, choose "Use Workspace Version", See <https://github.com/microsoft/TypeScript/wiki/Writing-a-Language-Service-Plugin#testing-locally>
 
 ## FAQ
 
