@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.12.1](https://github.com/plantain-00/type-coverage/compare/v2.12.0...v2.12.1) (2020-09-12)
+  
+* fix: remove unused demo code ([7efbae2](https://github.com/plantain-00/type-coverage/commit/7efbae2d82aa79a0c6d4bafa6a6b4e2e4fb9f434))
+
 ## [2.12.0](https://github.com/plantain-00/type-coverage/compare/v2.11.0...v2.12.0) (2020-09-12)
   
 * feat: support typescript language service plugin ([342ef9f](https://github.com/plantain-00/type-coverage/commit/342ef9fa8972a0f1c30789704722d38964b43690))
