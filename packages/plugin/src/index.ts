@@ -8,14 +8,6 @@ function init(modules: { typescript: typeof tsserverlibrary }) {
     const lintOptions = info.config as LintOptions
     const proxy: tsserverlibrary.LanguageService = {
       ...info.languageService,
-      getCompletionsAtPosition: (fileName, position, options) => {
-        const prior = info.languageService.getCompletionsAtPosition(fileName, position, options);
-        if (!prior) {
-          return prior
-        }
-        prior.entries = prior.entries.filter(e => ['caller'].indexOf(e.name) < 0);
-        return prior;
-      },
       getSemanticDiagnostics(fileName) {
         const prior = info.languageService.getSemanticDiagnostics(fileName)
         const result = lintSync(
