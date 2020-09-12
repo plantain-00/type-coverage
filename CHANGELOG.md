@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.12.0](https://github.com/plantain-00/type-coverage/compare/v2.11.0...v2.12.0) (2020-09-12)
+  
+* feat: support typescript language service plugin ([342ef9f](https://github.com/plantain-00/type-coverage/commit/342ef9fa8972a0f1c30789704722d38964b43690))
+* chore: update dependencies ([6948291](https://github.com/plantain-00/type-coverage/commit/69482910b5aa8a3aafd9dcd94d8b40b19ffd2fb8))
+
 ## [2.11.0](https://github.com/plantain-00/type-coverage/compare/v2.10.0...v2.11.0) (2020-09-09)
   
 * docs: improve docs for config in package.json ([1b618e2](https://github.com/plantain-00/type-coverage/commit/1b618e2f680a4cda5825f9ac9970382a51c4b077))
