@@ -201,7 +201,11 @@ export type ProccessAny = (node: ts.Node, context: FileContext) => boolean
 }
 ```
 
-For VSCode users, choose "Use Workspace Version", See <https://github.com/microsoft/TypeScript/wiki/Writing-a-Language-Service-Plugin#testing-locally>
+For VSCode users, choose "Use Workspace Version", See <https://github.com/microsoft/TypeScript/wiki/Writing-a-Language-Service-Plugin#testing-locally>, or just use the wrapped plugin below.
+
+## VSCode plugin(Added in `v2.13`)
+
+<https://marketplace.visualstudio.com/items?itemName=york-yao.vscode-type-coverage>
 
 ## FAQ
 
