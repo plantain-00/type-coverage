@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.13.0](https://github.com/plantain-00/type-coverage/compare/v2.12.1...v2.13.0) (2020-09-13)
+  
+* feat: add file any info kind, add configuration changed ([2500db6](https://github.com/plantain-00/type-coverage/commit/2500db6790b54609076afa7a9da96f0fe4b31630))
+
 ## [2.12.1](https://github.com/plantain-00/type-coverage/compare/v2.12.0...v2.12.1) (2020-09-12)
   
 * fix: remove unused demo code ([7efbae2](https://github.com/plantain-00/type-coverage/commit/7efbae2d82aa79a0c6d4bafa6a6b4e2e4fb9f434))
