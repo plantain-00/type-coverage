@@ -1,0 +1,62 @@
+{
+  "name": "vscode-type-coverage",
+  "displayName": "type-coverage",
+  "description": "VSCode plugin for type-coverage.",
+  "version": "2.0.0",
+  "author": "York Yao",
+  "publisher": "york-yao",
+  "license": "MIT",
+  "homepage": "https://github.com/plantain-00/type-coverage",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plantain-00/type-coverage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/plantain-00/type-coverage/issues"
+  },
+  "categories": [
+    "Linters"
+  ],
+  "engines": {
+    "vscode": "^1.28.0"
+  },
+  "main": "./dist/index",
+  "dependencies": {
+    "ts-plugin-type-coverage": "^2.13.0"
+  },
+  "devDependencies": {
+    "typescript": "4.0.2"
+  },
+  "keywords": [
+    "type",
+    "coverage"
+  ],
+  "activationEvents": [
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact"
+  ],
+  "contributes": {
+    "typescriptServerPlugins": [
+      {
+        "name": "ts-plugin-type-coverage",
+        "enableForWorkspaceTypeScriptVersions": true
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Type Coverage",
+      "properties": {
+        "typeCoverage.strict": {
+          "type": "boolean",
+          "description": "strict mode."
+        },
+        "typeCoverage.ignoreCatch": {
+          "type": "boolean",
+          "description": "ignore catch."
+        }
+      }
+    }
+  }
+}

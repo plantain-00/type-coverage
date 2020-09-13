@@ -1,25 +1,28 @@
+import { Tasks, readWorkspaceDependencies } from 'clean-scripts'
+
 const tsFiles = `"packages/**/src/**/*.ts"`
+
+const workspaces = readWorkspaceDependencies()
 
 export default {
   build: [
-    'rimraf packages/utils/dist/',
-    'rimraf packages/utils/es/',
-    'tsc -p packages/utils/src/',
-    'tsc -p packages/utils/src/tsconfig.es.json',
-    'rimraf packages/core/dist/',
-    'tsc -p packages/core/src/',
-    'rimraf packages/plugin/dist/',
-    'tsc -p packages/plugin/src/',
-    'rimraf packages/cli/dist/',
-    'tsc -p packages/cli/src/',
-    'node packages/cli/dist/index.js -p packages/core/src --detail --strict --supressError',
-    'node packages/cli/dist/index.js -p packages/cli/src --detail --strict --supressError',
-    'node packages/cli/dist/index.js -p packages/utils/src --detail --strict --supressError',
-    'node packages/cli/dist/index.js -p packages/plugin/src --detail --strict --supressError'
+    new Tasks(workspaces.map((d) => ({
+      name: d.name,
+      script: [
+        `rimraf ${d.path}/dist/`,
+        `tsc -p ${d.path}/src/`,
+        ...(d.name === 'utils' ? [
+          `rimraf ${d.path}/es/`,
+          `tsc -p ${d.path}/src/tsconfig.es.json`,
+        ] : []),
+      ],
+      dependencies: d.dependencies
+    }))),
+    ...workspaces.map((d) => `node packages/cli/dist/index.js -p ${d.path}/src --detail --strict --supressError`)
   ],
   lint: {
     ts: `eslint --ext .js,.ts ${tsFiles}`,
-    export: `no-unused-export ${tsFiles} --need-module tslib --strict`,
+    export: `no-unused-export ${tsFiles} --need-module tslib --need-module ts-plugin-type-coverage --ignore-module vscode --strict`,
     markdown: `markdownlint README.md`
   },
   test: [],

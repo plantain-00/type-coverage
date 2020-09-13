@@ -207,6 +207,8 @@ For VSCode users, choose "Use Workspace Version", See <https://github.com/micros
 
 <https://marketplace.visualstudio.com/items?itemName=york-yao.vscode-type-coverage>
 
+Configuration is in `Preferences` - `Settings` - `Extensions` - `Type Coverage`
+
 ## FAQ
 
 > Q: Does this count JavaScript files?

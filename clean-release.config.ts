@@ -12,8 +12,11 @@ const config: Configuration = {
   ],
   askVersion: true,
   changesGitStaged: true,
-  postScript: ({ dir, tag, version, effectedWorkspacePaths }) => [
+  postScript: ({ dir, tag, version, effectedWorkspacePaths = [] }) => [
     ...effectedWorkspacePaths.map((w) => w.map((e) => {
+      if (e === 'packages/vscode') {
+        return tag ? undefined : `cd "${dir}/${e}" && yarn install && rm -f "${dir}/yarn.lock" && vsce publish ${version}`
+      }
       return tag
         ? `npm publish "${dir}/${e}" --access public --tag ${tag}`
         : `npm publish "${dir}/${e}" --access public`

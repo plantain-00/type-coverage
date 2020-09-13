@@ -59,7 +59,6 @@ typings/
 
 
 # Source
-.vscode
 dist
 **/*.js
 **/*.css

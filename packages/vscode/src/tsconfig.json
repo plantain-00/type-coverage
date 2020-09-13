@@ -1,0 +1,14 @@
+{
+  "extends": "tsconfig-plantain",
+  "compilerOptions": {
+    "outDir": "../dist",
+    "module": "commonjs",
+    "target": "es6",
+    "lib": [
+      "es6"
+    ],
+  },
+  "files": [
+    "index.ts"
+  ]
+}
