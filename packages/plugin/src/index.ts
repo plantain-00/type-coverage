@@ -1,11 +1,11 @@
 import * as tsserverlibrary from 'typescript/lib/tsserverlibrary'
-import { lintSync, LintOptions } from 'type-coverage-core'
+import { lintSync, LintOptions, FileAnyInfoKind } from 'type-coverage-core'
 
 function init(modules: { typescript: typeof tsserverlibrary }) {
   let oldProgram: ts.Program | undefined
+  let lintOptions: LintOptions | undefined
 
   function create(info: ts.server.PluginCreateInfo) {
-    const lintOptions = info.config as LintOptions
     const proxy: tsserverlibrary.LanguageService = {
       ...info.languageService,
       getSemanticDiagnostics(fileName) {
@@ -14,21 +14,33 @@ function init(modules: { typescript: typeof tsserverlibrary }) {
           info.project.getCompilerOptions(),
           info.project.getRootFiles(),
           {
-            ...lintOptions,
+            ...(lintOptions || info.config as LintOptions),
             files: [fileName],
             oldProgram,
           },
         )
         oldProgram = result.program
         for (const anyObject of result.anys) {
+          let messageText: string
+          if (anyObject.kind === FileAnyInfoKind.containsAny) {
+            messageText = `The type of '${anyObject.text}' contains 'any'`
+          } else if (anyObject.kind === FileAnyInfoKind.unsafeAs) {
+            messageText = `The '${anyObject.text}' has unsafe 'as' type assertion`
+          } else if (anyObject.kind === FileAnyInfoKind.unsafeNonNull) {
+            messageText = `The '${anyObject.text}' has unsafe '!' type assertion`
+          } else if (anyObject.kind === FileAnyInfoKind.unsafeTypeAssertion) {
+            messageText = `The '${anyObject.text}' has unsafe '<>' type assertion`
+          } else {
+            messageText = `The type of '${anyObject.text}' is 'any'`
+          }
           prior.push({
             category: modules.typescript.DiagnosticCategory.Warning,
-            code: 1,
+            code: anyObject.kind,
             source: 'ts-plugin-type-coverage',
             file: anyObject.sourceFile,
             start: modules.typescript.getPositionOfLineAndCharacter(anyObject.sourceFile, anyObject.line, anyObject.character),
             length: anyObject.text.length,
-            messageText: `The type of '${anyObject.text}' is 'any'`,
+            messageText,
           })
         }
         return prior
@@ -37,7 +49,12 @@ function init(modules: { typescript: typeof tsserverlibrary }) {
     return proxy
   }
 
-  return { create };
+  return {
+    create,
+    onConfigurationChanged(config: LintOptions) {
+      lintOptions = config
+    }
+  };
 }
 
 export = init;

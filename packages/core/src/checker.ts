@@ -1,8 +1,8 @@
 import ts from 'typescript'
 
-import { FileContext } from './interfaces'
+import { FileAnyInfoKind, FileContext } from './interfaces'
 
-function collectAny(node: ts.Node, context: FileContext) {
+function collectAny(node: ts.Node, context: FileContext, kind: FileAnyInfoKind) {
   const { file, sourceFile, typeCheckResult, ingoreMap, debug, processAny } = context
   if (processAny !== undefined) {
     return processAny(node, context)
@@ -12,9 +12,9 @@ function collectAny(node: ts.Node, context: FileContext) {
     return false
   }
   if (debug) {
-    console.log(`type === any: ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
+    console.log(`type === any(${kind}): ${file}:${line + 1}:${character + 1}: ${node.getText(sourceFile)}`)
   } else {
-    typeCheckResult.anys.push({ line, character, text: node.getText(sourceFile) })
+    typeCheckResult.anys.push({ line, character, text: node.getText(sourceFile), kind })
   }
   return true
 }
@@ -41,7 +41,8 @@ function collectData(node: ts.Node, context: FileContext) {
   if (types.length > 0) {
     context.typeCheckResult.totalCount++
     if (types.every((t) => typeIsStrictAny(t, context.strict))) {
-      const success = collectAny(node, context)
+      const kind = types.every((t) => typeIsStrictAny(t, false)) ? FileAnyInfoKind.any : FileAnyInfoKind.containsAny
+      const success = collectAny(node, context, kind)
       if (!success) {
         collectNotAny(node, context, type)
       }
@@ -74,7 +75,7 @@ function checkNodes(nodes: ts.NodeArray<ts.Node> | undefined, context: FileConte
   }
 }
 
-function checkTypeAssertion(node: ts.Node, context: FileContext) {
+function checkTypeAssertion(node: ts.Node, context: FileContext, kind: FileAnyInfoKind) {
   if (context.strict) {
     if ((ts.isAsExpression(node) || ts.isTypeAssertion(node))) {
       // exclude `foo as const` and `<const>foo`
@@ -94,7 +95,7 @@ function checkTypeAssertion(node: ts.Node, context: FileContext) {
         return
       }
     }
-    const success = collectAny(node, context)
+    const success = collectAny(node, context, kind)
     if (success) {
       context.typeCheckResult.totalCount++
     }
@@ -313,7 +314,7 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     return
   }
   if (ts.isTypeAssertion(node)) {
-    checkTypeAssertion(node, context)
+    checkTypeAssertion(node, context, FileAnyInfoKind.unsafeTypeAssertion)
     checkNode(node.expression, context)
     checkNode(node.type, context)
     return
@@ -374,13 +375,13 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     return
   }
   if (ts.isAsExpression(node)) {
-    checkTypeAssertion(node, context)
+    checkTypeAssertion(node, context, FileAnyInfoKind.unsafeAs)
     checkNode(node.expression, context)
     checkNode(node.type, context)
     return
   }
   if (ts.isNonNullExpression(node)) {
-    checkTypeAssertion(node, context)
+    checkTypeAssertion(node, context, FileAnyInfoKind.unsafeNonNull)
     checkNode(node.expression, context)
     return
   }

@@ -138,7 +138,7 @@ const result = await lint('.', { strict: true })
 
 ```ts
 export function lint(project: string, options?: Partial<LintOptions>): Promise<FileTypeCheckResult & { program: ts.Program }>
-export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[], options?: Partial<LintOptions>): Promise<FileTypeCheckResult & { program: ts.Program }> // Added in `v2.12`
+export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[], options?: Partial<LintOptions>): FileTypeCheckResult & { program: ts.Program } // Added in `v2.12`
 
 export interface LintOptions {
   debug: boolean,
@@ -161,6 +161,21 @@ export interface FileTypeCheckResult {
     correctCount: number,
     totalCount: number,
   }[]
+}
+
+export interface FileAnyInfo {
+  line: number
+  character: number
+  text: string
+  kind: FileAnyInfoKind //  Added in v2.13
+}
+
+export const enum FileAnyInfoKind {
+  any = 1, // any
+  containsAny = 2, // Promise<any>
+  unsafeAs = 3, // foo as string
+  unsafeTypeAssertion = 4, // <string>foo
+  unsafeNonNull = 5, // foo!
 }
 
 export type ProccessAny = (node: ts.Node, context: FileContext) => boolean

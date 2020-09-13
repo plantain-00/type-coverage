@@ -13,10 +13,22 @@ export interface AnyInfo extends FileAnyInfo {
   file: string
 }
 
-interface FileAnyInfo {
+/**
+ * @public
+ */
+export interface FileAnyInfo {
   line: number
   character: number
   text: string
+  kind: FileAnyInfoKind
+}
+
+export const enum FileAnyInfoKind {
+  any = 1, // any
+  containsAny = 2, // Promise<any>
+  unsafeAs = 3, // foo as string
+  unsafeTypeAssertion = 4, // <string>foo
+  unsafeNonNull = 5, // foo!
 }
 
 /**
