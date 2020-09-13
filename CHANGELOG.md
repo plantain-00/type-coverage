@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.13.1](https://github.com/plantain-00/type-coverage/compare/v2.13.0...v2.13.1) (2020-09-13)
+  
+* feat: move in vscode plugin source code ([9ed4e05](https://github.com/plantain-00/type-coverage/commit/9ed4e057fd9898ae4405e1f70563dcd6ebc9329c))
+* docs: add vscode plugin url ([5e4f73f](https://github.com/plantain-00/type-coverage/commit/5e4f73f4e7546d66d0714979499ca41d33108429))
+
 ## [2.13.0](https://github.com/plantain-00/type-coverage/compare/v2.12.1...v2.13.0) (2020-09-13)
   
 * feat: add file any info kind, add configuration changed ([2500db6](https://github.com/plantain-00/type-coverage/commit/2500db6790b54609076afa7a9da96f0fe4b31630))
