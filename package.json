@@ -11,7 +11,7 @@
     "@typescript-eslint/eslint-plugin": "4.1.1",
     "@typescript-eslint/parser": "4.1.1",
     "clean-release": "2.14.0",
-    "clean-scripts": "1.18.5",
+    "clean-scripts": "1.18.6",
     "eslint": "7.9.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-plantain": "1.1.0",
