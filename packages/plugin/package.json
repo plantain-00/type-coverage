@@ -8,8 +8,8 @@
   "author": "york yao <yaoao12306@outlook.com>",
   "license": "MIT",
   "dependencies": {
-    "type-coverage-core": "^2.13.0",
-    "tslib": "1 || 2"
+    "tslib": "1 || 2",
+    "type-coverage-core": "^2.13.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
