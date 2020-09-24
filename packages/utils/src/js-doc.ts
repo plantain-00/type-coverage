@@ -23,10 +23,12 @@ function getJsDocFromTag(tag: ts.JSDocTag) {
   let paramName: string | undefined
   let optional: boolean | undefined
   if (tag.tagName.text === 'param') {
-    const typeExpression: ts.JSDocTypeExpression = (tag as unknown as { typeExpression: ts.JSDocTypeExpression }).typeExpression
-    type = typeExpression.type
-    paramName = (tag as unknown as { name: ts.Identifier }).name.text
-    optional = (tag as unknown as { isBracketed?: boolean }).isBracketed
+    const typeExpression = (tag as unknown as { typeExpression?: ts.JSDocTypeExpression }).typeExpression
+    if (typeExpression) {
+      type = typeExpression.type
+      paramName = (tag as unknown as { name: ts.Identifier }).name.text
+      optional = (tag as unknown as { isBracketed?: boolean }).isBracketed
+    }
   }
   return {
     name: tag.tagName.text,
