@@ -360,10 +360,10 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
-clean-release@2.14.0:
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/clean-release/-/clean-release-2.14.0.tgz#ea5d98668533631d03394338860768bad5530203"
-  integrity sha512-n4eZJ4mxUly+SDvCyEneoLPxRd45bzCh/dIiAv3uiyOOoXmZgAnaFoq3xyIaos+x/tXzrA9Bs6BsA8TP0wmi+Q==
+clean-release@2.15.1:
+  version "2.15.1"
+  resolved "https://registry.yarnpkg.com/clean-release/-/clean-release-2.15.1.tgz#af6155668dd29853c89049c8dc60d69df9524afb"
+  integrity sha512-8QNmYXYnGOKFjPMK6RPkO83EWuX18COdIMzCGs9ZunRjH1esBAOrWKpQuq0dD3jDGWPSeED+jpdIHYukfZqxcQ==
   dependencies:
     clean-scripts "1"
     cp-file "9"
@@ -1216,9 +1216,9 @@ no-unused-export@1.12.2:
     typescript "3 || 4"
 
 npm-version-cli@2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/npm-version-cli/-/npm-version-cli-2.1.2.tgz#ad5f03fd4c82d2b75d490bf19ccd07b4a9aacd83"
-  integrity sha512-4srF+vEqwiAUG1umE2hhMsQ2zAovsAJ9cGjwEPCFFueLyQ0vbek9KFq3fmAeOpsRidAQyFRVE6gTZuzBSyHfGA==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/npm-version-cli/-/npm-version-cli-2.2.0.tgz#08fcdcefca03b11ac24e953c5d4ede5b63eb7017"
+  integrity sha512-1UR8D03RPmHTcsk/O21cFLGMpbzBqPDKh1RhLTToXoTSD3DCdJFb60eywVdqdkq/qVHbVC7E8z4U8yLjYdKy7g==
   dependencies:
     git-commits-to-changelog "1"
     glob "7"
