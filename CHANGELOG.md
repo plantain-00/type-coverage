@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.13.2](https://github.com/plantain-00/type-coverage/compare/v2.13.1...v2.13.2) (2020-09-29)
+  
+* chore: update dependencies ([a13a875](https://github.com/plantain-00/type-coverage/commit/a13a8758774b25713d04794eb241863ffe8836cb)) ([e899427](https://github.com/plantain-00/type-coverage/commit/e899427ba3ed408ce29399cd3fd2237eb6036c7e)) ([374104e](https://github.com/plantain-00/type-coverage/commit/374104e325cbe81359a1d494de61f399e515a811))
+* fix: typeExpression may be undefined ([1187e3b](https://github.com/plantain-00/type-coverage/commit/1187e3bd920547133d7c4a40e3cf4ca3594bd213))
+* fix: ci failure ([bea8bf3](https://github.com/plantain-00/type-coverage/commit/bea8bf3c240f9f7e9f58e1b580a50945b227efd0))
+
 ## [2.13.1](https://github.com/plantain-00/type-coverage/compare/v2.13.0...v2.13.1) (2020-09-13)
   
 * feat: move in vscode plugin source code ([9ed4e05](https://github.com/plantain-00/type-coverage/commit/9ed4e057fd9898ae4405e1f70563dcd6ebc9329c))
