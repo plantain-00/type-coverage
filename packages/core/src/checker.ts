@@ -77,7 +77,8 @@ function checkNodes(nodes: ts.NodeArray<ts.Node> | undefined, context: FileConte
 
 function checkTypeAssertion(node: ts.Node, context: FileContext, kind: FileAnyInfoKind) {
   if (context.strict) {
-    if ((ts.isAsExpression(node) || ts.isTypeAssertion(node))) {
+    // include `foo as any` and `<any>foo`
+    if ((ts.isAsExpression(node) || ts.isTypeAssertion(node)) && node.type.kind !== ts.SyntaxKind.AnyKeyword) {
       // exclude `foo as const` and `<const>foo`
       if (ts.isTypeReferenceNode(node.type) && node.type.getText() === 'const') {
         return
