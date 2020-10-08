@@ -1,5 +1,7 @@
 # Change Log
 
+## [2.13.4](https://github.com/plantain-00/type-coverage/compare/v2.13.3...v2.13.4) (2020-10-08)
+
 ## [2.13.3](https://github.com/plantain-00/type-coverage/compare/v2.13.2...v2.13.3) (2020-10-08)
   
 * fix: include foo as any ([d6c6efa](https://github.com/plantain-00/type-coverage/commit/d6c6efa2e2228270dbecc03b9c6478aeaf7cef20))
