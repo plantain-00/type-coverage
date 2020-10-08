@@ -2,7 +2,7 @@
   "name": "vscode-type-coverage",
   "displayName": "type-coverage",
   "description": "VSCode plugin for type-coverage.",
-  "version": "2.13.2",
+  "version": "2.13.3",
   "author": "York Yao",
   "publisher": "york-yao",
   "license": "MIT",
@@ -22,7 +22,7 @@
   },
   "main": "./dist/index",
   "dependencies": {
-    "ts-plugin-type-coverage": "^2.13.2"
+    "ts-plugin-type-coverage": "^2.13.3"
   },
   "devDependencies": {
     "typescript": "4.0.3"

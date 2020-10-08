@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.13.3](https://github.com/plantain-00/type-coverage/compare/v2.13.2...v2.13.3) (2020-10-08)
+  
+* fix: include foo as any ([d6c6efa](https://github.com/plantain-00/type-coverage/commit/d6c6efa2e2228270dbecc03b9c6478aeaf7cef20))
+* chore: update dependencies ([eaca681](https://github.com/plantain-00/type-coverage/commit/eaca681b31a6677b47dbb546bcf669c370922431))
+
 ## [2.13.2](https://github.com/plantain-00/type-coverage/compare/v2.13.1...v2.13.2) (2020-09-29)
   
 * chore: update dependencies ([a13a875](https://github.com/plantain-00/type-coverage/commit/a13a8758774b25713d04794eb241863ffe8836cb)) ([e899427](https://github.com/plantain-00/type-coverage/commit/e899427ba3ed408ce29399cd3fd2237eb6036c7e)) ([374104e](https://github.com/plantain-00/type-coverage/commit/374104e325cbe81359a1d494de61f399e515a811))
