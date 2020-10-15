@@ -42,6 +42,7 @@ name | type | description
 `-h`, `--help` | boolean? | show help(Added in `v2.5`)
 `--is` | number? | fail if coverage rate !== this value(Added in `v2.6`)
 `--update` | boolean? | update "typeCoverage" in package.json to current result(Added in `v2.6`)
+`--ignore-unread` | boolean? | allow writes to variables with implicit any types(Added in `v2.14`)
 
 ### strict mode
 
@@ -93,7 +94,8 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
     "project": "tsconfig.json", // same as --project tsconfig.json or -p tsconfig.json (Added in `v2.11`)
     "strict": true, // same as --strict (Added in `v2.11`)
     "suppressError": true, // same as --suppressError (Added in `v2.11`)
-    "update": true // same as --update (Added in `v2.11`)
+    "update": true, // same as --update (Added in `v2.11`)
+    "ignoreUnread": true // same as --ignore-unread (Added in `v2.14`)
   },
 ```
 
@@ -151,6 +153,7 @@ export interface LintOptions {
   fileCounts: boolean, // Added in v2.3
   absolutePath?: boolean, // Added in v2.4
   processAny?: ProccessAny, // Added in v2.7
+  ignoreUnreadAnys: boolean, // Added in v2.14
 }
 
 export interface FileTypeCheckResult {
