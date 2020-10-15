@@ -43,7 +43,8 @@ export interface LintOptions {
   strict: boolean,
   enableCache: boolean,
   ignoreCatch: boolean,
-  ignoreFiles?: string | string[]
+  ignoreFiles?: string | string[],
+  ignoreUnreadAnys: boolean,
   fileCounts: boolean,
   absolutePath?: boolean,
   processAny?: ProccessAny,
@@ -57,6 +58,7 @@ export interface FileContext {
   strict: boolean
   checker: ts.TypeChecker
   ignoreCatch: boolean
+  ignoreUnreadAnys: boolean
   catchVariables: { [variable: string]: boolean }
   ingoreMap: { [file: string]: Set<number> }
   processAny?: ProccessAny

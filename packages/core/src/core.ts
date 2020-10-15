@@ -98,6 +98,7 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
         anys: []
       },
       ignoreCatch: lintOptions.ignoreCatch,
+      ignoreUnreadAnys: lintOptions.ignoreUnreadAnys,
       catchVariables: {},
       debug: lintOptions.debug,
       strict: lintOptions.strict,
@@ -152,6 +153,7 @@ const defaultLintOptions: LintOptions = {
   enableCache: false,
   ignoreCatch: false,
   ignoreFiles: undefined,
+  ignoreUnreadAnys: false,
   fileCounts: false,
 }
 
@@ -207,6 +209,7 @@ export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[
         anys: []
       },
       ignoreCatch: lintOptions.ignoreCatch,
+      ignoreUnreadAnys: lintOptions.ignoreUnreadAnys,
       catchVariables: {},
       debug: lintOptions.debug,
       strict: lintOptions.strict,

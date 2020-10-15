@@ -26,6 +26,7 @@ function printHelp() {
 --ignore-catch  boolean?  ignore catch
 --cache         boolean?  enable cache
 --ignore-files  string[]? ignore files
+--ignore-unread boolean?  allow writes to variables with implicit any types
 -h,--help       boolean?  show help
 --is            number?   fail if coverage rate !== this value
 --update        boolean?  update "typeCoverage" in package.json to current result
@@ -37,6 +38,7 @@ interface BaseArgs {
   project: string
   debug: boolean
   strict: boolean
+  ignoreUnreadAnys: boolean;
   cache: boolean
   detail: boolean
   is: number
@@ -51,11 +53,13 @@ interface CliArgs extends BaseArgs {
   ['ignore-catch']: boolean
   ['ignore-files']?: string | string[]
   ['at-least']: number
+  ['ignore-unread']: boolean
 }
 
 interface PkgArgs extends BaseArgs {
   ignoreCatch: boolean
   ignoreFiles?: string | string[]
+  ignoreUnread: boolean
   atLeast: boolean
 }
 
@@ -78,17 +82,18 @@ async function executeCommandLine() {
     printHelp()
     process.exit(0)
   }
-  
-  const { atLeast, debug, detail, enableCache, ignoreCatch, ignoreFiles, is, project, strict, update  } = await getTarget(argv);
-  
+
+  const { atLeast, debug, detail, enableCache, ignoreCatch, ignoreFiles, ignoreUnread, is, project, strict, update  } = await getTarget(argv);
+
   const { correctCount, totalCount, anys } = await lint(project, {
       debug: debug,
       strict: strict,
       enableCache: enableCache,
       ignoreCatch: ignoreCatch,
-      ignoreFiles: ignoreFiles
+      ignoreFiles: ignoreFiles,
+      ignoreUnreadAnys: ignoreUnread,
   });
-  
+
   const percent = Math.floor(10000 * correctCount / totalCount) / 100
   const atLeastFailed = atLeast && percent < atLeast
   const isFailed = is && percent !== is
@@ -125,7 +130,7 @@ async function getTarget(argv: CliArgs) {
             pkgCfg = typeCoverage
         }
     }
-    
+
     const isCliArg = (key:keyof AllArgs):key is keyof CliArgs => key in argv
     const isPkgArg = (key:keyof AllArgs):key is keyof PkgArgs => pkgCfg ? key in pkgCfg : false
 
@@ -136,9 +141,9 @@ async function getTarget(argv: CliArgs) {
             }
             if (pkgCfg && isPkgArg(key)) {
                 return pkgCfg[key]
-            }            
+            }
         }
-        return undefined   
+        return undefined
     }
 
     suppressError = getArgOrCfgVal(['suppressError']) || false
@@ -149,12 +154,13 @@ async function getTarget(argv: CliArgs) {
     const enableCache = getArgOrCfgVal(['cache'])
     const ignoreCatch = getArgOrCfgVal(['ignore-catch', 'ignoreCatch'])
     const ignoreFiles = getArgOrCfgVal(['ignore-files', 'ignoreFiles'])
+    const ignoreUnread = getArgOrCfgVal(['ignore-unread', 'ignoreUnread'])
     const is = getArgOrCfgVal(['is'])
     const project = getArgOrCfgVal(['p', 'project']) || '.'
-    const strict = getArgOrCfgVal(['strict'])    
-    const update = getArgOrCfgVal(['update'])    
+    const strict = getArgOrCfgVal(['strict'])
+    const update = getArgOrCfgVal(['update'])
 
-    return { atLeast, debug, detail, enableCache, ignoreCatch, ignoreFiles, is, project, strict, update };
+    return { atLeast, debug, detail, enableCache, ignoreCatch, ignoreFiles, ignoreUnread, is, project, strict, update };
 }
 
 async function saveTarget(target: number) {

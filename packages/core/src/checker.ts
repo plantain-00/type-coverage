@@ -3,12 +3,18 @@ import ts from 'typescript'
 import { FileAnyInfoKind, FileContext } from './interfaces'
 
 function collectAny(node: ts.Node, context: FileContext, kind: FileAnyInfoKind) {
-  const { file, sourceFile, typeCheckResult, ingoreMap, debug, processAny } = context
+  const { file, sourceFile, typeCheckResult, ingoreMap, ignoreUnreadAnys, debug, processAny } = context
   if (processAny !== undefined) {
     return processAny(node, context)
   }
   const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
   if (ingoreMap[file] && ingoreMap[file].has(line)) {
+    return false
+  }
+  if (ignoreUnreadAnys && isEvolvingAssignment(node)) {
+    if (debug) {
+      console.log(`Ignoring assignment to implicit any type: ${file}:${line + 1}:${character + 1}: ${node.parent.getText(sourceFile)}`)
+    }
     return false
   }
   if (debug) {
@@ -63,6 +69,20 @@ function typeIsStrictAny(type: ts.Type, strict: boolean): boolean {
     }
   }
   return false
+}
+
+// See https://github.com/plantain-00/type-coverage/issues/28
+function isEvolvingAssignment(node: ts.Node) {
+  const {parent} = node;
+  if (ts.isVariableDeclaration(parent)) {
+    // Match "let foo" and "let foo = null" but not "let foo: any".
+    return !parent.type;
+  }
+  if (ts.isBinaryExpression(parent)) {
+    // Match "foo = 123".
+    return parent.operatorToken.kind === ts.SyntaxKind.EqualsToken;
+  }
+  return false;
 }
 
 function checkNodes(nodes: ts.NodeArray<ts.Node> | undefined, context: FileContext): void {
