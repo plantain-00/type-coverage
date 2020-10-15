@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.14.0](https://github.com/plantain-00/type-coverage/compare/v2.13.4...v2.14.0) (2020-10-16)
+  
+* docs: add docs for --ignore-unread ([0136b30](https://github.com/plantain-00/type-coverage/commit/0136b30e4a7656eb6683bf802ccedf1d9579684f))
+* Ignore unread anys ([a775102](https://github.com/plantain-00/type-coverage/commit/a7751020eda89dc8fdfbe75af41b95111e101385))
+* chore: update dependencies ([61e15e7](https://github.com/plantain-00/type-coverage/commit/61e15e76f9d5c0477f8a5cc05f20a555b8a77923))
+
 ## [2.13.4](https://github.com/plantain-00/type-coverage/compare/v2.13.3...v2.13.4) (2020-10-08)
 
 ## [2.13.3](https://github.com/plantain-00/type-coverage/compare/v2.13.2...v2.13.3) (2020-10-08)
