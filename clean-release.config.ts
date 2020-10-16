@@ -15,7 +15,7 @@ const config: Configuration = {
   postScript: ({ dir, tag, version, effectedWorkspacePaths = [] }) => [
     ...effectedWorkspacePaths.map((w) => w.map((e) => {
       if (e === 'packages/vscode') {
-        return tag ? undefined : `cd "${dir}/${e}" && yarn install && rm -f "${dir}/yarn.lock" && vsce publish ${version}`
+        return tag ? undefined : `cd "${dir}/${e}" && yarn install --registry=https://registry.npmjs.org/ && rm -f "${dir}/yarn.lock" && vsce publish ${version}`
       }
       return tag
         ? `npm publish "${dir}/${e}" --access public --tag ${tag}`

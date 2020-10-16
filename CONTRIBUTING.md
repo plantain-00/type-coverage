@@ -14,6 +14,6 @@
 
 ## release
 
-Make sure you have the permission to execute `git push` and `npm publish` first.
+Make sure you have the permission to execute `git push`, `npm publish` and `vsce publish` first.
 
 `yarn release`
