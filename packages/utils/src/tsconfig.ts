@@ -96,8 +96,9 @@ async function getTsConfig(configFilePath: string, dirname: string): Promise<Jso
     }
     const { configFilePath, dirname: extendsBasename } = getTsConfigFilePath(project, fallbackProjects)
     const extendsConfig = await getTsConfig(configFilePath, extendsBasename)
+    const topLevelBaseUrl = config.compilerOptions ? config.compilerOptions.baseUrl : undefined
     config.compilerOptions = { ...extendsConfig.compilerOptions, ...config.compilerOptions }
-    config.basePath = config.compilerOptions.baseUrl || extendsBasename;
+    config.basePath = topLevelBaseUrl ? dirname : extendsBasename;
   }
   return config
 }
