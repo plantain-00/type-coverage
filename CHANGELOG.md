@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.14.1](https://github.com/plantain-00/type-coverage/compare/v2.14.0...v2.14.1) (2020-10-31)
+  
+* Respect user baseUrl for basePath ([2c000f2](https://github.com/plantain-00/type-coverage/commit/2c000f2b32d4c737f2788264cd3ec2346fac0f84))
+* chore: update dependencies ([3fe24fa](https://github.com/plantain-00/type-coverage/commit/3fe24faf8ee7af673285337142f79f89fe591b14)) ([bf57bdc](https://github.com/plantain-00/type-coverage/commit/bf57bdc488b7e40f2ed1bdaae9cf0b1fe921161d)) ([0ef54ac](https://github.com/plantain-00/type-coverage/commit/0ef54ace59f165faada605fb78d18d0a42680c2c))
+* fix: vscode plugin publish script ([73d735f](https://github.com/plantain-00/type-coverage/commit/73d735f17cc0072e4c36bda2b6a4e0a940c9d4e1))
+
 ## [2.14.0](https://github.com/plantain-00/type-coverage/compare/v2.13.4...v2.14.0) (2020-10-16)
   
 * docs: add docs for --ignore-unread ([0136b30](https://github.com/plantain-00/type-coverage/commit/0136b30e4a7656eb6683bf802ccedf1d9579684f))
