@@ -54,7 +54,7 @@ function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
 
 interface JsonConfig {
   extends?: string
-  compilerOptions?: { [name: string]: unknown }
+  compilerOptions?: { baseUrl?: string; [name: string]: unknown }
   include?: string[]
   exclude?: string[]
   files?: string[]
@@ -97,7 +97,7 @@ async function getTsConfig(configFilePath: string, dirname: string): Promise<Jso
     const { configFilePath, dirname: extendsBasename } = getTsConfigFilePath(project, fallbackProjects)
     const extendsConfig = await getTsConfig(configFilePath, extendsBasename)
     config.compilerOptions = { ...extendsConfig.compilerOptions, ...config.compilerOptions }
-    config.basePath = extendsBasename
+    config.basePath = config.compilerOptions.baseUrl || extendsBasename;
   }
   return config
 }
