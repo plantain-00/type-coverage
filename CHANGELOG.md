@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.14.2](https://github.com/plantain-00/type-coverage/compare/v2.14.1...v2.14.2) (2020-10-31)
+  
+* Only respect top level base url ([1b5f6f3](https://github.com/plantain-00/type-coverage/commit/1b5f6f3c6dea27ef4ef4a6240cec19020eab572c))
+
 ## [2.14.1](https://github.com/plantain-00/type-coverage/compare/v2.14.0...v2.14.1) (2020-10-31)
   
 * Respect user baseUrl for basePath ([2c000f2](https://github.com/plantain-00/type-coverage/commit/2c000f2b32d4c737f2788264cd3ec2346fac0f84))
