@@ -1,5 +1,10 @@
 # Change Log
 
+## [true](https://github.com/plantain-00/type-coverage/compare/v2.14.2...vtrue) (2020-11-19)
+  
+* fix: remove warning of named tuple member ([d3b6d22](https://github.com/plantain-00/type-coverage/commit/d3b6d224f4d3bba75834a478ec3a8914b57b2852))
+* chore: update dependencies ([162532c](https://github.com/plantain-00/type-coverage/commit/162532c6ebb0bfce9704b8608e9d0591503164b9)) ([bb26de1](https://github.com/plantain-00/type-coverage/commit/bb26de1a627d5cd60fc1b6939605c3c7395b41c7))
+
 ## [2.14.2](https://github.com/plantain-00/type-coverage/compare/v2.14.1...v2.14.2) (2020-10-31)
   
 * Only respect top level base url ([1b5f6f3](https://github.com/plantain-00/type-coverage/commit/1b5f6f3c6dea27ef4ef4a6240cec19020eab572c))
