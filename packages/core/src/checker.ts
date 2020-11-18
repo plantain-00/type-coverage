@@ -609,6 +609,11 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     checkNode((node as ts.RestTypeNode).type, context)
     return
   }
+  if (ts.isNamedTupleMember(node)) {
+    checkNode(node.name, context)
+    checkNode(node.type, context)
+    return
+  }
   console.log(`warning: unhandled node kind: ${node.kind}`)
 }
 
