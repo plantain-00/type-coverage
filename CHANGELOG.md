@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.14.5](https://github.com/plantain-00/type-coverage/compare/v2.14.4...v2.14.5) (2020-11-22)
+  
+* fix: move project .json code out of catch ([31739b1](https://github.com/plantain-00/type-coverage/commit/31739b1c29c00ddfb5ddfdbd11ba0992ec9dbcea))
+
 ## [2.14.4](https://github.com/plantain-00/type-coverage/compare/v2.14.3...v2.14.4) (2020-11-22)
   
 * fix: tsconfig.json extends without .json ([92330f1](https://github.com/plantain-00/type-coverage/commit/92330f1132b4677ced00a6356eb8e3387f7fc635))
