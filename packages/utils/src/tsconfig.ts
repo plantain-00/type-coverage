@@ -43,10 +43,11 @@ function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
   if (!projectStats) {
     try {
       projectStats = fs.statSync(project + '.json')
-    } catch {
       if (projectStats) {
         project = project + '.json'
       }
+    } catch {
+      // do nothing
     }
   }
   if (projectStats && projectStats.isDirectory()) {
