@@ -40,6 +40,15 @@ function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
       throw error
     }
   }
+  if (!projectStats) {
+    try {
+      projectStats = fs.statSync(project + '.json')
+    } catch {
+      if (projectStats) {
+        project = project + '.json'
+      }
+    }
+  }
   if (projectStats && projectStats.isDirectory()) {
     configFilePath = path.resolve(project, 'tsconfig.json')
     dirname = project
