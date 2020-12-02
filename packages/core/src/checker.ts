@@ -614,6 +614,16 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     checkNode(node.type, context)
     return
   }
+  if (ts.isTemplateLiteralTypeNode(node)) {
+    checkNode(node.head, context)
+    checkNodes(node.templateSpans, context)
+    return
+  }
+  if (ts.isTemplateLiteralTypeSpan(node)) {
+    checkNode(node.literal, context)
+    checkNode(node.type, context)
+    return
+  }
   console.log(`warning: unhandled node kind: ${node.kind}`)
 }
 
