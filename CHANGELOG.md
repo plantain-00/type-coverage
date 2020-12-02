@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.14.6](https://github.com/plantain-00/type-coverage/compare/v2.14.5...v2.14.6) (2020-12-02)
+  
+* fix: warning of template literal type ([8d65897](https://github.com/plantain-00/type-coverage/commit/8d65897ac3feb668080aec7e2e8d58d6b5d80fcd))
+* chore: update dependencies ([30f5eb8](https://github.com/plantain-00/type-coverage/commit/30f5eb8d835177d22c40e32d6965c2648ffe0c3d))
+
 ## [2.14.5](https://github.com/plantain-00/type-coverage/compare/v2.14.4...v2.14.5) (2020-11-22)
   
 * fix: move project .json code out of catch ([31739b1](https://github.com/plantain-00/type-coverage/commit/31739b1c29c00ddfb5ddfdbd11ba0992ec9dbcea))
