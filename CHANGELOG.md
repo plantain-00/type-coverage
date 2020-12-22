@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.14.7](https://github.com/plantain-00/type-coverage/compare/v2.14.6...v2.14.7) (2020-12-23)
+  
+* fix: tsconfig files always included in root names ([9be7b2a](https://github.com/plantain-00/type-coverage/commit/9be7b2a90d5415fc4cab34b3b267a97f6750ee98))
+* chore: update dependencies ([556a391](https://github.com/plantain-00/type-coverage/commit/556a391cecee97fcf3905032c58937eea46b9680)) ([8c5b987](https://github.com/plantain-00/type-coverage/commit/8c5b98711e10207759687e7cf380b9b0eeff1945)) ([5e62e8e](https://github.com/plantain-00/type-coverage/commit/5e62e8e7f639a877b50ae7e97282de6d08049fa2))
+
 ## [2.14.6](https://github.com/plantain-00/type-coverage/compare/v2.14.5...v2.14.6) (2020-12-02)
   
 * fix: warning of template literal type ([8d65897](https://github.com/plantain-00/type-coverage/commit/8d65897ac3feb668080aec7e2e8d58d6b5d80fcd))

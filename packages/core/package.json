@@ -1,6 +1,6 @@
 {
   "name": "type-coverage-core",
-  "version": "2.14.6",
+  "version": "2.14.7",
   "description": "A library to check type coverage for typescript code",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "minimatch": "3",
-    "ts-lib-utils": "^2.14.5",
+    "ts-lib-utils": "^2.14.7",
     "tslib": "1 || 2",
     "tsutils": "3"
   },
