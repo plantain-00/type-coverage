@@ -117,9 +117,8 @@ async function getRootNames(config: JsonConfig, dirname: string) {
   const include: string[] | undefined = config.include
   const exclude: string[] | undefined = config.exclude || ['node_modules/**']
 
-  if (config.files) {
-    return config.files.map(f => path.resolve(dirname, f))
-  }
+  const files = config.files?.map(f => path.resolve(dirname, f)) ?? []
+
   if (include && Array.isArray(include) && include.length > 0) {
     const rules: string[] = []
     for (const file of include) {
@@ -133,10 +132,14 @@ async function getRootNames(config: JsonConfig, dirname: string) {
         rules.push(currentPath)
       }
     }
-    return globAsync(rules.length === 1 ? rules[0] : `{${rules.join(',')}}`, exclude, dirname)
+    const includeFiles = await globAsync(rules.length === 1 ? rules[0] : `{${rules.join(',')}}`, exclude, dirname)
+    return [...files, ...includeFiles]
   }
   const rootNames = await globAsync(`**/*.{ts,tsx}`, exclude, dirname)
-  return rootNames.map((r) => path.resolve(process.cwd(), dirname, r))
+  return [
+    ...files,
+    ...rootNames.map((r) => path.resolve(process.cwd(), dirname, r)),
+  ]
 }
 
 function statAsync(file: string) {
