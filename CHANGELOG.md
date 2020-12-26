@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.14.8](https://github.com/plantain-00/type-coverage/compare/v2.14.7...v2.14.8) (2020-12-26)
+  
+* fix: tsconfig files only included in root names with include ([06a7965](https://github.com/plantain-00/type-coverage/commit/06a79657f3c9727631a4cc981f7df3dccaa0a2d1))
+* chore: update dependencies ([be08fc1](https://github.com/plantain-00/type-coverage/commit/be08fc15b295cd8e47d0606b50509a23782942b0))
+
 ## [2.14.7](https://github.com/plantain-00/type-coverage/compare/v2.14.6...v2.14.7) (2020-12-23)
   
 * fix: tsconfig files always included in root names ([9be7b2a](https://github.com/plantain-00/type-coverage/commit/9be7b2a90d5415fc4cab34b3b267a97f6750ee98))
