@@ -135,11 +135,13 @@ async function getRootNames(config: JsonConfig, dirname: string) {
     const includeFiles = await globAsync(rules.length === 1 ? rules[0] : `{${rules.join(',')}}`, exclude, dirname)
     return [...files, ...includeFiles]
   }
+
+  if (config.files) {
+    return files
+  }
+
   const rootNames = await globAsync(`**/*.{ts,tsx}`, exclude, dirname)
-  return [
-    ...files,
-    ...rootNames.map((r) => path.resolve(process.cwd(), dirname, r)),
-  ]
+  return rootNames.map((r) => path.resolve(process.cwd(), dirname, r))
 }
 
 function statAsync(file: string) {
