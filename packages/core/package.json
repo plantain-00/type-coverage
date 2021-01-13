@@ -1,6 +1,6 @@
 {
   "name": "type-coverage-core",
-  "version": "2.14.8",
+  "version": "2.14.9",
   "description": "A library to check type coverage for typescript code",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

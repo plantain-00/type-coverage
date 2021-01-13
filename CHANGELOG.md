@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.14.9](https://github.com/plantain-00/type-coverage/compare/v2.14.8...v2.14.9) (2021-01-13)
+  
+* fix: remove warning of namespace export ([02a6917](https://github.com/plantain-00/type-coverage/commit/02a691761d7e4f3bb60e47d9b60735cf2983afd8))
+* chore: update dependencies ([af37cb7](https://github.com/plantain-00/type-coverage/commit/af37cb72a50e9e117f54a6bef2f3b671bf09998b)) ([33bd228](https://github.com/plantain-00/type-coverage/commit/33bd228018312a87985764762114b2490beac8dd))
+
 ## [2.14.8](https://github.com/plantain-00/type-coverage/compare/v2.14.7...v2.14.8) (2020-12-26)
   
 * fix: tsconfig files only included in root names with include ([06a7965](https://github.com/plantain-00/type-coverage/commit/06a79657f3c9727631a4cc981f7df3dccaa0a2d1))
