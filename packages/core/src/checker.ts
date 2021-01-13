@@ -624,6 +624,10 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     checkNode(node.type, context)
     return
   }
+  if (ts.isNamespaceExport(node)) {
+    checkNode(node.name, context)
+    return
+  }
   console.log(`warning: unhandled node kind: ${node.kind}`)
 }
 
