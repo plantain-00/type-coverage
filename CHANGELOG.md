@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.15.0](https://github.com/plantain-00/type-coverage/compare/v2.14.9...v2.15.0) (2021-02-17)
+  
+* feat: disable esModuleInterop ([d487dec](https://github.com/plantain-00/type-coverage/commit/d487dec39e4a4e7161984ba4d566a211d860f3d9))
+* chore: update dependencies ([c683df4](https://github.com/plantain-00/type-coverage/commit/c683df4a0700f9a38f8452be344d09c41c395983)) ([194c169](https://github.com/plantain-00/type-coverage/commit/194c169e9240a8a8a47272a6682083c5e909cb11)) ([7c6a2fb](https://github.com/plantain-00/type-coverage/commit/7c6a2fb46317f1a13581ccc203da8d5ab18ac1f6)) ([d81f127](https://github.com/plantain-00/type-coverage/commit/d81f127cb16fb9ba49eacb63b1bd4b4a94639a05)) ([2ae12ab](https://github.com/plantain-00/type-coverage/commit/2ae12ab0732312af724fac4cc221f228873da403))
+
 ## [2.14.9](https://github.com/plantain-00/type-coverage/compare/v2.14.8...v2.14.9) (2021-01-13)
   
 * fix: remove warning of namespace export ([02a6917](https://github.com/plantain-00/type-coverage/commit/02a691761d7e4f3bb60e47d9b60735cf2983afd8))
