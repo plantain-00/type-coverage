@@ -1,4 +1,4 @@
-import ts from 'typescript'
+import * as ts from 'typescript'
 import * as utils from 'tsutils/util'
 
 export function collectIgnoreMap(sourceFile: ts.SourceFile, file: string) {

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "../dist",
     "module": "commonjs",
+    "esModuleInterop": false,
     "target": "es6",
     "lib": [
       "es6"

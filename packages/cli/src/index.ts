@@ -1,4 +1,4 @@
-import minimist from 'minimist'
+import minimist = require('minimist')
 import * as fs from 'fs'
 import * as util from 'util'
 import * as path from 'path'

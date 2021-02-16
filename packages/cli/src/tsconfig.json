@@ -2,6 +2,7 @@
   "extends": "tsconfig-plantain",
   "compilerOptions": {
     "outDir": "../dist",
+    "esModuleInterop": false,
     "module": "commonjs"
   },
   "files": [

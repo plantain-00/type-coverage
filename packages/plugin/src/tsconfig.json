@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "../dist",
     "module": "commonjs",
+    "esModuleInterop": false,
     "declaration": true
   },
   "files": [
