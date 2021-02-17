@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.15.1](https://github.com/plantain-00/type-coverage/compare/v2.15.0...v2.15.1) (2021-02-17)
+  
+* fix: move getProjectRootNamesAndCompilerOptions to core and fix glob and minimatch usage error ([2ae2cbc](https://github.com/plantain-00/type-coverage/commit/2ae2cbc39e12c6394de88cb39c17c2374fd54c30))
+
 ## [2.15.0](https://github.com/plantain-00/type-coverage/compare/v2.14.9...v2.15.0) (2021-02-17)
   
 * feat: disable esModuleInterop ([d487dec](https://github.com/plantain-00/type-coverage/commit/d487dec39e4a4e7161984ba4d566a211d860f3d9))
