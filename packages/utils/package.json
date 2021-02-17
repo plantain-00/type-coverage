@@ -9,7 +9,6 @@
   "author": "york yao <yaoao12306@outlook.com>",
   "license": "MIT",
   "dependencies": {
-    "glob": "7",
     "tslib": "1 || 2"
   },
   "publishConfig": {

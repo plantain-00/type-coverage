@@ -1,7 +1,7 @@
 import * as ts from 'typescript'
 import * as path from 'path'
-import minimatch from 'minimatch'
-import { getProjectRootNamesAndCompilerOptions } from 'ts-lib-utils'
+import minimatch = require('minimatch')
+import { getProjectRootNamesAndCompilerOptions } from './tsconfig'
 
 import {
   FileContext,

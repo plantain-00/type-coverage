@@ -1,7 +1,7 @@
 import * as ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
-import glob from 'glob'
+import glob = require('glob')
 
 /**
  * @public
