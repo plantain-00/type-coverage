@@ -36,32 +36,46 @@ export const enum FileAnyInfoKind {
  */
 export type ProccessAny = (node: ts.Node, context: FileContext) => boolean
 
-export interface LintOptions {
-  debug: boolean,
+export interface LintOptions extends CommonOptions {
   files?: string[],
   oldProgram?: ts.Program,
-  strict: boolean,
   enableCache: boolean,
-  ignoreCatch: boolean,
   ignoreFiles?: string | string[],
-  ignoreUnreadAnys: boolean,
   fileCounts: boolean,
   absolutePath?: boolean,
-  processAny?: ProccessAny,
 }
 
-export interface FileContext {
+interface CommonOptions {
+  debug: boolean,
+  strict: boolean,
+  ignoreCatch: boolean,
+  ignoreUnreadAnys: boolean,
+  processAny?: ProccessAny,
+  /**
+   * Promise<any>
+   */
+  ignoreNested: boolean
+  /**
+   * foo as string
+   */
+  ignoreAsAssertion: boolean
+  /**
+   * <string>foo
+   */
+  ignoreTypeAssertion: boolean
+  /**
+   * foo!
+   */
+  ignoreNonNullAssertion: boolean
+}
+
+export interface FileContext extends CommonOptions {
   file: string
   sourceFile: ts.SourceFile
   typeCheckResult: FileTypeCheckResult
-  debug: boolean
-  strict: boolean
   checker: ts.TypeChecker
-  ignoreCatch: boolean
-  ignoreUnreadAnys: boolean
   catchVariables: { [variable: string]: boolean }
   ingoreMap: { [file: string]: Set<number> }
-  processAny?: ProccessAny
 }
 
 interface TypeCheckCache extends FileTypeCheckResult {

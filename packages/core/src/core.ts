@@ -105,6 +105,10 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
       processAny: lintOptions.processAny,
       checker,
       ingoreMap,
+      ignoreNested: lintOptions.ignoreNested,
+      ignoreAsAssertion: lintOptions.ignoreAsAssertion,
+      ignoreTypeAssertion: lintOptions.ignoreTypeAssertion,
+      ignoreNonNullAssertion: lintOptions.ignoreNonNullAssertion,
     }
 
     sourceFile.forEachChild(node => {
@@ -155,6 +159,10 @@ const defaultLintOptions: LintOptions = {
   ignoreFiles: undefined,
   ignoreUnreadAnys: false,
   fileCounts: false,
+  ignoreNested: false,
+  ignoreAsAssertion: false,
+  ignoreTypeAssertion: false,
+  ignoreNonNullAssertion: false,
 }
 
 /**
@@ -216,6 +224,10 @@ export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[
       processAny: lintOptions.processAny,
       checker,
       ingoreMap,
+      ignoreNested: lintOptions.ignoreNested,
+      ignoreAsAssertion: lintOptions.ignoreAsAssertion,
+      ignoreTypeAssertion: lintOptions.ignoreTypeAssertion,
+      ignoreNonNullAssertion: lintOptions.ignoreNonNullAssertion,
     }
 
     sourceFile.forEachChild(node => {

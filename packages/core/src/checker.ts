@@ -46,8 +46,8 @@ function collectData(node: ts.Node, context: FileContext) {
 
   if (types.length > 0) {
     context.typeCheckResult.totalCount++
-    if (types.every((t) => typeIsStrictAny(t, context.strict))) {
-      const kind = types.every((t) => typeIsStrictAny(t, false)) ? FileAnyInfoKind.any : FileAnyInfoKind.containsAny
+    if (types.every((t) => typeIsAnyOrInTypeArguments(t, context.strict && !context.ignoreNested))) {
+      const kind = types.every((t) => typeIsAnyOrInTypeArguments(t, false)) ? FileAnyInfoKind.any : FileAnyInfoKind.containsAny
       const success = collectAny(node, context, kind)
       if (!success) {
         collectNotAny(node, context, type)
@@ -58,14 +58,14 @@ function collectData(node: ts.Node, context: FileContext) {
   }
 }
 
-function typeIsStrictAny(type: ts.Type, strict: boolean): boolean {
+function typeIsAnyOrInTypeArguments(type: ts.Type, anyCanBeInTypeArguments: boolean): boolean {
   if (type.flags === ts.TypeFlags.Any) {
     return (type as unknown as { intrinsicName: string }).intrinsicName === 'any'
   }
-  if (strict && type.flags === ts.TypeFlags.Object) {
+  if (anyCanBeInTypeArguments && type.flags === ts.TypeFlags.Object) {
     const typeArguments = (type as ts.TypeReference).typeArguments
     if (typeArguments) {
-      return typeArguments.some((typeArgument) => typeIsStrictAny(typeArgument, strict))
+      return typeArguments.some((typeArgument) => typeIsAnyOrInTypeArguments(typeArgument, anyCanBeInTypeArguments))
     }
   }
   return false
@@ -95,10 +95,22 @@ function checkNodes(nodes: ts.NodeArray<ts.Node> | undefined, context: FileConte
   }
 }
 
+const isTypeAssertionExpression = ts.isTypeAssertionExpression || ts.isTypeAssertion
+
 function checkTypeAssertion(node: ts.Node, context: FileContext, kind: FileAnyInfoKind) {
   if (context.strict) {
+    if (kind === FileAnyInfoKind.unsafeNonNull && context.ignoreNonNullAssertion) {
+      return
+    }
+    if (kind === FileAnyInfoKind.unsafeAs && context.ignoreAsAssertion) {
+      return
+    }
+    if (kind === FileAnyInfoKind.unsafeTypeAssertion && context.ignoreTypeAssertion) {
+      return
+    }
+
     // include `foo as any` and `<any>foo`
-    if ((ts.isAsExpression(node) || ts.isTypeAssertion(node)) && node.type.kind !== ts.SyntaxKind.AnyKeyword) {
+    if ((ts.isAsExpression(node) || isTypeAssertionExpression(node)) && node.type.kind !== ts.SyntaxKind.AnyKeyword) {
       // exclude `foo as const` and `<const>foo`
       if (ts.isTypeReferenceNode(node.type) && node.type.getText() === 'const') {
         return
@@ -334,7 +346,7 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     checkNodes(node.typeArguments, context)
     return
   }
-  if (ts.isTypeAssertion(node)) {
+  if (isTypeAssertionExpression(node)) {
     checkTypeAssertion(node, context, FileAnyInfoKind.unsafeTypeAssertion)
     checkNode(node.expression, context)
     checkNode(node.type, context)

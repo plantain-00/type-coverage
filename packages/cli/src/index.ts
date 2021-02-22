@@ -18,18 +18,22 @@ function showToolVersion() {
 function printHelp() {
   console.log(`type-coverage [options]
 
--p, --project   string?   tell the CLI where is the tsconfig.json
---detail        boolean?  show detail
---at-least      number?   fail if coverage rate < this value
---debug         boolean?  show debug info
---strict        boolean?  strict mode
---ignore-catch  boolean?  ignore catch
---cache         boolean?  enable cache
---ignore-files  string[]? ignore files
---ignore-unread boolean?  allow writes to variables with implicit any types
--h,--help       boolean?  show help
---is            number?   fail if coverage rate !== this value
---update        boolean?  update "typeCoverage" in package.json to current result
+-p, --project               string?   tell the CLI where is the tsconfig.json
+--detail                    boolean?  show detail
+--at-least                  number?   fail if coverage rate < this value
+--debug                     boolean?  show debug info
+--strict                    boolean?  strict mode
+--ignore-catch              boolean?  ignore catch
+--cache                     boolean?  enable cache
+--ignore-files              string[]? ignore files
+--ignore-unread             boolean?  allow writes to variables with implicit any types
+-h,--help                   boolean?  show help
+--is                        number?   fail if coverage rate !== this value
+--update                    boolean?  update "typeCoverage" in package.json to current result
+--ignore-nested             boolean?  ignore any in type arguments, eg: Promise<any>
+--ignore-as-assertion       boolean?  ignore as assertion, eg: foo as string
+--ignore-type-assertion     boolean?  ignore type assertion, eg: <string>foo
+--ignore-non-null-assertion boolean?  ignore non-null assertion, eg: foo!
   `)
 }
 
@@ -54,6 +58,11 @@ interface CliArgs extends BaseArgs {
   ['ignore-files']?: string | string[]
   ['at-least']: number
   ['ignore-unread']: boolean
+
+  ['ignore-nested']: boolean
+  ['ignore-as-assertion']: boolean
+  ['ignore-type-assertion']: boolean
+  ['ignore-non-null-assertion']: boolean
 }
 
 interface PkgArgs extends BaseArgs {
@@ -61,6 +70,11 @@ interface PkgArgs extends BaseArgs {
   ignoreFiles?: string | string[]
   ignoreUnread: boolean
   atLeast: boolean
+
+  ignoreNested: boolean
+  ignoreAsAssertion: boolean
+  ignoreTypeAssertion: boolean
+  ignoreNonNullAssertion: boolean
 }
 
 interface PackageJson {
@@ -83,15 +97,35 @@ async function executeCommandLine() {
     process.exit(0)
   }
 
-  const { atLeast, debug, detail, enableCache, ignoreCatch, ignoreFiles, ignoreUnread, is, project, strict, update  } = await getTarget(argv);
+  const {
+    atLeast,
+    debug,
+    detail,
+    enableCache,
+    ignoreCatch,
+    ignoreFiles,
+    ignoreUnread,
+    is,
+    project,
+    strict,
+    update,
+    ignoreNested,
+    ignoreAsAssertion,
+    ignoreTypeAssertion,
+    ignoreNonNullAssertion
+  } = await getTarget(argv);
 
   const { correctCount, totalCount, anys } = await lint(project, {
-      debug: debug,
-      strict: strict,
-      enableCache: enableCache,
-      ignoreCatch: ignoreCatch,
-      ignoreFiles: ignoreFiles,
+      debug,
+      strict,
+      enableCache,
+      ignoreCatch,
+      ignoreFiles,
       ignoreUnreadAnys: ignoreUnread,
+      ignoreNested,
+      ignoreAsAssertion: ignoreAsAssertion,
+      ignoreTypeAssertion,
+      ignoreNonNullAssertion,
   });
 
   const percent = Math.floor(10000 * correctCount / totalCount) / 100
@@ -159,8 +193,28 @@ async function getTarget(argv: CliArgs) {
     const project = getArgOrCfgVal(['p', 'project']) || '.'
     const strict = getArgOrCfgVal(['strict'])
     const update = getArgOrCfgVal(['update'])
+    const ignoreNested = getArgOrCfgVal(['ignore-nested', 'ignoreNested'])
+    const ignoreAsAssertion = getArgOrCfgVal(['ignore-as-assertion', 'ignoreAsAssertion'])
+    const ignoreTypeAssertion = getArgOrCfgVal(['ignore-type-assertion', 'ignoreTypeAssertion'])
+    const ignoreNonNullAssertion = getArgOrCfgVal(['ignore-non-null-assertion', 'ignoreNonNullAssertion'])
 
-    return { atLeast, debug, detail, enableCache, ignoreCatch, ignoreFiles, ignoreUnread, is, project, strict, update };
+    return {
+      atLeast,
+      debug,
+      detail,
+      enableCache,
+      ignoreCatch,
+      ignoreFiles,
+      ignoreUnread,
+      is,
+      project,
+      strict,
+      update,
+      ignoreNested,
+      ignoreAsAssertion,
+      ignoreTypeAssertion,
+      ignoreNonNullAssertion,
+    };
 }
 
 async function saveTarget(target: number) {
