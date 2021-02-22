@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.16.0](https://github.com/plantain-00/type-coverage/compare/v2.15.1...v2.16.0) (2021-02-22)
+  
+* feat: split strict flag ([2a4f62b](https://github.com/plantain-00/type-coverage/commit/2a4f62b468cd44c2a76e842ff7d168a6e859b84d))
+* chore: update dependencies ([1a24073](https://github.com/plantain-00/type-coverage/commit/1a24073d718a12e46ea8b3ae2ce573770dd65d9d))
+
 ## [2.15.1](https://github.com/plantain-00/type-coverage/compare/v2.15.0...v2.15.1) (2021-02-17)
   
 * fix: move getProjectRootNamesAndCompilerOptions to core and fix glob and minimatch usage error ([2ae2cbc](https://github.com/plantain-00/type-coverage/commit/2ae2cbc39e12c6394de88cb39c17c2374fd54c30))
