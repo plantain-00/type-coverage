@@ -9,7 +9,8 @@ import {
   SourceFileInfo,
   LintOptions,
   FileTypeCheckResult,
-  SourceFileInfoWithoutCache
+  SourceFileInfoWithoutCache,
+  FileAnyInfoKind
 } from './interfaces'
 import { checkNode } from './checker'
 import { clearCacheOfDependencies, collectDependencies } from './dependencies'
@@ -49,6 +50,20 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
       allFiles.add(file)
       const hash = await getFileHash(file, lintOptions.enableCache)
       const cache = typeCheckResult.cache[file]
+      if (cache) {
+        if (lintOptions.ignoreNested) {
+          cache.anys = cache.anys.filter((c) => c.kind !== FileAnyInfoKind.containsAny)
+        }
+        if (lintOptions.ignoreAsAssertion) {
+          cache.anys = cache.anys.filter((c) => c.kind !== FileAnyInfoKind.unsafeAs)
+        }
+        if (lintOptions.ignoreTypeAssertion) {
+          cache.anys = cache.anys.filter((c) => c.kind !== FileAnyInfoKind.unsafeTypeAssertion)
+        }
+        if (lintOptions.ignoreNonNullAssertion) {
+          cache.anys = cache.anys.filter((c) => c.kind !== FileAnyInfoKind.unsafeNonNull)
+        }
+      }
       sourceFileInfos.push({
         file,
         sourceFile,
