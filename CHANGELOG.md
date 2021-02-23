@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.16.1](https://github.com/plantain-00/type-coverage/compare/v2.16.0...v2.16.1) (2021-02-23)
+  
+* fix: ignore flags work with cache ([fbc2424](https://github.com/plantain-00/type-coverage/commit/fbc242439dcae5e62e1d32b5fd6c3d0abd3ee376))
+
 ## [2.16.0](https://github.com/plantain-00/type-coverage/compare/v2.15.1...v2.16.0) (2021-02-22)
   
 * feat: split strict flag ([2a4f62b](https://github.com/plantain-00/type-coverage/commit/2a4f62b468cd44c2a76e842ff7d168a6e859b84d))
