@@ -115,7 +115,8 @@ async function getTsConfig(configFilePath: string, dirname: string): Promise<Jso
 
 async function getRootNames(config: JsonConfig, dirname: string) {
   const include: string[] | undefined = config.include
-  const exclude: string[] | undefined = config.exclude || ['node_modules/**']
+  // exclude only works when include exists: https://www.typescriptlang.org/tsconfig#exclude
+  const exclude: string[] | undefined = include ? config.exclude || ['node_modules/**'] : ['node_modules/**']
 
   const files = config.files?.map(f => path.resolve(dirname, f)) ?? []
 
