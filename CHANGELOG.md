@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.16.2](https://github.com/plantain-00/type-coverage/compare/v2.16.1...v2.16.2) (2021-02-24)
+  
+* fix: exclude only works when include exists ([0584375](https://github.com/plantain-00/type-coverage/commit/0584375e62290574ca4f41851e9a47e655999be3))
+
 ## [2.16.1](https://github.com/plantain-00/type-coverage/compare/v2.16.0...v2.16.1) (2021-02-23)
   
 * fix: ignore flags work with cache ([fbc2424](https://github.com/plantain-00/type-coverage/commit/fbc242439dcae5e62e1d32b5fd6c3d0abd3ee376))
