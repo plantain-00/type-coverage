@@ -64,7 +64,7 @@ function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
 
 interface JsonConfig {
   extends?: string
-  compilerOptions?: { baseUrl?: string; [name: string]: unknown }
+  compilerOptions?: { baseUrl?: string; outDir?: string; [name: string]: unknown }
   include?: string[]
   exclude?: string[]
   files?: string[]
@@ -114,35 +114,45 @@ async function getTsConfig(configFilePath: string, dirname: string): Promise<Jso
 }
 
 async function getRootNames(config: JsonConfig, dirname: string) {
-  const include: string[] | undefined = config.include
-  // exclude only works when include exists: https://www.typescriptlang.org/tsconfig#exclude
-  const exclude: string[] | undefined = include ? config.exclude || ['node_modules/**'] : ['node_modules/**']
+  // https://www.typescriptlang.org/tsconfig#include
+  let include: string[]
+  if (config.include) {
+    include = config.include
+  } else {
+    include = config.files ? [] : ['**/*']
+  }
 
+  // https://www.typescriptlang.org/tsconfig#files
   const files = config.files?.map(f => path.resolve(dirname, f)) ?? []
 
-  if (include && Array.isArray(include) && include.length > 0) {
+  if (Array.isArray(include) && include.length > 0) {
+    // https://www.typescriptlang.org/tsconfig#exclude
+    let exclude: string[]
+    if (config.exclude) {
+      exclude = config.exclude
+    } else {
+      exclude = ['node_modules', 'bower_components', 'jspm_packages']
+      if (config.compilerOptions?.outDir) {
+        exclude.push(config.compilerOptions.outDir)
+      }
+    }
+
     const rules: string[] = []
     for (const file of include) {
       const currentPath = path.resolve(dirname, file)
       const stats = await statAsync(currentPath)
-      if (stats === undefined) {
+      if (stats === undefined || stats.isFile()) {
         rules.push(currentPath)
       } else if (stats.isDirectory()) {
-        rules.push(`${currentPath.endsWith('/') ? currentPath.substring(0, currentPath.length - 1) : currentPath}/**/*.{ts,tsx}`)
-      } else if (stats.isFile()) {
-        rules.push(currentPath)
+        rules.push(`${currentPath.endsWith('/') ? currentPath.substring(0, currentPath.length - 1) : currentPath}/**/*`)
       }
     }
+
     const includeFiles = await globAsync(rules.length === 1 ? rules[0] : `{${rules.join(',')}}`, exclude, dirname)
-    return [...files, ...includeFiles]
+    files.push(...includeFiles)
   }
 
-  if (config.files) {
-    return files
-  }
-
-  const rootNames = await globAsync(`**/*.{ts,tsx}`, exclude, dirname)
-  return rootNames.map((r) => path.resolve(process.cwd(), dirname, r))
+  return files.map((r) => path.resolve(process.cwd(), dirname, r))
 }
 
 function statAsync(file: string) {
