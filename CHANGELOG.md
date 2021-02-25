@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.16.3](https://github.com/plantain-00/type-coverage/compare/v2.16.2...v2.16.3) (2021-02-25)
+  
+* fix: include and exclude inconsistency with typescript ([432fd5c](https://github.com/plantain-00/type-coverage/commit/432fd5cac41628a22b36b9f9eb98c774855b4c3b))
+
 ## [2.16.2](https://github.com/plantain-00/type-coverage/compare/v2.16.1...v2.16.2) (2021-02-24)
   
 * fix: exclude only works when include exists ([0584375](https://github.com/plantain-00/type-coverage/commit/0584375e62290574ca4f41851e9a47e655999be3))
