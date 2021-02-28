@@ -32,7 +32,8 @@ function synchronizeConfiguration(api: API) {
   const configuration = vscode.workspace.getConfiguration(configurationSection)
   const options = {
     strict: configuration.get('strict'),
-    ignoreCatch: configuration.get('ignoreCatch')
+    ignoreCatch: configuration.get('ignoreCatch'),
+    doNotValidateJavascriptFile: configuration.get('doNotValidateJavascriptFile'),
   }
   api.configurePlugin(configId, options)
 }

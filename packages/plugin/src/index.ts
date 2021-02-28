@@ -9,12 +9,16 @@ function init(modules: { typescript: typeof tsserverlibrary }) {
     const proxy: tsserverlibrary.LanguageService = {
       ...info.languageService,
       getSemanticDiagnostics(fileName) {
+        const config = info.config as LintOptions & { doNotValidateJavascriptFile?: boolean }
         const prior = info.languageService.getSemanticDiagnostics(fileName)
+        if (config.doNotValidateJavascriptFile && (fileName.endsWith('.js') || fileName.endsWith('.jsx'))) {
+          return prior
+        }
         const result = lintSync(
           info.project.getCompilerOptions(),
           info.project.getRootFiles(),
           {
-            ...(lintOptions || info.config as LintOptions),
+            ...(lintOptions || config),
             files: [fileName],
             oldProgram,
           },

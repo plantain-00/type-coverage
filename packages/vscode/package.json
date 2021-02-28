@@ -55,6 +55,10 @@
         "typeCoverage.ignoreCatch": {
           "type": "boolean",
           "description": "ignore catch."
+        },
+        "typeCoverage.doNotValidateJavascriptFile": {
+          "type": "boolean",
+          "description": "do not validate javascript file."
         }
       }
     }
