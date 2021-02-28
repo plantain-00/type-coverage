@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.16.4](https://github.com/plantain-00/type-coverage/compare/v2.16.3...v2.16.4) (2021-02-28)
+  
+* feat: add vscode configuration of not validating js file ([6a11a9a](https://github.com/plantain-00/type-coverage/commit/6a11a9ad8995d97a07215add7a7f252c2ccfb682))
+* chore: update dependencies ([20ab419](https://github.com/plantain-00/type-coverage/commit/20ab419726e9ef9699ba2c059a4aa653a08fc063))
+
 ## [2.16.3](https://github.com/plantain-00/type-coverage/compare/v2.16.2...v2.16.3) (2021-02-25)
   
 * fix: include and exclude inconsistency with typescript ([432fd5c](https://github.com/plantain-00/type-coverage/commit/432fd5cac41628a22b36b9f9eb98c774855b4c3b))
