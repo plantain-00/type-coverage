@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.16.5](https://github.com/plantain-00/type-coverage/compare/v2.16.4...v2.16.5) (2021-02-28)
+  
+* feat: js file validation disabled by default ([13c4709](https://github.com/plantain-00/type-coverage/commit/13c470977c027dcf974fca656ddff1d0dccaa336))
+
 ## [2.16.4](https://github.com/plantain-00/type-coverage/compare/v2.16.3...v2.16.4) (2021-02-28)
   
 * feat: add vscode configuration of not validating js file ([6a11a9a](https://github.com/plantain-00/type-coverage/commit/6a11a9ad8995d97a07215add7a7f252c2ccfb682))
