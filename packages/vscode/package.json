@@ -56,9 +56,9 @@
           "type": "boolean",
           "description": "ignore catch."
         },
-        "typeCoverage.doNotValidateJavascriptFile": {
+        "typeCoverage.jsEnable": {
           "type": "boolean",
-          "description": "do not validate javascript file."
+          "description": "validate javascript file."
         }
       }
     }

@@ -33,7 +33,7 @@ function synchronizeConfiguration(api: API) {
   const options = {
     strict: configuration.get('strict'),
     ignoreCatch: configuration.get('ignoreCatch'),
-    doNotValidateJavascriptFile: configuration.get('doNotValidateJavascriptFile'),
+    jsEnable: configuration.get('jsEnable'),
   }
   api.configurePlugin(configId, options)
 }

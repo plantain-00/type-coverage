@@ -1,24 +1,29 @@
 import * as tsserverlibrary from 'typescript/lib/tsserverlibrary'
-import { lintSync, LintOptions, FileAnyInfoKind } from 'type-coverage-core'
+import { lintSync, FileAnyInfoKind } from 'type-coverage-core'
+
+interface Option {
+  strict: boolean
+  ignoreCatch: boolean
+  jsEnable: boolean
+}
 
 function init(modules: { typescript: typeof tsserverlibrary }) {
   let oldProgram: ts.Program | undefined
-  let lintOptions: LintOptions | undefined
+  let options: Option | undefined
 
   function create(info: ts.server.PluginCreateInfo) {
     const proxy: tsserverlibrary.LanguageService = {
       ...info.languageService,
       getSemanticDiagnostics(fileName) {
-        const config = info.config as LintOptions & { doNotValidateJavascriptFile?: boolean }
         const prior = info.languageService.getSemanticDiagnostics(fileName)
-        if (config.doNotValidateJavascriptFile && (fileName.endsWith('.js') || fileName.endsWith('.jsx'))) {
+        if (!options?.jsEnable && (fileName.endsWith('.js') || fileName.endsWith('.jsx'))) {
           return prior
         }
         const result = lintSync(
           info.project.getCompilerOptions(),
           info.project.getRootFiles(),
           {
-            ...(lintOptions || config),
+            ...options,
             files: [fileName],
             oldProgram,
           },
@@ -55,8 +60,8 @@ function init(modules: { typescript: typeof tsserverlibrary }) {
 
   return {
     create,
-    onConfigurationChanged(config: LintOptions) {
-      lintOptions = config
+    onConfigurationChanged(config: Option) {
+      options = config
     }
   };
 }
