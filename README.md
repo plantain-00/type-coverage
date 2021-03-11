@@ -224,6 +224,8 @@ For VSCode users, choose "Use Workspace Version", See <https://github.com/micros
 
 Configuration is in `Preferences` - `Settings` - `Extensions` - `Type Coverage`
 
+If the result from the vscode plugin is different from the result from the CLI, maybe your project root directory's `tsconfig.json` is different from your CLI `tsconfig.json`
+
 ## FAQ
 
 > Q: Does this count JavaScript files?
