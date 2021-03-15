@@ -34,6 +34,7 @@ function printHelp() {
 --ignore-as-assertion       boolean?  ignore as assertion, eg: foo as string
 --ignore-type-assertion     boolean?  ignore type assertion, eg: <string>foo
 --ignore-non-null-assertion boolean?  ignore non-null assertion, eg: foo!
+--show-relative-path        boolean?  show relative path in detail message
   `)
 }
 
@@ -58,6 +59,7 @@ interface CliArgs extends BaseArgs {
   ['ignore-files']?: string | string[]
   ['at-least']: number
   ['ignore-unread']: boolean
+  ['show-relative-path']: boolean
 
   ['ignore-nested']: boolean
   ['ignore-as-assertion']: boolean
@@ -70,6 +72,7 @@ interface PkgArgs extends BaseArgs {
   ignoreFiles?: string | string[]
   ignoreUnread: boolean
   atLeast: boolean
+  showRelativePath: boolean
 
   ignoreNested: boolean
   ignoreAsAssertion: boolean
@@ -112,7 +115,8 @@ async function executeCommandLine() {
     ignoreNested,
     ignoreAsAssertion,
     ignoreTypeAssertion,
-    ignoreNonNullAssertion
+    ignoreNonNullAssertion,
+    showRelativePath,
   } = await getTarget(argv);
 
   const { correctCount, totalCount, anys } = await lint(project, {
@@ -134,7 +138,8 @@ async function executeCommandLine() {
 
   if (detail || atLeastFailed || isFailed) {
     for (const { file, line, character, text } of anys) {
-      console.log(`${path.resolve(process.cwd(), file)}:${line + 1}:${character + 1}: ${text}`)
+      const filePath = showRelativePath ? file : path.resolve(process.cwd(), file)
+      console.log(`${filePath}:${line + 1}:${character + 1}: ${text}`)
     }
   }
   const percentString = percent.toFixed(2)
@@ -197,6 +202,7 @@ async function getTarget(argv: CliArgs) {
     const ignoreAsAssertion = getArgOrCfgVal(['ignore-as-assertion', 'ignoreAsAssertion'])
     const ignoreTypeAssertion = getArgOrCfgVal(['ignore-type-assertion', 'ignoreTypeAssertion'])
     const ignoreNonNullAssertion = getArgOrCfgVal(['ignore-non-null-assertion', 'ignoreNonNullAssertion'])
+    const showRelativePath = getArgOrCfgVal(['show-relative-path', 'showRelativePath'])
 
     return {
       atLeast,
@@ -214,6 +220,7 @@ async function getTarget(argv: CliArgs) {
       ignoreAsAssertion,
       ignoreTypeAssertion,
       ignoreNonNullAssertion,
+      showRelativePath,
     };
 }
 
