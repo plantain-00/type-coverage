@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.17.0](https://github.com/plantain-00/type-coverage/compare/v2.16.5...v2.17.0) (2021-03-15)
+  
+* feat: support --show-relative-path ([8ec354c](https://github.com/plantain-00/type-coverage/commit/8ec354c5ca165511daa26a627ffc5b1593206717))
+* chore: update dependencies ([338ffae](https://github.com/plantain-00/type-coverage/commit/338ffae22280364c527a2a910f2cfa0a93137410))
+* Update README.md ([cb4239e](https://github.com/plantain-00/type-coverage/commit/cb4239e0ddafc15f2e3133ba33b4ff2aeb5b566c))
+
 ## [2.16.5](https://github.com/plantain-00/type-coverage/compare/v2.16.4...v2.16.5) (2021-02-28)
   
 * feat: js file validation disabled by default ([13c4709](https://github.com/plantain-00/type-coverage/commit/13c470977c027dcf974fca656ddff1d0dccaa336))
