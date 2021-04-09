@@ -1,7 +1,7 @@
 import * as ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
-import fg from 'fast-glob'
+import fg = require('fast-glob')
 
 /**
  * @public
