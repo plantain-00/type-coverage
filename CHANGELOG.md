@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.17.2](https://github.com/plantain-00/type-coverage/compare/v2.17.1...v2.17.2) (2021-04-10)
+  
+* fix: fast-glob import ([ad1cbfc](https://github.com/plantain-00/type-coverage/commit/ad1cbfcdb18e7180c772d7db5dad386e9e82cff5))
+
 ## [2.17.1](https://github.com/plantain-00/type-coverage/compare/v2.17.0...v2.17.1) (2021-04-09)
   
 * fix: replace glob with fast-glob to solve glob issue ([e17d765](https://github.com/plantain-00/type-coverage/commit/e17d765f8882e39a7cf6d1a6a85b80c74472eb5a))
