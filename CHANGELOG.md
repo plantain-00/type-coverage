@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.17.1](https://github.com/plantain-00/type-coverage/compare/v2.17.0...v2.17.1) (2021-04-09)
+  
+* fix: replace glob with fast-glob to solve glob issue ([e17d765](https://github.com/plantain-00/type-coverage/commit/e17d765f8882e39a7cf6d1a6a85b80c74472eb5a))
+* chore: update dependencies ([ca8a425](https://github.com/plantain-00/type-coverage/commit/ca8a425970a378cd2fcdc231f84f16565c5c0893)) ([dcdcbd0](https://github.com/plantain-00/type-coverage/commit/dcdcbd065e308e00169043cf08d54cb37bb72ccd)) ([39c8af4](https://github.com/plantain-00/type-coverage/commit/39c8af43d368f2a1cec8ab225f6e88ca90e8d42c))
+
 ## [2.17.0](https://github.com/plantain-00/type-coverage/compare/v2.16.5...v2.17.0) (2021-03-15)
   
 * feat: support --show-relative-path ([8ec354c](https://github.com/plantain-00/type-coverage/commit/8ec354c5ca165511daa26a627ffc5b1593206717))
