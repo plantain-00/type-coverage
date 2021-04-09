@@ -1,7 +1,7 @@
 import * as ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
-import glob = require('glob')
+import fg from 'fast-glob'
 
 /**
  * @public
@@ -137,6 +137,12 @@ async function getRootNames(config: JsonConfig, dirname: string) {
       }
     }
 
+    // https://github.com/mrmlnc/fast-glob#how-to-exclude-directory-from-reading
+    const ignore: string[] = []
+    for (const e of exclude) {
+      ignore.push(e, `**/${e}`)
+    }
+
     const rules: string[] = []
     for (const file of include) {
       const currentPath = path.resolve(dirname, file)
@@ -148,7 +154,10 @@ async function getRootNames(config: JsonConfig, dirname: string) {
       }
     }
 
-    const includeFiles = await globAsync(rules.length === 1 ? rules[0] : `{${rules.join(',')}}`, exclude, dirname)
+    const includeFiles = await fg(rules, {
+      ignore,
+      cwd: dirname,
+    })
     files.push(...includeFiles)
   }
 
@@ -162,18 +171,6 @@ function statAsync(file: string) {
         resolve(undefined)
       } else {
         resolve(stats)
-      }
-    })
-  })
-}
-
-function globAsync(pattern: string, ignore: string | string[], cwd?: string) {
-  return new Promise<string[]>((resolve, reject) => {
-    glob(pattern, { ignore, cwd }, (error, matches) => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve(matches)
       }
     })
   })
