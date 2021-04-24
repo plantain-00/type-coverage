@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.17.3](https://github.com/plantain-00/type-coverage/compare/v2.17.2...v2.17.3) (2021-04-24)
+  
+* fix: normalize path when fast-glob used on Windows ([b82ceee](https://github.com/plantain-00/type-coverage/commit/b82ceeec78103c1873251cd876fb2085c90233c0))
+* chore: update dependencies ([1daf259](https://github.com/plantain-00/type-coverage/commit/1daf259745fce7051f32fc536b6cb39a22a88135)) ([66d979d](https://github.com/plantain-00/type-coverage/commit/66d979d7683f345c9580dbe68d202c83516dadaa))
+
 ## [2.17.2](https://github.com/plantain-00/type-coverage/compare/v2.17.1...v2.17.2) (2021-04-10)
   
 * fix: fast-glob import ([ad1cbfc](https://github.com/plantain-00/type-coverage/commit/ad1cbfcdb18e7180c772d7db5dad386e9e82cff5))
