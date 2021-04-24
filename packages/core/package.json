@@ -10,6 +10,7 @@
   "dependencies": {
     "fast-glob": "3",
     "minimatch": "3",
+    "normalize-path": "3",
     "tslib": "1 || 2",
     "tsutils": "3"
   },

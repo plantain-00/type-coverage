@@ -2,6 +2,7 @@ import * as ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
 import fg = require('fast-glob')
+import normalize = require('normalize-path')
 
 /**
  * @public
@@ -138,12 +139,12 @@ async function getRootNames(config: JsonConfig, dirname: string) {
     }
 
     // https://github.com/mrmlnc/fast-glob#how-to-exclude-directory-from-reading
-    const ignore: string[] = []
+    let ignore: string[] = []
     for (const e of exclude) {
       ignore.push(e, `**/${e}`)
     }
 
-    const rules: string[] = []
+    let rules: string[] = []
     for (const file of include) {
       const currentPath = path.resolve(dirname, file)
       const stats = await statAsync(currentPath)
@@ -154,6 +155,8 @@ async function getRootNames(config: JsonConfig, dirname: string) {
       }
     }
 
+    rules = rules.map((r) => normalize(r))
+    ignore = ignore.map((r) => normalize(r))
     const includeFiles = await fg(rules, {
       ignore,
       cwd: dirname,
