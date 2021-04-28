@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.17.4](https://github.com/plantain-00/type-coverage/compare/v2.17.3...v2.17.4) (2021-04-29)
+  
+* fix: remove warning of unhandled node kind 79 ([dfe0ef1](https://github.com/plantain-00/type-coverage/commit/dfe0ef12c84bd229898b28a3ab5bc238fa2dc6b1))
+* chore: update dependencies ([ccd96de](https://github.com/plantain-00/type-coverage/commit/ccd96ded480e37a79992ae041307fa222194fa1b))
+
 ## [2.17.3](https://github.com/plantain-00/type-coverage/compare/v2.17.2...v2.17.3) (2021-04-24)
   
 * fix: normalize path when fast-glob used on Windows ([b82ceee](https://github.com/plantain-00/type-coverage/commit/b82ceeec78103c1873251cd876fb2085c90233c0))
