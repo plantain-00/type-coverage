@@ -716,6 +716,7 @@ const skippedNodeKinds = new Set([
   ts.SyntaxKind.AmpersandEqualsToken,
   ts.SyntaxKind.BarEqualsToken,
   ts.SyntaxKind.CaretEqualsToken,
+  ts.SyntaxKind.PrivateIdentifier,
   ts.SyntaxKind.BreakKeyword,
   ts.SyntaxKind.CaseKeyword,
   ts.SyntaxKind.CatchKeyword,
