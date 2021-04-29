@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.17.5](https://github.com/plantain-00/type-coverage/compare/v2.17.4...v2.17.5) (2021-04-29)
+  
+* feat: report file position of warning ([5fc20aa](https://github.com/plantain-00/type-coverage/commit/5fc20aac36f16910ec833c7f1286dd097dfc3dc2))
+
 ## [2.17.4](https://github.com/plantain-00/type-coverage/compare/v2.17.3...v2.17.4) (2021-04-29)
   
 * fix: remove warning of unhandled node kind 79 ([dfe0ef1](https://github.com/plantain-00/type-coverage/commit/dfe0ef12c84bd229898b28a3ab5bc238fa2dc6b1))
