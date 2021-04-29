@@ -640,7 +640,8 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     checkNode(node.name, context)
     return
   }
-  console.log(`warning: unhandled node kind: ${node.kind}`)
+  const { line, character } = ts.getLineAndCharacterOfPosition(context.sourceFile, node.getStart(context.sourceFile))
+  console.log(`warning: unhandled node kind: ${node.kind} in ${context.file}:${line + 1}:${character + 1}`)
 }
 
 const skippedNodeKinds = new Set([
