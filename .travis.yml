@@ -1,7 +1,7 @@
 language: node_js
 dist: trusty
 node_js:
-  - "10"
+  - "14"
 before_install:
   - git fetch --unshallow || true
 install:
