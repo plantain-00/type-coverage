@@ -34,7 +34,7 @@ function getJsDocFromTag(tag: ts.JSDocTag) {
     name: tag.tagName.text,
     type,
     paramName,
-    comment: tag.comment,
+    comment: typeof tag.comment === 'string' ? tag.comment : undefined,
     optional
   }
 }
