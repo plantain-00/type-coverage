@@ -47,6 +47,7 @@ name | type | description
 `--ignore-type-assertion` | boolean? | ignore type assertion, eg: `<string>foo`(Added in `v2.16`)
 `--ignore-non-null-assertion` | boolean? | ignore non-null assertion, eg: `foo!`(Added in `v2.16`)
 `--show-relative-path` | boolean? | show relative path in detail message(Added in `v2.17`)
+`--history-file` | string? | file name where history is saved
 
 ### strict mode
 
@@ -104,7 +105,8 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
     "ignoreAsAssertion": true, // same as --ignore-as-assertion (Added in `v2.16`)
     "ignoreTypeAssertion": true, // same as --ignore-type-assertion (Added in `v2.16`)
     "ignoreNonNullAssertion": true, // same as --ignore-non-null-assertion (Added in `v2.16`)
-    "showRelativePath": true // same as --show-relative-path (Added in `v2.17`)
+    "showRelativePath": true, // same as --show-relative-path (Added in `v2.17`)
+    "historyFile": "typecoverage.json" // same as --history-file
   },
 ```
 
