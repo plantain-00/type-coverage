@@ -35,6 +35,7 @@ function printHelp() {
 --ignore-type-assertion     boolean?  ignore type assertion, eg: <string>foo
 --ignore-non-null-assertion boolean?  ignore non-null assertion, eg: foo!
 --show-relative-path        boolean?  show relative path in detail message
+--history-file              string?   file name where history is saved
   `)
 }
 
