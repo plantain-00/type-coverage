@@ -65,6 +65,8 @@ interface CliArgs extends BaseArgs {
   ['ignore-as-assertion']: boolean
   ['ignore-type-assertion']: boolean
   ['ignore-non-null-assertion']: boolean
+
+  ['history-file']: string
 }
 
 interface PkgArgs extends BaseArgs {
@@ -78,6 +80,8 @@ interface PkgArgs extends BaseArgs {
   ignoreAsAssertion: boolean
   ignoreTypeAssertion: boolean
   ignoreNonNullAssertion: boolean
+
+  historyFile: string
 }
 
 interface PackageJson {
@@ -117,6 +121,7 @@ async function executeCommandLine() {
     ignoreTypeAssertion,
     ignoreNonNullAssertion,
     showRelativePath,
+    historyFile,
   } = await getTarget(argv);
 
   const { correctCount, totalCount, anys } = await lint(project, {
@@ -147,6 +152,9 @@ async function executeCommandLine() {
 
   if (update) {
     await saveTarget(+percentString)
+  }
+  if (historyFile) {
+    await saveHistory(+percentString, historyFile)
   }
 
   if (atLeastFailed) {
@@ -203,6 +211,7 @@ async function getTarget(argv: CliArgs) {
     const ignoreTypeAssertion = getArgOrCfgVal(['ignore-type-assertion', 'ignoreTypeAssertion'])
     const ignoreNonNullAssertion = getArgOrCfgVal(['ignore-non-null-assertion', 'ignoreNonNullAssertion'])
     const showRelativePath = getArgOrCfgVal(['show-relative-path', 'showRelativePath'])
+    const historyFile = getArgOrCfgVal(['history-file', 'historyFile'])
 
     return {
       atLeast,
@@ -221,6 +230,7 @@ async function getTarget(argv: CliArgs) {
       ignoreTypeAssertion,
       ignoreNonNullAssertion,
       showRelativePath,
+      historyFile,
     };
 }
 
@@ -242,6 +252,23 @@ async function saveTarget(target: number) {
       await writeFileAsync(packageJsonPath, JSON.stringify(currentPackageJson, null, 2) + '\n')
     }
   }
+}
+
+async function saveHistory(percentage: number, historyFile?:string) {
+  if (historyFile) {
+    const historyFilePath = path.resolve(process.cwd(), historyFile);
+    if (await existsAsync(historyFilePath)) {
+      const date = new Date().toISOString()
+      const historyFile = JSON.parse((await readFileAsync(historyFilePath)).toString());
+      historyFile[date] = percentage
+      await writeFileAsync(historyFilePath, JSON.stringify(historyFile, null, 2) + '\n');
+    } else {
+      const date = new Date().toISOString()
+      const historyFile: Record<string, number> = {}
+      historyFile[date] = percentage
+      await writeFileAsync(historyFilePath, JSON.stringify(historyFile, null, 2) + '\n');
+    }
+  } 
 }
 
 executeCommandLine().then(() => {
