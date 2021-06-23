@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.18.0](https://github.com/plantain-00/type-coverage/compare/v2.17.5...v2.18.0) (2021-06-23)
+  
+* feat: update docs ([57d7f33](https://github.com/plantain-00/type-coverage/commit/57d7f338d5a488479b0e7a8dbbedd6de49acf284))
+* Save coverage history on a target file ([f4099f8](https://github.com/plantain-00/type-coverage/commit/f4099f825a5c0ef532bb6dc53aa7130e2a720696))
+* chore: update dependencies ([a5382fb](https://github.com/plantain-00/type-coverage/commit/a5382fbedfc93528a8014bdf52ae36e4c88c30bf)) ([392a03f](https://github.com/plantain-00/type-coverage/commit/392a03fac1dd69927e6d63dc412b90dae045f12a)) ([63b41d4](https://github.com/plantain-00/type-coverage/commit/63b41d4fd3ccd9f53c3d1de8176c71627baa149c)) ([edec147](https://github.com/plantain-00/type-coverage/commit/edec147aeea9f23c3c761a6e355f879c51fd2a10)) ([5b8391e](https://github.com/plantain-00/type-coverage/commit/5b8391e6b6295d62ab39dfd484b7ac51478ab381)) ([1f6eaef](https://github.com/plantain-00/type-coverage/commit/1f6eaefd68c4c0df54dd042945b9fb1c09987cba)) ([48f0c7f](https://github.com/plantain-00/type-coverage/commit/48f0c7f690d9e27090fccae35dceb04f4f48c63b)) ([0b183c6](https://github.com/plantain-00/type-coverage/commit/0b183c6947e934b6c9eb8a36cbafb25fc9d93f96))
+* chore: deprecate travis ([31ac34b](https://github.com/plantain-00/type-coverage/commit/31ac34ba3ec30b8062bbf204d6f3bae69c5712bc))
+* chore: update ci nodejs version ([f65c01f](https://github.com/plantain-00/type-coverage/commit/f65c01f784a0ea2449e87c535c1fe577ba674fcd))
+
 ## [2.17.5](https://github.com/plantain-00/type-coverage/compare/v2.17.4...v2.17.5) (2021-04-29)
   
 * feat: report file position of warning ([5fc20aa](https://github.com/plantain-00/type-coverage/commit/5fc20aac36f16910ec833c7f1286dd097dfc3dc2))
