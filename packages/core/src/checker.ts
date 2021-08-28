@@ -790,6 +790,7 @@ const skippedNodeKinds = new Set([
   ts.SyntaxKind.FromKeyword,
   ts.SyntaxKind.GlobalKeyword,
   ts.SyntaxKind.BigIntKeyword,
+  ts.SyntaxKind.OverrideKeyword,
   ts.SyntaxKind.OfKeyword,
   ts.SyntaxKind.OptionalType,
   ts.SyntaxKind.ThisType,
