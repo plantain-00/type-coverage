@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.18.1](https://github.com/plantain-00/type-coverage/compare/v2.18.0...v2.18.1) (2021-08-28)
+  
+* fix: remove warning of unhandled node kind 157 ([30138e7](https://github.com/plantain-00/type-coverage/commit/30138e766f29a4b10ecf315387d5b7c0d585c672))
+* chore: update dependencies ([bbf1d5a](https://github.com/plantain-00/type-coverage/commit/bbf1d5ad1c26f4696c11634e29bd9767d293e69d)) ([6ef3cb0](https://github.com/plantain-00/type-coverage/commit/6ef3cb09ea0b66ebf7766d7b4e614ae0db3db029)) ([a014a2d](https://github.com/plantain-00/type-coverage/commit/a014a2d0372d114fc598b19973e7d0a4e574af9d)) ([86a8cbd](https://github.com/plantain-00/type-coverage/commit/86a8cbda85d35b7bbb53313a2ddee0c6b6ee7b0f)) ([1056596](https://github.com/plantain-00/type-coverage/commit/10565966a1c9aa81407a3b74e13dec08618f6e0d)) ([2a478c4](https://github.com/plantain-00/type-coverage/commit/2a478c4ad5d380e6f7e6540e0f1be4a1fda4c3ac)) ([f1e0378](https://github.com/plantain-00/type-coverage/commit/f1e03785c68fe540214eb4f5d723b2e811684a00)) ([8d39bb6](https://github.com/plantain-00/type-coverage/commit/8d39bb6b1fe8902f88f28f1f4c2f10b6da22eb0a))
+
 ## [2.18.0](https://github.com/plantain-00/type-coverage/compare/v2.17.5...v2.18.0) (2021-06-23)
   
 * feat: update docs ([57d7f33](https://github.com/plantain-00/type-coverage/commit/57d7f338d5a488479b0e7a8dbbedd6de49acf284))
