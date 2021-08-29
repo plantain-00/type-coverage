@@ -59,6 +59,10 @@
         "typeCoverage.jsEnable": {
           "type": "boolean",
           "description": "validate javascript file."
+        },
+        "typeCoverage.ignoreUnread": {
+          "type": "boolean",
+          "description": "allow writes to variables with implicit any types"
         }
       }
     }
