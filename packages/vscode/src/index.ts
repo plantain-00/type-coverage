@@ -34,6 +34,7 @@ function synchronizeConfiguration(api: API) {
     strict: configuration.get('strict'),
     ignoreCatch: configuration.get('ignoreCatch'),
     jsEnable: configuration.get('jsEnable'),
+    ignoreUnreadAnys: configuration.get('ignoreUnread'),
   }
   api.configurePlugin(configId, options)
 }

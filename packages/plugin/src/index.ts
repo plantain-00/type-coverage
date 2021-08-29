@@ -5,6 +5,7 @@ interface Option {
   strict: boolean
   ignoreCatch: boolean
   jsEnable: boolean
+  ignoreUnreadAnys: boolean
 }
 
 function init(modules: { typescript: typeof tsserverlibrary }) {
