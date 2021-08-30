@@ -229,6 +229,10 @@ Configuration is in `Preferences` - `Settings` - `Extensions` - `Type Coverage`
 
 If the result from the vscode plugin is different from the result from the CLI, maybe your project root directory's `tsconfig.json` is different from your CLI `tsconfig.json`
 
+If the plugin does not work, you may see some workarounds:
+
++ <https://github.com/plantain-00/type-coverage/issues/86#issuecomment-907814000>
+
 ## FAQ
 
 > Q: Does this count JavaScript files?
