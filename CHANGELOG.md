@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.18.2](https://github.com/plantain-00/type-coverage/compare/v2.18.1...v2.18.2) (2021-08-30)
+  
+* fix: remove warning of unhandled node kind 76 ([4379095](https://github.com/plantain-00/type-coverage/commit/43790955adea1e8499459bdbcb0799f348ea61af))
+* Add ignoreUnread for VS Code plugin ([ee25c53](https://github.com/plantain-00/type-coverage/commit/ee25c53fc5c0189da0c57c02727c886910447b62))
+
 ## [2.18.1](https://github.com/plantain-00/type-coverage/compare/v2.18.0...v2.18.1) (2021-08-28)
   
 * fix: remove warning of unhandled node kind 157 ([30138e7](https://github.com/plantain-00/type-coverage/commit/30138e766f29a4b10ecf315387d5b7c0d585c672))
