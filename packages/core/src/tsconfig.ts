@@ -30,7 +30,7 @@ function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
     if (fallbackProject) {
       while (fallbackProject.length > 0) {
         try {
-          project = fallbackProject[0]
+          project = fallbackProject[0]!
           projectStats = fs.statSync(project)
           break
         } catch {

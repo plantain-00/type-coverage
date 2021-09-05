@@ -13,13 +13,13 @@ export function collectIgnoreMap(sourceFile: ts.SourceFile, file: string) {
         ingoreMap[file] = new Set()
       }
       const line = ts.getLineAndCharacterOfPosition(sourceFile, comment.pos).line
-      ingoreMap[file].add(line + 1)
+      ingoreMap[file]?.add(line + 1)
     } else if (commentText.includes('type-coverage:ignore-line')) {
       if (!ingoreMap[file]) {
         ingoreMap[file] = new Set()
       }
       const line = ts.getLineAndCharacterOfPosition(sourceFile, comment.pos).line
-      ingoreMap[file].add(line)
+      ingoreMap[file]?.add(line)
     }
   })
 

@@ -8,7 +8,7 @@ function collectAny(node: ts.Node, context: FileContext, kind: FileAnyInfoKind) 
     return processAny(node, context)
   }
   const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
-  if (ingoreMap[file] && ingoreMap[file].has(line)) {
+  if (ingoreMap[file] && ingoreMap[file]?.has(line)) {
     return false
   }
   if (ignoreUnreadAnys && isEvolvingAssignment(node)) {
