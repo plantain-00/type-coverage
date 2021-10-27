@@ -1,5 +1,10 @@
 # Change Log
 
+### [2.18.3-alpha.0](https://github.com/plantain-00/type-coverage/compare/v2.18.2...v2.18.3-alpha.0) (2021-10-27)
+  
+* fix: try to fix tsconfig json path ([dc51c8b](https://github.com/plantain-00/type-coverage/commit/dc51c8b0b98b229467547bbb88a11eb86d901151))
+* chore: update dependencies ([ed3d4bd](https://github.com/plantain-00/type-coverage/commit/ed3d4bddd67761083c9225521f16907ce9d41946)) ([a052197](https://github.com/plantain-00/type-coverage/commit/a05219711e14bbb00cdeba002fd69d07325ada9a)) ([681ce8a](https://github.com/plantain-00/type-coverage/commit/681ce8a36370c14b16fa73213d55799883ad638c)) ([8cb76b2](https://github.com/plantain-00/type-coverage/commit/8cb76b2ad05a6e9aa0d455b691dc1920cc1c6475)) ([7e6e4f3](https://github.com/plantain-00/type-coverage/commit/7e6e4f3ccebad55245269d9a73ed2672fcf3dbb9))
+
 ## [2.18.2](https://github.com/plantain-00/type-coverage/compare/v2.18.1...v2.18.2) (2021-08-30)
   
 * fix: remove warning of unhandled node kind 76 ([4379095](https://github.com/plantain-00/type-coverage/commit/43790955adea1e8499459bdbcb0799f348ea61af))
