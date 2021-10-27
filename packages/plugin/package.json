@@ -1,6 +1,6 @@
 {
   "name": "ts-plugin-type-coverage",
-  "version": "2.18.3-alpha.0",
+  "version": "2.18.3",
   "description": "A typescript language service plugin to check type coverage for typescript code",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "tslib": "1 || 2",
-    "type-coverage-core": "^2.18.3-alpha.0"
+    "type-coverage-core": "^2.18.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
