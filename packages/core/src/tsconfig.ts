@@ -20,37 +20,47 @@ export async function getProjectRootNamesAndCompilerOptions(project: string) {
   return { rootNames, compilerOptions }
 }
 
+function tryToStatFile(filePath: string) {
+  try {
+    return {
+      path: filePath,
+      stats: fs.statSync(filePath),
+    }
+  } catch {
+    try {
+      filePath = filePath + '.json'
+      return {
+        path: filePath,
+        stats: fs.statSync(filePath),
+      }
+    } catch {
+      return undefined
+    }
+  }
+}
+
 function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
   let configFilePath: string
   let dirname: string
   let projectStats: fs.Stats | undefined
-  try {
-    projectStats = fs.statSync(project)
-  } catch (error: unknown) {
-    if (fallbackProject) {
-      while (fallbackProject.length > 0) {
-        try {
-          project = fallbackProject[0]!
-          projectStats = fs.statSync(project)
-          break
-        } catch {
-          fallbackProject.shift()
-        }
+
+  let result = tryToStatFile(project)
+  if (result) {
+    project = result.path
+    projectStats = result.stats
+  } else if (fallbackProject) {
+    while (fallbackProject.length > 0) {
+      result = tryToStatFile(fallbackProject[0]!)
+      if (result) {
+        project = result.path
+        projectStats = result.stats
+        break
+      } else {
+        fallbackProject.shift()
       }
-    } else {
-      throw error
     }
   }
-  if (!projectStats) {
-    try {
-      projectStats = fs.statSync(project + '.json')
-      if (projectStats) {
-        project = project + '.json'
-      }
-    } catch {
-      // do nothing
-    }
-  }
+
   if (projectStats && projectStats.isDirectory()) {
     configFilePath = path.resolve(project, 'tsconfig.json')
     dirname = project
