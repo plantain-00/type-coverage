@@ -36,6 +36,7 @@ function printHelp() {
 --ignore-non-null-assertion boolean?  ignore non-null assertion, eg: foo!
 --show-relative-path        boolean?  show relative path in detail message
 --history-file              string?   file name where history is saved
+--no-detail-when-failed     boolean?  not show detail message when the CLI failed
   `)
 }
 
@@ -68,6 +69,7 @@ interface CliArgs extends BaseArgs {
   ['ignore-non-null-assertion']: boolean
 
   ['history-file']: string
+  ['no-detail-when-failed']: boolean
 }
 
 interface PkgArgs extends BaseArgs {
@@ -83,6 +85,7 @@ interface PkgArgs extends BaseArgs {
   ignoreNonNullAssertion: boolean
 
   historyFile: string
+  noDetailWhenFailed: boolean
 }
 
 interface PackageJson {
@@ -123,6 +126,7 @@ async function executeCommandLine() {
     ignoreNonNullAssertion,
     showRelativePath,
     historyFile,
+    noDetailWhenFailed,
   } = await getTarget(argv);
 
   const { correctCount, totalCount, anys } = await lint(project, {
@@ -142,7 +146,7 @@ async function executeCommandLine() {
   const atLeastFailed = atLeast && percent < atLeast
   const isFailed = is && percent !== is
 
-  if (detail || atLeastFailed || isFailed) {
+  if (detail || (!noDetailWhenFailed && (atLeastFailed || isFailed))) {
     for (const { file, line, character, text } of anys) {
       const filePath = showRelativePath ? file : path.resolve(process.cwd(), file)
       console.log(`${filePath}:${line + 1}:${character + 1}: ${text}`)
@@ -213,6 +217,7 @@ async function getTarget(argv: CliArgs) {
     const ignoreNonNullAssertion = getArgOrCfgVal(['ignore-non-null-assertion', 'ignoreNonNullAssertion'])
     const showRelativePath = getArgOrCfgVal(['show-relative-path', 'showRelativePath'])
     const historyFile = getArgOrCfgVal(['history-file', 'historyFile'])
+    const noDetailWhenFailed = getArgOrCfgVal(['no-detail-when-failed', 'noDetailWhenFailed'])
 
     return {
       atLeast,
@@ -232,6 +237,7 @@ async function getTarget(argv: CliArgs) {
       ignoreNonNullAssertion,
       showRelativePath,
       historyFile,
+      noDetailWhenFailed,
     };
 }
 

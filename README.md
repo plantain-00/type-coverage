@@ -48,6 +48,7 @@ name | type | description
 `--ignore-non-null-assertion` | boolean? | ignore non-null assertion, eg: `foo!`(Added in `v2.16`)
 `--show-relative-path` | boolean? | show relative path in detail message(Added in `v2.17`)
 `--history-file` | string? | file name where history is saved(Added in `v2.18`)
+`--no-detail-when-failed` | boolean? | not show detail message when the CLI failed(Added in `v2.19`)
 
 ### strict mode
 
@@ -106,7 +107,8 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
     "ignoreTypeAssertion": true, // same as --ignore-type-assertion (Added in `v2.16`)
     "ignoreNonNullAssertion": true, // same as --ignore-non-null-assertion (Added in `v2.16`)
     "showRelativePath": true, // same as --show-relative-path (Added in `v2.17`)
-    "historyFile": "typecoverage.json" // same as --history-file (Added in `v2.18`)
+    "historyFile": "typecoverage.json", // same as --history-file (Added in `v2.18`)
+    "noDetailWhenFailed": true, // same as --no-detail-when-failed (Added in `v2.19`)
   },
 ```
 
