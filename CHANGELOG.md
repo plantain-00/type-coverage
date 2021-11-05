@@ -1,5 +1,7 @@
 # Change Log
 
+## [2.19.0](https://github.com/plantain-00/type-coverage/compare/v2.19.0-alpha.0...v2.19.0) (2021-11-05)
+
 ### [2.19.0-alpha.0](https://github.com/plantain-00/type-coverage/compare/v2.18.3...v2.19.0-alpha.0) (2021-10-28)
   
 * feat: support --no-detail-when-failed ([1dc6e97](https://github.com/plantain-00/type-coverage/commit/1dc6e972f231b4a96b04225d4a1cdd043e6bd41d))
