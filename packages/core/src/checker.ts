@@ -653,6 +653,7 @@ const skippedNodeKinds = new Set([
   ts.SyntaxKind.WhitespaceTrivia,
   ts.SyntaxKind.ShebangTrivia,
   ts.SyntaxKind.ConflictMarkerTrivia,
+  ts.SyntaxKind.BigIntLiteral,
   ts.SyntaxKind.NumericLiteral,
   ts.SyntaxKind.StringLiteral,
   ts.SyntaxKind.JsxText,
