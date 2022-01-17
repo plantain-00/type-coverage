@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.19.1](https://github.com/plantain-00/type-coverage/compare/v2.19.0...v2.19.1) (2022-01-17)
+  
+* ignore BitInt literal ([5111739](https://github.com/plantain-00/type-coverage/commit/5111739689f51d14db5e7b19f0a2928a191f8841))
+* chore: update dependencies ([30e1510](https://github.com/plantain-00/type-coverage/commit/30e1510d75c20a68411c049b549248c03ea56728)) ([b23723e](https://github.com/plantain-00/type-coverage/commit/b23723e7a2386e33bae3fcf5ed20864ce89f581a)) ([edb095f](https://github.com/plantain-00/type-coverage/commit/edb095f8a1621538db1e4a04b3eea61e8c02c38e)) ([0b16bea](https://github.com/plantain-00/type-coverage/commit/0b16beaf57918ecfa21c2ff7a4397b93b20417b0))
+
 ## [2.19.0](https://github.com/plantain-00/type-coverage/compare/v2.19.0-alpha.0...v2.19.0) (2021-11-05)
 
 ### [2.19.0-alpha.0](https://github.com/plantain-00/type-coverage/compare/v2.18.3...v2.19.0-alpha.0) (2021-10-28)
