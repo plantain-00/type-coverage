@@ -30,6 +30,7 @@ function printHelp() {
 -h,--help                   boolean?  show help
 --is                        number?   fail if coverage rate !== this value
 --update                    boolean?  update "typeCoverage" in package.json to current result
+--update-if-higher          boolean?  update "typeCoverage" in package.json to current result if new type coverage is higher
 --ignore-nested             boolean?  ignore any in type arguments, eg: Promise<any>
 --ignore-as-assertion       boolean?  ignore as assertion, eg: foo as string
 --ignore-type-assertion     boolean?  ignore type assertion, eg: <string>foo
@@ -70,6 +71,7 @@ interface CliArgs extends BaseArgs {
 
   ['history-file']: string
   ['no-detail-when-failed']: boolean
+  ['update-if-higher']: boolean
 }
 
 interface PkgArgs extends BaseArgs {
@@ -86,6 +88,7 @@ interface PkgArgs extends BaseArgs {
 
   historyFile: string
   noDetailWhenFailed: boolean
+  updateIfHigher: boolean
 }
 
 interface PackageJson {
@@ -120,6 +123,7 @@ async function executeCommandLine() {
     project,
     strict,
     update,
+    updateIfHigher,
     ignoreNested,
     ignoreAsAssertion,
     ignoreTypeAssertion,
@@ -157,6 +161,8 @@ async function executeCommandLine() {
 
   if (update) {
     await saveTarget(+percentString)
+  } else if (updateIfHigher) {
+    await saveTarget(+percentString, true)
   }
   if (historyFile) {
     await saveHistory(+percentString, historyFile)
@@ -211,6 +217,7 @@ async function getTarget(argv: CliArgs) {
     const project = getArgOrCfgVal(['p', 'project']) || '.'
     const strict = getArgOrCfgVal(['strict'])
     const update = getArgOrCfgVal(['update'])
+    const updateIfHigher = getArgOrCfgVal(['update-if-higher', 'updateIfHigher'])
     const ignoreNested = getArgOrCfgVal(['ignore-nested', 'ignoreNested'])
     const ignoreAsAssertion = getArgOrCfgVal(['ignore-as-assertion', 'ignoreAsAssertion'])
     const ignoreTypeAssertion = getArgOrCfgVal(['ignore-type-assertion', 'ignoreTypeAssertion'])
@@ -231,6 +238,7 @@ async function getTarget(argv: CliArgs) {
       project,
       strict,
       update,
+      updateIfHigher,
       ignoreNested,
       ignoreAsAssertion,
       ignoreTypeAssertion,
@@ -241,7 +249,7 @@ async function getTarget(argv: CliArgs) {
     };
 }
 
-async function saveTarget(target: number) {
+async function saveTarget(target: number, ifHigher?: boolean) {
   const packageJsonPath = path.resolve(process.cwd(), 'package.json')
   if (await existsAsync(packageJsonPath)) {
     const currentPackageJson: {
@@ -252,9 +260,13 @@ async function saveTarget(target: number) {
     } = JSON.parse((await readFileAsync(packageJsonPath)).toString())
     if (currentPackageJson.typeCoverage) {
       if (currentPackageJson.typeCoverage.atLeast) {
-        currentPackageJson.typeCoverage.atLeast = target
+        if (!ifHigher || target > currentPackageJson.typeCoverage.atLeast) {
+          currentPackageJson.typeCoverage.atLeast = target
+        }
       } else if (currentPackageJson.typeCoverage.is) {
-        currentPackageJson.typeCoverage.is = target
+        if (!ifHigher || target > currentPackageJson.typeCoverage.is) {
+          currentPackageJson.typeCoverage.is = target
+        }
       }
       await writeFileAsync(packageJsonPath, JSON.stringify(currentPackageJson, null, 2) + '\n')
     }
