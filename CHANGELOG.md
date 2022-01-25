@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.20.0](https://github.com/plantain-00/type-coverage/compare/v2.19.1...v2.20.0) (2022-01-25)
+  
+* feat: support --update-if-higher ([68acc65](https://github.com/plantain-00/type-coverage/commit/68acc655215f6e577d5bf8d5d8320cb5c86cd03e))
+
 ## [2.19.1](https://github.com/plantain-00/type-coverage/compare/v2.19.0...v2.19.1) (2022-01-17)
   
 * ignore BitInt literal ([5111739](https://github.com/plantain-00/type-coverage/commit/5111739689f51d14db5e7b19f0a2928a191f8841))
