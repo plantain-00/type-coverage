@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.21.0](https://github.com/plantain-00/type-coverage/compare/v2.20.0...v2.21.0) (2022-02-02)
+  
+* feat: Object type and empty type is considered as any in --strict, and can be ingored by --ignore-object and --ignore-empty-type ([a290acc](https://github.com/plantain-00/type-coverage/commit/a290acc32e8f5497b662b2da2598ee255bdbdadb))
+* chore: update dependencies ([ed791de](https://github.com/plantain-00/type-coverage/commit/ed791dee2ebce0113530d08a337af8b45ca71982))
+
 ## [2.20.0](https://github.com/plantain-00/type-coverage/compare/v2.19.1...v2.20.0) (2022-01-25)
   
 * feat: support --update-if-higher ([68acc65](https://github.com/plantain-00/type-coverage/commit/68acc655215f6e577d5bf8d5d8320cb5c86cd03e))
