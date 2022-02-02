@@ -124,6 +124,8 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
       ignoreAsAssertion: lintOptions.ignoreAsAssertion,
       ignoreTypeAssertion: lintOptions.ignoreTypeAssertion,
       ignoreNonNullAssertion: lintOptions.ignoreNonNullAssertion,
+      ignoreObject: lintOptions.ignoreObject,
+      ignoreEmptyType: lintOptions.ignoreEmptyType,
     }
 
     sourceFile.forEachChild(node => {
@@ -178,6 +180,8 @@ const defaultLintOptions: LintOptions = {
   ignoreAsAssertion: false,
   ignoreTypeAssertion: false,
   ignoreNonNullAssertion: false,
+  ignoreObject: false,
+  ignoreEmptyType: false,
 }
 
 /**
@@ -243,6 +247,8 @@ export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[
       ignoreAsAssertion: lintOptions.ignoreAsAssertion,
       ignoreTypeAssertion: lintOptions.ignoreTypeAssertion,
       ignoreNonNullAssertion: lintOptions.ignoreNonNullAssertion,
+      ignoreObject: lintOptions.ignoreObject,
+      ignoreEmptyType: lintOptions.ignoreEmptyType,
     }
 
     sourceFile.forEachChild(node => {

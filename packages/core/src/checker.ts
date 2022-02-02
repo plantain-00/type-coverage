@@ -46,8 +46,8 @@ function collectData(node: ts.Node, context: FileContext) {
 
   if (types.length > 0) {
     context.typeCheckResult.totalCount++
-    if (types.every((t) => typeIsAnyOrInTypeArguments(t, context.strict && !context.ignoreNested))) {
-      const kind = types.every((t) => typeIsAnyOrInTypeArguments(t, false)) ? FileAnyInfoKind.any : FileAnyInfoKind.containsAny
+    if (types.every((t) => typeIsAnyOrInTypeArguments(t, context.strict && !context.ignoreNested, context))) {
+      const kind = types.every((t) => typeIsAnyOrInTypeArguments(t, false, context)) ? FileAnyInfoKind.any : FileAnyInfoKind.containsAny
       const success = collectAny(node, context, kind)
       if (!success) {
         collectNotAny(node, context, type)
@@ -58,14 +58,33 @@ function collectData(node: ts.Node, context: FileContext) {
   }
 }
 
-function typeIsAnyOrInTypeArguments(type: ts.Type, anyCanBeInTypeArguments: boolean): boolean {
+function typeIsAnyOrInTypeArguments(type: ts.Type, anyCanBeInTypeArguments: boolean, context: FileContext): boolean {
   if (type.flags === ts.TypeFlags.Any) {
     return (type as unknown as { intrinsicName: string }).intrinsicName === 'any'
+  }
+  if (type.flags === ts.TypeFlags.Object && type.symbol) {
+    // foo: Object
+    if (context.strict && !context.ignoreObject && type.symbol.escapedName === 'Object') {
+      return true
+    }
+    // foo: {}
+    if (
+      context.strict &&
+      !context.ignoreEmptyType &&
+      (type as unknown as { objectFlags: ts.ObjectFlags }).objectFlags === ts.ObjectFlags.Anonymous &&
+      type.getProperties().length === 0 &&
+      type.getCallSignatures().length === 0 &&
+      type.getConstructSignatures().length === 0 &&
+      type.symbol.flags === (ts.SymbolFlags.Transient | ts.SymbolFlags.TypeLiteral) &&
+      !type.symbol.members?.size
+    ) {
+      return true
+    }
   }
   if (anyCanBeInTypeArguments && type.flags === ts.TypeFlags.Object) {
     const typeArguments = (type as ts.TypeReference).typeArguments
     if (typeArguments) {
-      return typeArguments.some((typeArgument) => typeIsAnyOrInTypeArguments(typeArgument, anyCanBeInTypeArguments))
+      return typeArguments.some((typeArgument) => typeIsAnyOrInTypeArguments(typeArgument, anyCanBeInTypeArguments, context))
     }
   }
   return false

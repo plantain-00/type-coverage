@@ -67,6 +67,14 @@ interface CommonOptions {
    * foo!
    */
   ignoreNonNullAssertion: boolean
+  /**
+   * Object
+   */
+  ignoreObject: boolean
+  /**
+   * {}
+   */
+  ignoreEmptyType: boolean
 }
 
 export interface FileContext extends CommonOptions {

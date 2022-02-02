@@ -35,6 +35,8 @@ function printHelp() {
 --ignore-as-assertion       boolean?  ignore as assertion, eg: foo as string
 --ignore-type-assertion     boolean?  ignore type assertion, eg: <string>foo
 --ignore-non-null-assertion boolean?  ignore non-null assertion, eg: foo!
+--ignore-object             boolean?  Object type not counted as any, eg: foo: Object
+--ignore-empty-type         boolean?  empty type not counted as any, eg: foo: {}
 --show-relative-path        boolean?  show relative path in detail message
 --history-file              string?   file name where history is saved
 --no-detail-when-failed     boolean?  not show detail message when the CLI failed
@@ -68,6 +70,8 @@ interface CliArgs extends BaseArgs {
   ['ignore-as-assertion']: boolean
   ['ignore-type-assertion']: boolean
   ['ignore-non-null-assertion']: boolean
+  ['ignore-object']: boolean
+  ['ignore-empty-type']: boolean
 
   ['history-file']: string
   ['no-detail-when-failed']: boolean
@@ -85,6 +89,8 @@ interface PkgArgs extends BaseArgs {
   ignoreAsAssertion: boolean
   ignoreTypeAssertion: boolean
   ignoreNonNullAssertion: boolean
+  ignoreObject: boolean
+  ignoreEmptyType: boolean
 
   historyFile: string
   noDetailWhenFailed: boolean
@@ -128,6 +134,8 @@ async function executeCommandLine() {
     ignoreAsAssertion,
     ignoreTypeAssertion,
     ignoreNonNullAssertion,
+    ignoreObject,
+    ignoreEmptyType,
     showRelativePath,
     historyFile,
     noDetailWhenFailed,
@@ -144,6 +152,8 @@ async function executeCommandLine() {
       ignoreAsAssertion: ignoreAsAssertion,
       ignoreTypeAssertion,
       ignoreNonNullAssertion,
+      ignoreObject,
+      ignoreEmptyType,
   });
 
   const percent = Math.floor(10000 * correctCount / totalCount) / 100
@@ -222,6 +232,8 @@ async function getTarget(argv: CliArgs) {
     const ignoreAsAssertion = getArgOrCfgVal(['ignore-as-assertion', 'ignoreAsAssertion'])
     const ignoreTypeAssertion = getArgOrCfgVal(['ignore-type-assertion', 'ignoreTypeAssertion'])
     const ignoreNonNullAssertion = getArgOrCfgVal(['ignore-non-null-assertion', 'ignoreNonNullAssertion'])
+    const ignoreObject = getArgOrCfgVal(['ignore-object', 'ignoreObject'])
+    const ignoreEmptyType = getArgOrCfgVal(['ignore-empty-type', 'ignoreEmptyType'])
     const showRelativePath = getArgOrCfgVal(['show-relative-path', 'showRelativePath'])
     const historyFile = getArgOrCfgVal(['history-file', 'historyFile'])
     const noDetailWhenFailed = getArgOrCfgVal(['no-detail-when-failed', 'noDetailWhenFailed'])
@@ -243,6 +255,8 @@ async function getTarget(argv: CliArgs) {
       ignoreAsAssertion,
       ignoreTypeAssertion,
       ignoreNonNullAssertion,
+      ignoreObject,
+      ignoreEmptyType,
       showRelativePath,
       historyFile,
       noDetailWhenFailed,
