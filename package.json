@@ -17,7 +17,7 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-plantain": "2.0.0",
     "markdownlint-cli": "0.30.0",
-    "no-unused-export": "1.14.2",
+    "no-unused-export": "1.15.0",
     "rimraf": "3.0.2",
     "ts-node": "10.4.0",
     "tsconfig-plantain": "0.0.2",

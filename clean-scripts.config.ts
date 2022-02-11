@@ -11,10 +11,6 @@ export default {
       script: [
         `rimraf ${d.path}/dist/`,
         `tsc -p ${d.path}/src/`,
-        ...(d.name === 'ts-lib-utils' ? [
-          `rimraf ${d.path}/es/`,
-          `tsc -p ${d.path}/src/tsconfig.es.json`,
-        ] : []),
       ],
       dependencies: d.dependencies
     }))),
