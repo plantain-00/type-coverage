@@ -17,6 +17,18 @@ export async function getProjectRootNamesAndCompilerOptions(project: string) {
   }
 
   const rootNames = await getRootNames(config, dirname)
+  if (compilerOptions.baseUrl) {
+    if (compilerOptions.baseUrl === '.'
+      || compilerOptions.baseUrl === '..'
+      || compilerOptions.baseUrl.startsWith(`.${path.sep}`)
+      || compilerOptions.baseUrl.startsWith(`..${path.sep}`)
+      || compilerOptions.baseUrl.startsWith('./')
+      || compilerOptions.baseUrl.startsWith('../')
+    ) {
+      compilerOptions.baseUrl = path.resolve(path.resolve(process.cwd(), dirname), compilerOptions.baseUrl)
+    }
+  }
+  
   return { rootNames, compilerOptions }
 }
 
