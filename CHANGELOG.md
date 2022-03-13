@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.21.1](https://github.com/plantain-00/type-coverage/compare/v2.21.0...v2.21.1) (2022-03-13)
+  
+* fix: relative path baseUrl resolves wrong path ([7e668d9](https://github.com/plantain-00/type-coverage/commit/7e668d9b4854534a8f09defeb906d3062e77c239))
+* chore: update dependencies ([0b7d23a](https://github.com/plantain-00/type-coverage/commit/0b7d23ac7354015e7303baa36322dad36c100a6e)) ([d79b5d9](https://github.com/plantain-00/type-coverage/commit/d79b5d9e4aa3edc846a63cb59cdf94b91d5c08a2)) ([cfff886](https://github.com/plantain-00/type-coverage/commit/cfff8865a899663f30ec7ae473529e1d6e99aa45))
+* chore: remove unused ts-lib-utils ([f9985a4](https://github.com/plantain-00/type-coverage/commit/f9985a4a48b6042ec03e7af357b3f702289788ca))
+
 ## [2.21.0](https://github.com/plantain-00/type-coverage/compare/v2.20.0...v2.21.0) (2022-02-02)
   
 * feat: Object type and empty type is considered as any in --strict, and can be ingored by --ignore-object and --ignore-empty-type ([a290acc](https://github.com/plantain-00/type-coverage/commit/a290acc32e8f5497b662b2da2598ee255bdbdadb))
