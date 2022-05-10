@@ -40,7 +40,7 @@ name | type | description
 `--ignore-files` | string[]? | [ignore files](#ignore-files)(Added in `v1.14`)
 `-h`, `--help` | boolean? | show help(Added in `v2.5`)
 `--is` | number? | fail if coverage rate !== this value(Added in `v2.6`)
-`--update` | boolean? | update "typeCoverage" in package.json to current result(Added in `v2.6`)
+`--update` | boolean? | if "typeCoverage" section in package.json is present update its "atLeast" or "is" value (Added in `v2.6`)
 `--update-if-higher` | boolean? | update "typeCoverage" in package.json to current result if new type coverage is higher(Added in `v2.20`)
 `--ignore-unread` | boolean? | allow writes to variables with implicit any types(Added in `v2.14`)
 `--ignore-nested` | boolean? | ignore any in type arguments, eg: `Promise<any>`(Added in `v2.16`)
