@@ -34,6 +34,7 @@ name | type | description
 `--detail` | boolean? | show detail(Added in `v1.0`)
 `--at-least` | number? | fail if coverage rate < this value(Added in `v1.0`)
 `--debug` | boolean? | show debug info(Added in `v1.0`)
+`--suppressError` | boolean? | process exit 0 even failed or errored
 `--strict` | boolean? | [strict mode](#strict-mode)(Added in `v1.7`)
 `--ignore-catch` | boolean? | [ignore catch](#ignore-catch)(Added in `v1.13`)
 `--cache` | boolean? | [enable cache](#enable-cache)(Added in `v1.10`)
