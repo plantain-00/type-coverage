@@ -33,14 +33,17 @@ export async function getProjectRootNamesAndCompilerOptions(project: string) {
 }
 
 function tryToStatFile(filePath: string) {
+  const jsonFilePath = filePath.endsWith('.json') ? filePath : filePath + '.json'
   try {
     return {
-      path: filePath,
-      stats: fs.statSync(filePath),
+      path: jsonFilePath,
+      stats: fs.statSync(jsonFilePath),
     }
   } catch {
+    if (jsonFilePath === filePath) {
+      return undefined
+    }
     try {
-      filePath = filePath + '.json'
       return {
         path: filePath,
         stats: fs.statSync(filePath),
