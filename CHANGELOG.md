@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.21.2](https://github.com/plantain-00/type-coverage/compare/v2.21.1...v2.21.2) (2022-06-26)
+  
+* fix: prefer json file over same named dir ([31c56c5](https://github.com/plantain-00/type-coverage/commit/31c56c5e312657f8e06d48da1e8441a8554cc5f0))
+* chore: update dependencies ([330e7a0](https://github.com/plantain-00/type-coverage/commit/330e7a08326b67ea44366bf3d3d9e9b73b4d41e7)) ([8ead29e](https://github.com/plantain-00/type-coverage/commit/8ead29ec2de19da8454da0934b53dc348eb52b87)) ([001f647](https://github.com/plantain-00/type-coverage/commit/001f647d77e3922707a2f90922f480efdc68da6c)) ([5c89a7f](https://github.com/plantain-00/type-coverage/commit/5c89a7f42ff973e0347b56c82db1a49de579d94e)) ([e45685c](https://github.com/plantain-00/type-coverage/commit/e45685c304e116ee3c14dffce628eeb1aec905f2)) ([8603549](https://github.com/plantain-00/type-coverage/commit/8603549fe3275c2fbf486796ec4e3a37cc35d475))
+* docs: add --suppressError in README ([1e9e321](https://github.com/plantain-00/type-coverage/commit/1e9e321ca88743b2f1ff9467ed9cf0025629aa16))
+* docs: minor readme update ([4a997a1](https://github.com/plantain-00/type-coverage/commit/4a997a110ef5eddc1af7f8b5f1164a1795dcbd9f))
+
 ## [2.21.1](https://github.com/plantain-00/type-coverage/compare/v2.21.0...v2.21.1) (2022-03-13)
   
 * fix: relative path baseUrl resolves wrong path ([7e668d9](https://github.com/plantain-00/type-coverage/commit/7e668d9b4854534a8f09defeb906d3062e77c239))
