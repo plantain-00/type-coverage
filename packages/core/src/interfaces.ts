@@ -29,6 +29,7 @@ export const enum FileAnyInfoKind {
   unsafeAs = 3, // foo as string
   unsafeTypeAssertion = 4, // <string>foo
   unsafeNonNull = 5, // foo!
+  semanticError = 6,
 }
 
 /**
@@ -75,6 +76,7 @@ interface CommonOptions {
    * {}
    */
   ignoreEmptyType: boolean
+  reportSemanticError: boolean
 }
 
 export interface FileContext extends CommonOptions {

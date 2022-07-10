@@ -126,6 +126,7 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
       ignoreNonNullAssertion: lintOptions.ignoreNonNullAssertion,
       ignoreObject: lintOptions.ignoreObject,
       ignoreEmptyType: lintOptions.ignoreEmptyType,
+      reportSemanticError: lintOptions.reportSemanticError,
     }
 
     sourceFile.forEachChild(node => {
@@ -135,6 +136,29 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
     correctCount += context.typeCheckResult.correctCount
     totalCount += context.typeCheckResult.totalCount
     anys.push(...context.typeCheckResult.anys.map((a) => ({ file, ...a })))
+
+    if (lintOptions.reportSemanticError) {
+      const diagnostics = program.getSemanticDiagnostics(sourceFile)
+      for (const diagnostic of diagnostics) {
+        if (diagnostic.start !== undefined) {
+          totalCount++
+          let text: string
+          if (typeof diagnostic.messageText === 'string') {
+            text = diagnostic.messageText
+          } else {
+            text = diagnostic.messageText.messageText
+          }
+          const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, diagnostic.start)
+          anys.push({
+            line,
+            character,
+            text,
+            kind: FileAnyInfoKind.semanticError,
+            file,
+          })
+        }
+      }
+    }
 
     if (lintOptions.fileCounts) {
       fileCounts.set(file, {
@@ -182,6 +206,7 @@ const defaultLintOptions: LintOptions = {
   ignoreNonNullAssertion: false,
   ignoreObject: false,
   ignoreEmptyType: false,
+  reportSemanticError: false,
 }
 
 /**
@@ -249,6 +274,7 @@ export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[
       ignoreNonNullAssertion: lintOptions.ignoreNonNullAssertion,
       ignoreObject: lintOptions.ignoreObject,
       ignoreEmptyType: lintOptions.ignoreEmptyType,
+      reportSemanticError: lintOptions.reportSemanticError,
     }
 
     sourceFile.forEachChild(node => {

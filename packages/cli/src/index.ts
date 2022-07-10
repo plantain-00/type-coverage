@@ -40,6 +40,7 @@ function printHelp() {
 --show-relative-path        boolean?  show relative path in detail message
 --history-file              string?   file name where history is saved
 --no-detail-when-failed     boolean?  not show detail message when the CLI failed
+--report-semantic-error     boolean?  report typescript semantic error
   `)
 }
 
@@ -76,6 +77,8 @@ interface CliArgs extends BaseArgs {
   ['history-file']: string
   ['no-detail-when-failed']: boolean
   ['update-if-higher']: boolean
+
+  ['report-semantic-error']: boolean
 }
 
 interface PkgArgs extends BaseArgs {
@@ -95,6 +98,7 @@ interface PkgArgs extends BaseArgs {
   historyFile: string
   noDetailWhenFailed: boolean
   updateIfHigher: boolean
+  reportSemanticError: boolean
 }
 
 interface PackageJson {
@@ -139,6 +143,7 @@ async function executeCommandLine() {
     showRelativePath,
     historyFile,
     noDetailWhenFailed,
+    reportSemanticError,
   } = await getTarget(argv);
 
   const { correctCount, totalCount, anys } = await lint(project, {
@@ -149,11 +154,12 @@ async function executeCommandLine() {
       ignoreFiles,
       ignoreUnreadAnys: ignoreUnread,
       ignoreNested,
-      ignoreAsAssertion: ignoreAsAssertion,
+      ignoreAsAssertion,
       ignoreTypeAssertion,
       ignoreNonNullAssertion,
       ignoreObject,
       ignoreEmptyType,
+      reportSemanticError,
   });
 
   const percent = Math.floor(10000 * correctCount / totalCount) / 100
@@ -237,6 +243,7 @@ async function getTarget(argv: CliArgs) {
     const showRelativePath = getArgOrCfgVal(['show-relative-path', 'showRelativePath'])
     const historyFile = getArgOrCfgVal(['history-file', 'historyFile'])
     const noDetailWhenFailed = getArgOrCfgVal(['no-detail-when-failed', 'noDetailWhenFailed'])
+    const reportSemanticError = getArgOrCfgVal(['report-semantic-error', 'reportSemanticError'])
 
     return {
       atLeast,
@@ -260,6 +267,7 @@ async function getTarget(argv: CliArgs) {
       showRelativePath,
       historyFile,
       noDetailWhenFailed,
+      reportSemanticError,
     };
 }
 

@@ -17,6 +17,7 @@ This tool will check type of all identifiers, `the type coverage rate` = `the co
 
 + Show progress of long-term progressive migration from existing js code to typescript code.
 + Avoid introducing accidental `any` by running in CI.
++ Show progress of long-term progressive migration from existing looser typescript code to stricter typescript code.[migrate to stricter typescript](#migrate-to-stricter-typescript)
 
 ## install
 
@@ -53,6 +54,7 @@ name | type | description
 `--show-relative-path` | boolean? | show relative path in detail message(Added in `v2.17`)
 `--history-file` | string? | file name where history is saved(Added in `v2.18`)
 `--no-detail-when-failed` | boolean? | not show detail message when the CLI failed(Added in `v2.19`)
+`--report-semantic-error` | boolean? | report typescript semantic error(Added in `v2.22`)
 
 ### strict mode
 
@@ -118,6 +120,7 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
     "showRelativePath": true, // same as --show-relative-path (Added in `v2.17`)
     "historyFile": "typecoverage.json", // same as --history-file (Added in `v2.18`)
     "noDetailWhenFailed": true, // same as --no-detail-when-failed (Added in `v2.19`)
+    "reportSemanticError": true, // same as --report-semantic-error (Added in `v2.22`)
   },
 ```
 
@@ -131,6 +134,23 @@ try {
 } catch (error) { // type-coverage:ignore-line
 }
 ```
+
+## migrate to stricter typescript
+
+Create a new tsconfig file(eg: `tconfig.type-coverage.json`) with stricter config, that extends from `tsc`'s `tsconfig.json`
+
+```json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "strict": true
+  }
+}
+```
+
+Run `type-coverage -p ./tconfig.type-coverage.json --report-semantic-error`, tsc semantic errors will be reported by `type-coverage`.
+
+When all tsc semantic errors are resolved, merge the two `tsconfig`s.
 
 ## add dynamic badges of type coverage rate
 
@@ -182,6 +202,7 @@ export interface LintOptions {
   ignoreNonNullAssertion: boolean // Added in v2.16
   ignoreObject: boolean // Added in v2.21
   ignoreEmptyType: boolean // Added in v2.21
+  reportSemanticError: boolean // Added in v2.22
 }
 
 export interface FileTypeCheckResult {
