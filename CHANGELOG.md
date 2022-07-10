@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.22.0](https://github.com/plantain-00/type-coverage/compare/v2.21.2...v2.22.0) (2022-07-10)
+  
+* feat: add --report-semantic-error ([c4b83ed](https://github.com/plantain-00/type-coverage/commit/c4b83ed47de0cdd1cdc1ea57e77bcc6f0fbea479))
+* chore: update dependencies ([a753578](https://github.com/plantain-00/type-coverage/commit/a7535789bb8449483c10ea120c8805932adb592c))
+
 ## [2.21.2](https://github.com/plantain-00/type-coverage/compare/v2.21.1...v2.21.2) (2022-06-26)
   
 * fix: prefer json file over same named dir ([31c56c5](https://github.com/plantain-00/type-coverage/commit/31c56c5e312657f8e06d48da1e8441a8554cc5f0))
