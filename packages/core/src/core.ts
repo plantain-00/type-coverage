@@ -126,7 +126,6 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
       ignoreNonNullAssertion: lintOptions.ignoreNonNullAssertion,
       ignoreObject: lintOptions.ignoreObject,
       ignoreEmptyType: lintOptions.ignoreEmptyType,
-      reportSemanticError: lintOptions.reportSemanticError,
     }
 
     sourceFile.forEachChild(node => {
@@ -274,7 +273,6 @@ export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[
       ignoreNonNullAssertion: lintOptions.ignoreNonNullAssertion,
       ignoreObject: lintOptions.ignoreObject,
       ignoreEmptyType: lintOptions.ignoreEmptyType,
-      reportSemanticError: lintOptions.reportSemanticError,
     }
 
     sourceFile.forEachChild(node => {

@@ -44,6 +44,7 @@ export interface LintOptions extends CommonOptions {
   ignoreFiles?: string | string[],
   fileCounts: boolean,
   absolutePath?: boolean,
+  reportSemanticError: boolean
 }
 
 interface CommonOptions {
@@ -76,7 +77,6 @@ interface CommonOptions {
    * {}
    */
   ignoreEmptyType: boolean
-  reportSemanticError: boolean
 }
 
 export interface FileContext extends CommonOptions {
