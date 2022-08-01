@@ -53,7 +53,7 @@ name | type | description
 `--ignore-empty-type` | boolean? | empty type not counted as any, eg: `foo: {}`(Added in `v2.21`)
 `--show-relative-path` | boolean? | show relative path in detail message(Added in `v2.17`)
 `--history-file` | string? | file name where history is saved(Added in `v2.18`)
-`--no-detail-when-failed` | boolean? | not show detail message when the CLI failed(Added in `v2.19`)
+`--no-detail-when-failed` | boolean? | not show detail message when the CLI failed(Added in `v2.19`)(Use `--no-detail-when-failed=true` to enable it <https://github.com/plantain-00/type-coverage/issues/113>)
 `--report-semantic-error` | boolean? | report typescript semantic error(Added in `v2.22`)
 
 ### strict mode
