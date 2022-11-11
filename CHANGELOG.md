@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.23.0](https://github.com/plantain-00/type-coverage/compare/v2.22.0...v2.23.0) (2022-11-11)
+  
+* feat: support check specific files ([9bf6ac8](https://github.com/plantain-00/type-coverage/commit/9bf6ac8b7025240787d72f9c9296c09313389067))
+* chore: update dependencies ([f0afc7e](https://github.com/plantain-00/type-coverage/commit/f0afc7e10ebf087debf4f3843cd15d0f4f388971)) ([6d4e2cb](https://github.com/plantain-00/type-coverage/commit/6d4e2cb85697bbdde00e5e8feea1328a57b708e0)) ([9db3278](https://github.com/plantain-00/type-coverage/commit/9db32781a4ed82d6d2d6d180d7249c8e2e8ce08d)) ([f953c1b](https://github.com/plantain-00/type-coverage/commit/f953c1b453b2d913257f0be37ce04538118125df)) ([215c923](https://github.com/plantain-00/type-coverage/commit/215c923540d161a285be2d47da6060ab1f981f6e)) ([e00e52a](https://github.com/plantain-00/type-coverage/commit/e00e52a921c9e635639c9064bdae0bae1e117e48)) ([d319a92](https://github.com/plantain-00/type-coverage/commit/d319a92aa65418774284b0d1a9e9c78fa327cde0)) ([15179f9](https://github.com/plantain-00/type-coverage/commit/15179f9c2b428d114f655cc19cb4f430a421d5dc))
+* docs: clarify --no-detail-when-failed usage ([35c9bb9](https://github.com/plantain-00/type-coverage/commit/35c9bb97dc38433ac2ca0d2aeecca48cd0f87d24))
+* chore: reportSemanticError is not used by FileContext ([ed918f4](https://github.com/plantain-00/type-coverage/commit/ed918f4a41f3013e1640948a928c807b0867407c))
+
 ## [2.22.0](https://github.com/plantain-00/type-coverage/compare/v2.21.2...v2.22.0) (2022-07-10)
   
 * feat: add --report-semantic-error ([c4b83ed](https://github.com/plantain-00/type-coverage/commit/c4b83ed47de0cdd1cdc1ea57e77bcc6f0fbea479))
