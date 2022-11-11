@@ -55,6 +55,7 @@ name | type | description
 `--history-file` | string? | file name where history is saved(Added in `v2.18`)
 `--no-detail-when-failed` | boolean? | not show detail message when the CLI failed(Added in `v2.19`)(Use `--no-detail-when-failed=true` to enable it <https://github.com/plantain-00/type-coverage/issues/113>)
 `--report-semantic-error` | boolean? | report typescript semantic error(Added in `v2.22`)
+`-- file1.ts file2.ts ...` | string[]? | only checks these files, useful for usage with tools like `lint-staged`(Added in `v2.23`)
 
 ### strict mode
 

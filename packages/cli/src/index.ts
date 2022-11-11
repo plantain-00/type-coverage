@@ -16,7 +16,7 @@ function showToolVersion() {
 }
 
 function printHelp() {
-  console.log(`type-coverage [options]
+  console.log(`type-coverage [options] [-- file1.ts file2.ts ...]
 
 -p, --project               string?   tell the CLI where is the tsconfig.json
 --detail                    boolean?  show detail
@@ -41,6 +41,7 @@ function printHelp() {
 --history-file              string?   file name where history is saved
 --no-detail-when-failed     boolean?  not show detail message when the CLI failed
 --report-semantic-error     boolean?  report typescript semantic error
+-- file1.ts file2.ts ...    string[]? only checks these files, useful for usage with tools like lint-staged
   `)
 }
 
@@ -56,6 +57,7 @@ interface BaseArgs {
   update: boolean
 }
 interface CliArgs extends BaseArgs {
+  '--': string[]
   p: string
   v: boolean
   version: boolean
@@ -160,6 +162,7 @@ async function executeCommandLine() {
       ignoreObject,
       ignoreEmptyType,
       reportSemanticError,
+      files: argv['--'].length > 0 ? argv['--'] : undefined,
   });
 
   const percent = Math.floor(10000 * correctCount / totalCount) / 100
