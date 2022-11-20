@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.24.0](https://github.com/plantain-00/type-coverage/compare/v2.23.0...v2.24.0) (2022-11-20)
+  
+* feat: support --cache-directory ([f04a347](https://github.com/plantain-00/type-coverage/commit/f04a3473125b694589dd8c84365592b3c6304716))
+* chore: update dependencies ([cd60df0](https://github.com/plantain-00/type-coverage/commit/cd60df0aa34763c37f99716b794123923c4bfc38))
+
 ## [2.23.0](https://github.com/plantain-00/type-coverage/compare/v2.22.0...v2.23.0) (2022-11-11)
   
 * feat: support check specific files ([9bf6ac8](https://github.com/plantain-00/type-coverage/commit/9bf6ac8b7025240787d72f9c9296c09313389067))
