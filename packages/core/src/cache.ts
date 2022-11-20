@@ -17,12 +17,12 @@ function calculateHash(str: string): string {
   return createHash('sha1').update(str).digest('hex')
 }
 
-export async function saveCache(typeCheckResult: TypeCheckResult) {
-  await mkdirIfmissing()
+export async function saveCache(typeCheckResult: TypeCheckResult, dirName = defaultDirName) {
+  await mkdirIfmissing(dirName)
   await writeFileAsync(path.resolve(dirName, 'result.json'), JSON.stringify(typeCheckResult, null, 2))
 }
 
-const dirName = '.type-coverage'
+const defaultDirName = '.type-coverage'
 
 function statAsync(p: string) {
   return new Promise<fs.Stats | undefined>((resolve) => {
@@ -36,14 +36,14 @@ function statAsync(p: string) {
   })
 }
 
-async function mkdirIfmissing() {
+async function mkdirIfmissing(dirName = defaultDirName) {
   const stats = await statAsync(dirName)
   if (!stats) {
     await mkdirAsync(dirName)
   }
 }
 
-export async function readCache(enableCache: boolean): Promise<TypeCheckResult> {
+export async function readCache(enableCache: boolean, dirName = defaultDirName): Promise<TypeCheckResult> {
   if (!enableCache) {
     return {
       cache: {}

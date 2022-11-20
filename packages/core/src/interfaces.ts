@@ -45,6 +45,7 @@ export interface LintOptions extends CommonOptions {
   fileCounts: boolean,
   absolutePath?: boolean,
   reportSemanticError: boolean
+  cacheDirectory?: string
 }
 
 interface CommonOptions {

@@ -29,7 +29,7 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
 
   const allFiles = new Set<string>()
   const sourceFileInfos: SourceFileInfo[] = []
-  const typeCheckResult = await readCache(lintOptions.enableCache)
+  const typeCheckResult = await readCache(lintOptions.enableCache, lintOptions.cacheDirectory)
   const ignoreFileGlobs = lintOptions.ignoreFiles
     ? (typeof lintOptions.ignoreFiles === 'string'
       ? [lintOptions.ignoreFiles]
@@ -186,7 +186,7 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
   }
 
   if (lintOptions.enableCache) {
-    await saveCache(typeCheckResult)
+    await saveCache(typeCheckResult, lintOptions.cacheDirectory)
   }
 
   return { correctCount, totalCount, anys, program, fileCounts }

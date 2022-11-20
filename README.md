@@ -56,6 +56,7 @@ name | type | description
 `--no-detail-when-failed` | boolean? | not show detail message when the CLI failed(Added in `v2.19`)(Use `--no-detail-when-failed=true` to enable it <https://github.com/plantain-00/type-coverage/issues/113>)
 `--report-semantic-error` | boolean? | report typescript semantic error(Added in `v2.22`)
 `-- file1.ts file2.ts ...` | string[]? | only checks these files, useful for usage with tools like `lint-staged`(Added in `v2.23`)
+`--cache-directory` | string? | [set cache directory](#enable-cache)(Added in `v2.24`)
 
 ### strict mode
 
@@ -69,7 +70,7 @@ Also, future minor release may introduce stricter type check in this mode, which
 
 ### enable cache
 
-save and reuse type check result of files that is unchanged and independent of changed files in `.type-coverage` directory, to improve speed
+save and reuse type check result of files that is unchanged and independent of changed files in `.type-coverage` directory(or set by `--cache-directory`), to improve speed
 
 ### ignore catch
 
@@ -122,6 +123,7 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
     "historyFile": "typecoverage.json", // same as --history-file (Added in `v2.18`)
     "noDetailWhenFailed": true, // same as --no-detail-when-failed (Added in `v2.19`)
     "reportSemanticError": true, // same as --report-semantic-error (Added in `v2.22`)
+    "cacheDirectory": "custom-directory", // same as --cache-directory (Added in `v2.24`)
   },
 ```
 
@@ -204,6 +206,7 @@ export interface LintOptions {
   ignoreObject: boolean // Added in v2.21
   ignoreEmptyType: boolean // Added in v2.21
   reportSemanticError: boolean // Added in v2.22
+  cacheDirectory: string // Added in v2.24
 }
 
 export interface FileTypeCheckResult {

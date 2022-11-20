@@ -42,6 +42,7 @@ function printHelp() {
 --no-detail-when-failed     boolean?  not show detail message when the CLI failed
 --report-semantic-error     boolean?  report typescript semantic error
 -- file1.ts file2.ts ...    string[]? only checks these files, useful for usage with tools like lint-staged
+--cache-directory           string?   set cache directory
   `)
 }
 
@@ -81,6 +82,7 @@ interface CliArgs extends BaseArgs {
   ['update-if-higher']: boolean
 
   ['report-semantic-error']: boolean
+  ['cache-directory']: string
 }
 
 interface PkgArgs extends BaseArgs {
@@ -101,6 +103,7 @@ interface PkgArgs extends BaseArgs {
   noDetailWhenFailed: boolean
   updateIfHigher: boolean
   reportSemanticError: boolean
+  cacheDirectory: string
 }
 
 interface PackageJson {
@@ -146,6 +149,7 @@ async function executeCommandLine() {
     historyFile,
     noDetailWhenFailed,
     reportSemanticError,
+    cacheDirectory,
   } = await getTarget(argv);
 
   const { correctCount, totalCount, anys } = await lint(project, {
@@ -162,6 +166,7 @@ async function executeCommandLine() {
       ignoreObject,
       ignoreEmptyType,
       reportSemanticError,
+      cacheDirectory,
       files: argv['--'].length > 0 ? argv['--'] : undefined,
   });
 
@@ -247,6 +252,7 @@ async function getTarget(argv: CliArgs) {
     const historyFile = getArgOrCfgVal(['history-file', 'historyFile'])
     const noDetailWhenFailed = getArgOrCfgVal(['no-detail-when-failed', 'noDetailWhenFailed'])
     const reportSemanticError = getArgOrCfgVal(['report-semantic-error', 'reportSemanticError'])
+    const cacheDirectory = getArgOrCfgVal(['cache-directory', 'cacheDirectory'])
 
     return {
       atLeast,
@@ -271,6 +277,7 @@ async function getTarget(argv: CliArgs) {
       historyFile,
       noDetailWhenFailed,
       reportSemanticError,
+      cacheDirectory,
     };
 }
 
