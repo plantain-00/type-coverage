@@ -39,7 +39,7 @@ function statAsync(p: string) {
 async function mkdirIfmissing(dirName = defaultDirName) {
   const stats = await statAsync(dirName)
   if (!stats) {
-    await mkdirAsync(dirName)
+    await mkdirAsync(dirName, { recursive: true })
   }
 }
 
