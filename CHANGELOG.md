@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.24.1](https://github.com/plantain-00/type-coverage/compare/v2.24.0...v2.24.1) (2022-11-21)
+  
+* fix: mkdir recursive ([cd0af19](https://github.com/plantain-00/type-coverage/commit/cd0af193f70e9c03f8f36aa79a2c448f4e1e5942))
+
 ## [2.24.0](https://github.com/plantain-00/type-coverage/compare/v2.23.0...v2.24.0) (2022-11-20)
   
 * feat: support --cache-directory ([f04a347](https://github.com/plantain-00/type-coverage/commit/f04a3473125b694589dd8c84365592b3c6304716))
