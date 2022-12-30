@@ -7,10 +7,10 @@
   "devDependencies": {
     "@types/minimatch": "5.1.2",
     "@types/minimist": "1.2.2",
-    "@types/node": "18.11.16",
+    "@types/node": "18.11.18",
     "@types/normalize-path": "3.0.0",
-    "@typescript-eslint/eslint-plugin": "5.46.1",
-    "@typescript-eslint/parser": "5.46.1",
+    "@typescript-eslint/eslint-plugin": "5.47.1",
+    "@typescript-eslint/parser": "5.47.1",
     "clean-release": "2.18.0",
     "clean-scripts": "1.21.1",
     "eslint": "8.30.0",
