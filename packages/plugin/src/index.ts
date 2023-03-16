@@ -9,10 +9,10 @@ interface Option {
 }
 
 function init(modules: { typescript: typeof tsserverlibrary }) {
-  let oldProgram: ts.Program | undefined
+  let oldProgram: tsserverlibrary.Program | undefined
   let options: Option | undefined
 
-  function create(info: ts.server.PluginCreateInfo) {
+  function create(info: tsserverlibrary.server.PluginCreateInfo) {
     const proxy: tsserverlibrary.LanguageService = {
       ...info.languageService,
       getSemanticDiagnostics(fileName) {

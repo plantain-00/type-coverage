@@ -18,7 +18,6 @@ export default {
   ],
   lint: {
     ts: `eslint --ext .js,.ts ${tsFiles}`,
-    export: `no-unused-export ${tsFiles} --need-module tslib --need-module ts-plugin-type-coverage --ignore-module vscode --strict`,
     markdown: `markdownlint README.md`
   },
   test: [],
