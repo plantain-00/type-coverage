@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.25.0](https://github.com/plantain-00/type-coverage/compare/v2.24.1...v2.25.0) (2023-03-17)
+  
+* feat: support typescript@5 ([c8acac7](https://github.com/plantain-00/type-coverage/commit/c8acac74e07e4913a9ec2f78268fcd3e330b06b7))
+* chore: update dependencies ([d992817](https://github.com/plantain-00/type-coverage/commit/d992817fadf9707a76b7f8d1d3bb07e124265169)) ([7d621b0](https://github.com/plantain-00/type-coverage/commit/7d621b069cd431be03cf69ad4eca075a29100497)) ([e1b87fd](https://github.com/plantain-00/type-coverage/commit/e1b87fd8dfe39bf460dbb3fe662adb55f2e4639f)) ([e66300c](https://github.com/plantain-00/type-coverage/commit/e66300c59845341c370ae8e7824d3fc9d52b8663)) ([050dbfd](https://github.com/plantain-00/type-coverage/commit/050dbfde391a0d4eaf4d5fcedf94746121077f9d)) ([178e6c5](https://github.com/plantain-00/type-coverage/commit/178e6c528d7bebe9ec680cdbcf00a765bad5b0eb))
+* fix: remove npm mirror ([d22a568](https://github.com/plantain-00/type-coverage/commit/d22a5682598445065089cf5738b30bd79c3fbfef))
+
 ## [2.24.1](https://github.com/plantain-00/type-coverage/compare/v2.24.0...v2.24.1) (2022-11-21)
   
 * fix: mkdir recursive ([cd0af19](https://github.com/plantain-00/type-coverage/commit/cd0af193f70e9c03f8f36aa79a2c448f4e1e5942))
