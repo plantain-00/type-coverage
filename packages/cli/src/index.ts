@@ -171,7 +171,7 @@ async function executeCommandLine() {
   });
 
   const percent = Math.floor(10000 * correctCount / totalCount) / 100
-  const atLeastFailed = atLeast && percent < atLeast
+  const atLeastFailed = typeof atLeast === 'number' && percent < atLeast
   const isFailed = is && percent !== is
 
   if (detail || (!noDetailWhenFailed && (atLeastFailed || isFailed))) {

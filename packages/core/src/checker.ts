@@ -92,7 +92,7 @@ function typeIsAnyOrInTypeArguments(type: ts.Type, anyCanBeInTypeArguments: bool
 
 // See https://github.com/plantain-00/type-coverage/issues/28
 function isEvolvingAssignment(node: ts.Node) {
-  const {parent} = node;
+  const { parent } = node;
   if (ts.isVariableDeclaration(parent)) {
     // Match "let foo" and "let foo = null" but not "let foo: any".
     return !parent.type;
@@ -114,7 +114,7 @@ function checkNodes(nodes: ts.NodeArray<ts.Node> | undefined, context: FileConte
   }
 }
 
-const isTypeAssertionExpression = ts.isTypeAssertionExpression || ts.isTypeAssertion
+const isTypeAssertionExpression = ts.isTypeAssertionExpression || (ts as { isTypeAssertion?: typeof ts.isTypeAssertionExpression }).isTypeAssertion
 
 function checkTypeAssertion(node: ts.Node, context: FileContext, kind: FileAnyInfoKind) {
   if (context.strict) {
@@ -164,8 +164,8 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     console.log(`node: ${context.file}:${line + 1}:${character + 1}: ${node.getText(context.sourceFile)} ${node.kind}(kind)`)
   }
 
-  checkNodes(node.decorators, context)
-  checkNodes(node.modifiers, context)
+  checkNodes((node as { decorators?: ts.NodeArray<ts.Node> }).decorators, context)
+  checkNodes((node as { modifiers?: ts.NodeArray<ts.Node> }).modifiers, context)
 
   if (skippedNodeKinds.has(node.kind)) {
     return
@@ -215,7 +215,7 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     checkNode(node.name, context)
     checkNode(node.questionToken, context)
     checkNode(node.type, context)
-    checkNode(node.initializer, context)
+    checkNode((node as { initializer?: ts.Node }).initializer, context)
     return
   }
   if (ts.isMethodSignature(node)
@@ -625,13 +625,13 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
   }
   if (ts.isPropertyAssignment(node)) {
     checkNode(node.name, context)
-    checkNode(node.questionToken, context)
+    checkNode((node as { questionToken?: ts.Node }).questionToken, context)
     checkNode(node.initializer, context)
     return
   }
   if (ts.isShorthandPropertyAssignment(node)) {
     checkNode(node.name, context)
-    checkNode(node.questionToken, context)
+    checkNode((node as { questionToken?: ts.Node }).questionToken, context)
     checkNode(node.equalsToken, context)
     checkNode(node.objectAssignmentInitializer, context)
     return
