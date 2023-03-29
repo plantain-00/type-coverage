@@ -21,7 +21,7 @@ This tool will check type of all identifiers, `the type coverage rate` = `the co
 
 ## install
 
-`yarn global add type-coverage`
+`yarn global add type-coverage typescript`
 
 ## usage
 
