@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.25.1](https://github.com/plantain-00/type-coverage/compare/v2.25.0...v2.25.1) (2023-05-04)
+  
+* fix: checking private identifier ([b56606b](https://github.com/plantain-00/type-coverage/commit/b56606b76665bec3a4f0d7fd55395c4f9cf7f5d8))
+* chore: update dependencies ([2da9703](https://github.com/plantain-00/type-coverage/commit/2da9703c02a949b348760f9fe6ed55834687cf61))
+* Also install `typescript` which is a peer dep ([b316a57](https://github.com/plantain-00/type-coverage/commit/b316a57811cf3b8f25f872354a7d0c506d0ecaaf))
+
 ## [2.25.0](https://github.com/plantain-00/type-coverage/compare/v2.24.1...v2.25.0) (2023-03-17)
   
 * feat: support typescript@5 ([c8acac7](https://github.com/plantain-00/type-coverage/commit/c8acac74e07e4913a9ec2f78268fcd3e330b06b7))
