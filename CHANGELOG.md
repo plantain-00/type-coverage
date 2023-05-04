@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.25.2](https://github.com/plantain-00/type-coverage/compare/v2.25.1...v2.25.2) (2023-05-04)
+  
+* fix: support minimatch@9 ([c96e7f1](https://github.com/plantain-00/type-coverage/commit/c96e7f10e0d90263e62326bb11c969589c001e2e))
+
 ## [2.25.1](https://github.com/plantain-00/type-coverage/compare/v2.25.0...v2.25.1) (2023-05-04)
   
 * fix: checking private identifier ([b56606b](https://github.com/plantain-00/type-coverage/commit/b56606b76665bec3a4f0d7fd55395c4f9cf7f5d8))
