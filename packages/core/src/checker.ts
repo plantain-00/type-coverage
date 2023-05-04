@@ -175,7 +175,7 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     collectData(node, context)
     return
   }
-  if (ts.isIdentifier(node)) {
+  if (ts.isIdentifier(node) || ts.isPrivateIdentifier?.(node)) {
     if (context.catchVariables[node.escapedText as string]) {
       return
     }
@@ -740,7 +740,6 @@ const skippedNodeKinds = new Set([
   ts.SyntaxKind.AmpersandAmpersandEqualsToken,
   ts.SyntaxKind.QuestionQuestionEqualsToken,
   ts.SyntaxKind.CaretEqualsToken,
-  ts.SyntaxKind.PrivateIdentifier,
   ts.SyntaxKind.BreakKeyword,
   ts.SyntaxKind.CaseKeyword,
   ts.SyntaxKind.CatchKeyword,
