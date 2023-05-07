@@ -5,7 +5,6 @@
   "author": "york yao <yaoao12306@outlook.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/minimatch": "5.1.2",
     "@types/minimist": "1.2.2",
     "@types/node": "20.1.0",
     "@types/normalize-path": "3.0.0",
