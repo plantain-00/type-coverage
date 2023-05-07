@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.25.3](https://github.com/plantain-00/type-coverage/compare/v2.25.2...v2.25.3) (2023-05-08)
+  
+* fix: drop use of minimatch@3 || 4 || 5 ([a7140b5](https://github.com/plantain-00/type-coverage/commit/a7140b538aeb37816a6ebf3a743109acd98dc8f8))
+* chore: update dependencies ([b8a58fb](https://github.com/plantain-00/type-coverage/commit/b8a58fb7081ba66a8feab96a58eb3cd1232127a4))
+
 ## [2.25.2](https://github.com/plantain-00/type-coverage/compare/v2.25.1...v2.25.2) (2023-05-04)
   
 * fix: support minimatch@9 ([c96e7f1](https://github.com/plantain-00/type-coverage/commit/c96e7f10e0d90263e62326bb11c969589c001e2e))
