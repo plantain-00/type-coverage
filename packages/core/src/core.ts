@@ -40,7 +40,7 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
     if (!file.includes('node_modules')) {
       if (!lintOptions.absolutePath) {
         file = path.relative(process.cwd(), file)
-        if (file.startsWith('..')) {
+        if (!lintOptions.notOnlyInCWD && file.startsWith('..')) {
           continue
         }
       }
@@ -232,7 +232,7 @@ export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[
     if (!file.includes('node_modules') && (!lintOptions.files || lintOptions.files.includes(file))) {
       if (!lintOptions.absolutePath) {
         file = path.relative(process.cwd(), file)
-        if (file.startsWith('..')) {
+        if (!lintOptions.notOnlyInCWD && file.startsWith('..')) {
           continue
         }
       }

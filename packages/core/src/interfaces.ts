@@ -46,6 +46,7 @@ export interface LintOptions extends CommonOptions {
   absolutePath?: boolean,
   reportSemanticError: boolean
   cacheDirectory?: string
+  notOnlyInCWD?: boolean
 }
 
 interface CommonOptions {

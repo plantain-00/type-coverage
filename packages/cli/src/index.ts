@@ -43,6 +43,7 @@ function printHelp() {
 --report-semantic-error     boolean?  report typescript semantic error
 -- file1.ts file2.ts ...    string[]? only checks these files, useful for usage with tools like lint-staged
 --cache-directory           string?   set cache directory
+--not-only-in-cwd           boolean?  include results outside current working directory
   `)
 }
 
@@ -83,6 +84,7 @@ interface CliArgs extends BaseArgs {
 
   ['report-semantic-error']: boolean
   ['cache-directory']: string
+  ['not-only-in-cwd']: boolean
 }
 
 interface PkgArgs extends BaseArgs {
@@ -104,6 +106,7 @@ interface PkgArgs extends BaseArgs {
   updateIfHigher: boolean
   reportSemanticError: boolean
   cacheDirectory: string
+  notOnlyInCWD: boolean
 }
 
 interface PackageJson {
@@ -150,6 +153,7 @@ async function executeCommandLine() {
     noDetailWhenFailed,
     reportSemanticError,
     cacheDirectory,
+    notOnlyInCWD,
   } = await getTarget(argv);
 
   const { correctCount, totalCount, anys } = await lint(project, {
@@ -167,6 +171,7 @@ async function executeCommandLine() {
       ignoreEmptyType,
       reportSemanticError,
       cacheDirectory,
+      notOnlyInCWD,
       files: argv['--'].length > 0 ? argv['--'] : undefined,
   });
 
@@ -253,6 +258,7 @@ async function getTarget(argv: CliArgs) {
     const noDetailWhenFailed = getArgOrCfgVal(['no-detail-when-failed', 'noDetailWhenFailed'])
     const reportSemanticError = getArgOrCfgVal(['report-semantic-error', 'reportSemanticError'])
     const cacheDirectory = getArgOrCfgVal(['cache-directory', 'cacheDirectory'])
+    const notOnlyInCWD = getArgOrCfgVal(['not-only-in-cwd', 'notOnlyInCWD'])
 
     return {
       atLeast,
@@ -278,6 +284,7 @@ async function getTarget(argv: CliArgs) {
       noDetailWhenFailed,
       reportSemanticError,
       cacheDirectory,
+      notOnlyInCWD,
     };
 }
 
