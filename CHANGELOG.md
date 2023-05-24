@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.26.0](https://github.com/plantain-00/type-coverage/compare/v2.25.3...v2.26.0) (2023-05-24)
+  
+* feat: support --not-only-in-cwd ([f1cda0b](https://github.com/plantain-00/type-coverage/commit/f1cda0b785b7a814b32186b81302ba0217ecdd56))
+
 ## [2.25.3](https://github.com/plantain-00/type-coverage/compare/v2.25.2...v2.25.3) (2023-05-08)
   
 * fix: drop use of minimatch@3 || 4 || 5 ([a7140b5](https://github.com/plantain-00/type-coverage/commit/a7140b538aeb37816a6ebf3a743109acd98dc8f8))
