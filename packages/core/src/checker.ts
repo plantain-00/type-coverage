@@ -849,7 +849,5 @@ const skippedNodeKinds = new Set([
   ts.SyntaxKind.NotEmittedStatement,
   ts.SyntaxKind.PartiallyEmittedExpression,
   ts.SyntaxKind.CommaListExpression,
-  ts.SyntaxKind.MergeDeclarationMarker,
-  ts.SyntaxKind.EndOfDeclarationMarker,
   ts.SyntaxKind.Count,
 ])
