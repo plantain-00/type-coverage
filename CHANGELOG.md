@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.26.1](https://github.com/plantain-00/type-coverage/compare/v2.26.0...v2.26.1) (2023-08-25)
+  
+* Update `atLeast` or `is` if they are set to zero ([9971cc0](https://github.com/plantain-00/type-coverage/commit/9971cc098648243aa5b34d47c83821f5b897aa4f))
+* chore: update dependencies ([39aa3b8](https://github.com/plantain-00/type-coverage/commit/39aa3b86cef98a091a67b2a212e4f7479fa08a67)) ([a3b359c](https://github.com/plantain-00/type-coverage/commit/a3b359c2821a6f2d089aa235529291a9fba012d6)) ([fed865a](https://github.com/plantain-00/type-coverage/commit/fed865a331911a581bffce02ef199a8f26149e66))
+* fix: ci ([0bd5939](https://github.com/plantain-00/type-coverage/commit/0bd59395de0747f57d20ad8343008fb2e32413d6))
+
 ## [2.26.0](https://github.com/plantain-00/type-coverage/compare/v2.25.3...v2.26.0) (2023-05-24)
   
 * feat: support --not-only-in-cwd ([f1cda0b](https://github.com/plantain-00/type-coverage/commit/f1cda0b785b7a814b32186b81302ba0217ecdd56))
