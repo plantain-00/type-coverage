@@ -298,11 +298,11 @@ async function saveTarget(target: number, ifHigher?: boolean) {
       }
     } = JSON.parse((await readFileAsync(packageJsonPath)).toString())
     if (currentPackageJson.typeCoverage) {
-      if (currentPackageJson.typeCoverage.atLeast) {
+      if (currentPackageJson.typeCoverage.atLeast != null) {
         if (!ifHigher || target > currentPackageJson.typeCoverage.atLeast) {
           currentPackageJson.typeCoverage.atLeast = target
         }
-      } else if (currentPackageJson.typeCoverage.is) {
+      } else if (currentPackageJson.typeCoverage.is != null) {
         if (!ifHigher || target > currentPackageJson.typeCoverage.is) {
           currentPackageJson.typeCoverage.is = target
         }
