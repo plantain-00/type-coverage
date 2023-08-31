@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.26.2](https://github.com/plantain-00/type-coverage/compare/v2.26.1...v2.26.2) (2023-08-31)
+  
+* fix: unhandled satisfied expression ([1dee649](https://github.com/plantain-00/type-coverage/commit/1dee649b3d86a1a148f30c63e5974c5508069a1d))
+* chore: update dependencies ([bf33237](https://github.com/plantain-00/type-coverage/commit/bf332378686de84c0d82838b25f7230bc7ab8e3f))
+
 ## [2.26.1](https://github.com/plantain-00/type-coverage/compare/v2.26.0...v2.26.1) (2023-08-25)
   
 * Update `atLeast` or `is` if they are set to zero ([9971cc0](https://github.com/plantain-00/type-coverage/commit/9971cc098648243aa5b34d47c83821f5b897aa4f))
