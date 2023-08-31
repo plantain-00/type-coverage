@@ -659,6 +659,11 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
     checkNode(node.name, context)
     return
   }
+  if (ts.isSatisfiesExpression(node)) {
+    checkNode(node.expression, context)
+    checkNode(node.type, context)
+    return
+  }
   const { line, character } = ts.getLineAndCharacterOfPosition(context.sourceFile, node.getStart(context.sourceFile))
   console.log(`warning: unhandled node kind: ${node.kind} in ${context.file}:${line + 1}:${character + 1}`)
 }
