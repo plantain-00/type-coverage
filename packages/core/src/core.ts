@@ -131,14 +131,6 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
       ignoreEmptyType: lintOptions.ignoreEmptyType,
     }
 
-    sourceFile.forEachChild(node => {
-      checkNode(node, context)
-    })
-
-    correctCount += context.typeCheckResult.correctCount
-    totalCount += context.typeCheckResult.totalCount
-    anys.push(...context.typeCheckResult.anys.map((a) => ({ file, ...a })))
-
     if (lintOptions.reportSemanticError) {
       const diagnostics = program.getSemanticDiagnostics(sourceFile)
       for (const diagnostic of diagnostics) {
@@ -161,6 +153,14 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
         }
       }
     }
+
+    sourceFile.forEachChild(node => {
+      checkNode(node, context)
+    })
+
+    correctCount += context.typeCheckResult.correctCount
+    totalCount += context.typeCheckResult.totalCount
+    anys.push(...context.typeCheckResult.anys.map((a) => ({ file, ...a })))
 
     if (lintOptions.fileCounts) {
       fileCounts.set(file, {
