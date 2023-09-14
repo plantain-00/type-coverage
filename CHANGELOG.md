@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.26.3](https://github.com/plantain-00/type-coverage/compare/v2.26.2...v2.26.3) (2023-09-14)
+  
+* fix: report semantic before type checking ([3684c0a](https://github.com/plantain-00/type-coverage/commit/3684c0a5f42f96c8401a77ae703cf0763e9ed500))
+
 ## [2.26.2](https://github.com/plantain-00/type-coverage/compare/v2.26.1...v2.26.2) (2023-08-31)
   
 * fix: unhandled satisfied expression ([1dee649](https://github.com/plantain-00/type-coverage/commit/1dee649b3d86a1a148f30c63e5974c5508069a1d))
