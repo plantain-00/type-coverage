@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.26.4](https://github.com/plantain-00/type-coverage/compare/v2.26.3...v2.26.4) (2023-09-19)
+  
+* fix: deduplicate result from plugin ([885ef2e](https://github.com/plantain-00/type-coverage/commit/885ef2eb581e0b085a4b788f5b890b21052e9493))
+
 ## [2.26.3](https://github.com/plantain-00/type-coverage/compare/v2.26.2...v2.26.3) (2023-09-14)
   
 * fix: report semantic before type checking ([3684c0a](https://github.com/plantain-00/type-coverage/commit/3684c0a5f42f96c8401a77ae703cf0763e9ed500))

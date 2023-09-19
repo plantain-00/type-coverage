@@ -1,6 +1,6 @@
 {
   "name": "ts-plugin-type-coverage",
-  "version": "2.26.3",
+  "version": "2.26.4",
   "description": "A typescript language service plugin to check type coverage for typescript code",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
