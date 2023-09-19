@@ -1,35 +1,27 @@
 import * as tsserverlibrary from 'typescript/lib/tsserverlibrary'
 import { lintSync, FileAnyInfoKind } from 'type-coverage-core'
 
-interface Option {
-  strict: boolean
-  ignoreCatch: boolean
-  jsEnable: boolean
-  ignoreUnreadAnys: boolean
-}
-
 function init(modules: { typescript: typeof tsserverlibrary }) {
   let oldProgram: tsserverlibrary.Program | undefined
-  let options: Option | undefined
 
   function create(info: tsserverlibrary.server.PluginCreateInfo) {
     const proxy: tsserverlibrary.LanguageService = {
       ...info.languageService,
       getSemanticDiagnostics(fileName) {
-        const prior = info.languageService.getSemanticDiagnostics(fileName)
-        if (!options?.jsEnable && (fileName.endsWith('.js') || fileName.endsWith('.jsx'))) {
-          return prior
+        if (!info.config?.jsEnable && (fileName.endsWith('.js') || fileName.endsWith('.jsx'))) {
+          return []
         }
         const result = lintSync(
           info.project.getCompilerOptions(),
           info.project.getRootFiles(),
           {
-            ...options,
+            ...info.config,
             files: [fileName],
             oldProgram,
           },
         )
         oldProgram = result.program
+        const diagnostics: tsserverlibrary.Diagnostic[] = []
         for (const anyObject of result.anys) {
           let messageText: string
           if (anyObject.kind === FileAnyInfoKind.containsAny) {
@@ -43,7 +35,7 @@ function init(modules: { typescript: typeof tsserverlibrary }) {
           } else {
             messageText = `The type of '${anyObject.text}' is 'any'`
           }
-          prior.push({
+          diagnostics.push({
             category: modules.typescript.DiagnosticCategory.Warning,
             code: anyObject.kind,
             source: 'ts-plugin-type-coverage',
@@ -53,7 +45,7 @@ function init(modules: { typescript: typeof tsserverlibrary }) {
             messageText,
           })
         }
-        return prior
+        return diagnostics
       },
     }
     return proxy
@@ -61,9 +53,6 @@ function init(modules: { typescript: typeof tsserverlibrary }) {
 
   return {
     create,
-    onConfigurationChanged(config: Option) {
-      options = config
-    }
   };
 }
 
