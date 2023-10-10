@@ -7,6 +7,33 @@ import * as packageJson from '../package.json'
 import { lint } from 'type-coverage-core'
 
 let suppressError = false
+let jsonOutput = false
+
+interface LintResult {
+  character: number
+  filePath: string
+  line: number
+  text: string
+}
+
+interface Output {
+  atLeastFailed?: boolean
+  isFailed?: boolean | 0
+  succeeded: boolean
+  correctCount?: number
+  totalCount?: number
+  percent?: number
+  percentString?: string
+  atLeast?: boolean | number 
+  is?: number
+  details?: LintResult[]
+  error?: string | unknown
+}
+
+const output: Output = {
+  succeeded: false,
+}
+
 const existsAsync = util.promisify(fs.exists)
 const readFileAsync = util.promisify(fs.readFile)
 const writeFileAsync = util.promisify(fs.writeFile)
@@ -44,6 +71,7 @@ function printHelp() {
 -- file1.ts file2.ts ...    string[]? only checks these files, useful for usage with tools like lint-staged
 --cache-directory           string?   set cache directory
 --not-only-in-cwd           boolean?  include results outside current working directory
+--json-output               boolean?  output results as JSON
   `)
 }
 
@@ -85,6 +113,7 @@ interface CliArgs extends BaseArgs {
   ['report-semantic-error']: boolean
   ['cache-directory']: string
   ['not-only-in-cwd']: boolean
+  ['json-output']: boolean
 }
 
 interface PkgArgs extends BaseArgs {
@@ -107,6 +136,7 @@ interface PkgArgs extends BaseArgs {
   reportSemanticError: boolean
   cacheDirectory: string
   notOnlyInCWD: boolean
+  jsonOutput: boolean
 }
 
 interface PackageJson {
@@ -180,13 +210,27 @@ async function executeCommandLine() {
   const isFailed = is && percent !== is
 
   if (detail || (!noDetailWhenFailed && (atLeastFailed || isFailed))) {
+    output.details = []
     for (const { file, line, character, text } of anys) {
       const filePath = showRelativePath ? file : path.resolve(process.cwd(), file)
-      console.log(`${filePath}:${line + 1}:${character + 1}: ${text}`)
+      output.details.push({
+        character,
+        filePath,
+        line,
+        text
+      })
     }
   }
   const percentString = percent.toFixed(2)
-  console.log(`${correctCount} / ${totalCount} ${percentString}%`)
+
+  output.atLeast = atLeast
+  output.atLeastFailed = atLeastFailed
+  output.correctCount = correctCount
+  output.is = is
+  output.isFailed = isFailed
+  output.percent = percent
+  output.percentString = percentString
+  output.totalCount = totalCount
 
   if (update) {
     await saveTarget(+percentString)
@@ -234,6 +278,7 @@ async function getTarget(argv: CliArgs) {
     }
 
     suppressError = getArgOrCfgVal(['suppressError']) || false
+    jsonOutput = getArgOrCfgVal(['json-output', 'jsonOutput']) || false
 
     const atLeast = getArgOrCfgVal(['at-least', 'atLeast'])
     const debug = getArgOrCfgVal(['debug'])
@@ -329,14 +374,44 @@ async function saveHistory(percentage: number, historyFile?:string) {
   } 
 }
 
-executeCommandLine().then(() => {
-  console.log('type-coverage success.')
-}, (error: Error | string) => {
-  if (error instanceof Error) {
-    console.log(error.message)
+function printOutput(output: Output, asJson: boolean) {
+  if(asJson) {
+    console.log(JSON.stringify(output, null, 2))
+    return
+  }
+
+  const {details, correctCount, error, totalCount, percentString, succeeded} = output
+
+  for(const detail of details || []) {
+    const { filePath, line, character, text } = detail
+    console.log(`${filePath}:${line + 1}:${character + 1}: ${text}`)
+  }
+  
+  if(percentString) {
+    console.log(`${correctCount} / ${totalCount} ${percentString}%`)
+  }
+
+  if(succeeded) {
+    console.log('type-coverage success.')
   } else {
     console.log(error)
   }
+
+}
+
+executeCommandLine().then(() => {
+  output.succeeded = true;
+  printOutput(output, jsonOutput)
+}, (error: Error | string) => {
+  output.succeeded = false;
+  if (error instanceof Error) {
+    output.error = error.message
+  } else {
+    output.error = error
+  }
+
+  printOutput(output, jsonOutput)
+
   if (!suppressError) {
     process.exit(1)
   }
