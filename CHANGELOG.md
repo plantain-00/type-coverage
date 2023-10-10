@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.27.0](https://github.com/plantain-00/type-coverage/compare/v2.26.4...v2.27.0) (2023-10-11)
+  
+* docs: --json-output ([8d394e7](https://github.com/plantain-00/type-coverage/commit/8d394e7c0fa481ec39d27c6ca71b3f3343bfa74b))
+* Add JSON Output argument to CLI ([e9364af](https://github.com/plantain-00/type-coverage/commit/e9364afb64e6196d7417dba661f3b0da92a6aa61))
+* chore: update dependencies ([5085b1e](https://github.com/plantain-00/type-coverage/commit/5085b1e1eeb9c88ea4ec98f1cd0a24e885262704))
+
 ## [2.26.4](https://github.com/plantain-00/type-coverage/compare/v2.26.3...v2.26.4) (2023-09-19)
   
 * fix: deduplicate result from plugin ([885ef2e](https://github.com/plantain-00/type-coverage/commit/885ef2eb581e0b085a4b788f5b890b21052e9493))
