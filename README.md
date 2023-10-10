@@ -58,6 +58,7 @@ name | type | description
 `-- file1.ts file2.ts ...` | string[]? | only checks these files, useful for usage with tools like `lint-staged`(Added in `v2.23`)
 `--cache-directory` | string? | [set cache directory](#enable-cache)(Added in `v2.24`)
 `--not-only-in-cwd` | boolean? | include results outside current working directory(Added in `v2.26`)
+`--json-output` | boolean? | output results as JSON(Added in `v2.27`)
 
 ### strict mode
 
@@ -125,7 +126,8 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
     "noDetailWhenFailed": true, // same as --no-detail-when-failed (Added in `v2.19`)
     "reportSemanticError": true, // same as --report-semantic-error (Added in `v2.22`)
     "cacheDirectory": "custom-directory", // same as --cache-directory (Added in `v2.24`)
-    "notOnlyInCWD": true, // same as --not-only-in-cwd (Added in `v2.24`)
+    "notOnlyInCWD": true, // same as --not-only-in-cwd (Added in `v2.26`)
+    "jsonOutput": true, // same as --json-output (Added in `v2.27`)
   },
 ```
 
