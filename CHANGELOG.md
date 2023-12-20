@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.27.1](https://github.com/plantain-00/type-coverage/compare/v2.27.0...v2.27.1) (2023-12-20)
+  
+* support tsconfig extends array ([3f93834](https://github.com/plantain-00/type-coverage/commit/3f938348e4f91ab519cbb3a38bb02c9b6f50ba6d))
+* chore: update dependencies ([1798d6f](https://github.com/plantain-00/type-coverage/commit/1798d6f373f12b54c428d29e904e6e24922b9c0d)) ([dd48902](https://github.com/plantain-00/type-coverage/commit/dd489023867b0c43b008a15c230fc021953d2eb5))
+
 ## [2.27.0](https://github.com/plantain-00/type-coverage/compare/v2.26.4...v2.27.0) (2023-10-11)
   
 * docs: --json-output ([8d394e7](https://github.com/plantain-00/type-coverage/commit/8d394e7c0fa481ec39d27c6ca71b3f3343bfa74b))
