@@ -89,7 +89,7 @@ function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
 }
 
 interface JsonConfig {
-  extends?: string
+  extends?: string | string[]
   compilerOptions?: { baseUrl?: string; outDir?: string; [name: string]: unknown }
   include?: string[]
   exclude?: string[]
@@ -113,28 +113,35 @@ async function getTsConfig(configFilePath: string, dirname: string): Promise<Jso
     }
   } : configResult.config as JsonConfig
   if (config.extends) {
-    let project: string
-    let fallbackProjects: string[] = []
-    if (path.isAbsolute(config.extends)) {
-      project = config.extends
-    } else if (config.extends === '.'
-      || config.extends === '..'
-      || config.extends.startsWith(`.${path.sep}`)
-      || config.extends.startsWith(`..${path.sep}`)
-      || config.extends.startsWith('./')
-      || config.extends.startsWith('../')
-    ) {
-      project = path.resolve(dirname, config.extends)
-    } else {
-      project = path.resolve(dirname, 'node_modules', config.extends)
-      const paths = await findParentsWithNodeModules(dirname)
-      fallbackProjects = paths.map(p => path.resolve(p, 'node_modules', config.extends || ''))
+    let lastBasename = dirname
+    const extendsArray = Array.isArray(config.extends) ? config.extends : [config.extends]
+    let extendsCompilerOptions: JsonConfig = {};
+    for (const extend of extendsArray) {
+      let project: string
+      let fallbackProjects: string[] = []
+      if (path.isAbsolute(extend)) {
+        project = extend
+      } else if (extend === '.'
+        || extend === '..'
+        || extend.startsWith(`.${path.sep}`)
+        || extend.startsWith(`..${path.sep}`)
+        || extend.startsWith('./')
+        || extend.startsWith('../')
+      ) {
+        project = path.resolve(dirname, extend)
+      } else {
+        project = path.resolve(dirname, 'node_modules', extend)
+        const paths = await findParentsWithNodeModules(dirname)
+        fallbackProjects = paths.map(p => path.resolve(p, 'node_modules', extend || ''))
+      }
+      const { configFilePath, dirname: extendsBasename } = getTsConfigFilePath(project, fallbackProjects)
+      lastBasename = extendsBasename;
+      const extendsConfig = await getTsConfig(configFilePath, extendsBasename);
+      extendsCompilerOptions = { ...extendsCompilerOptions, ...extendsConfig.compilerOptions }
     }
-    const { configFilePath, dirname: extendsBasename } = getTsConfigFilePath(project, fallbackProjects)
-    const extendsConfig = await getTsConfig(configFilePath, extendsBasename)
+    config.compilerOptions = { ...extendsCompilerOptions, ...config.compilerOptions }
     const topLevelBaseUrl = config.compilerOptions ? config.compilerOptions.baseUrl : undefined
-    config.compilerOptions = { ...extendsConfig.compilerOptions, ...config.compilerOptions }
-    config.basePath = topLevelBaseUrl ? dirname : extendsBasename;
+    config.basePath = topLevelBaseUrl ? dirname : lastBasename;
   }
   return config
 }
