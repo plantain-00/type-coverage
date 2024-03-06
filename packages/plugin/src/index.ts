@@ -8,14 +8,15 @@ function init(modules: { typescript: typeof tsserverlibrary }) {
     const proxy: tsserverlibrary.LanguageService = {
       ...info.languageService,
       getSemanticDiagnostics(fileName) {
-        if (!info.config?.jsEnable && (fileName.endsWith('.js') || fileName.endsWith('.jsx'))) {
+        const config: { jsEnable: boolean } = info.config
+        if (!config?.jsEnable && (fileName.endsWith('.js') || fileName.endsWith('.jsx'))) {
           return []
         }
         const result = lintSync(
           info.project.getCompilerOptions(),
           info.project.getRootFiles(),
           {
-            ...info.config,
+            ...config,
             files: [fileName],
             oldProgram,
           },

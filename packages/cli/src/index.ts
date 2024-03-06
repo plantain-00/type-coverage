@@ -362,7 +362,7 @@ async function saveHistory(percentage: number, historyFile?:string) {
     const historyFilePath = path.resolve(process.cwd(), historyFile);
     if (await existsAsync(historyFilePath)) {
       const date = new Date().toISOString()
-      const historyFile = JSON.parse((await readFileAsync(historyFilePath)).toString());
+      const historyFile: Record<string, number> = JSON.parse((await readFileAsync(historyFilePath)).toString());
       historyFile[date] = percentage
       await writeFileAsync(historyFilePath, JSON.stringify(historyFile, null, 2) + '\n');
     } else {

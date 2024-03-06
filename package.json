@@ -19,7 +19,7 @@
     "rimraf": "5.0.5",
     "tsconfig-plantain": "0.0.2",
     "tsx": "3.12.10",
-    "typescript": "5.3.3",
+    "typescript": "5.4.2",
     "vscode": "1.1.37"
   },
   "scripts": {
@@ -34,6 +34,6 @@
   ],
   "private": true,
   "typeCoverage": {
-    "atLeast": 99.5
+    "atLeast": 99.52
   }
 }

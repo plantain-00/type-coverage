@@ -139,9 +139,7 @@ function checkTypeAssertion(node: ts.Node, context: FileContext, kind: FileAnyIn
         return
       }
       // exclude safe type assertion powered by isTypeAssignableTo
-      const checker = context.checker as unknown as {
-        isTypeAssignableTo?: (type1: ts.Type, type2: ts.Type) => boolean
-      } & typeof context.checker
+      const checker = context.checker
       if (checker.isTypeAssignableTo
         && checker.isTypeAssignableTo(checker.getTypeAtLocation(node.expression), checker.getTypeFromTypeNode(node.type))) {
         return
