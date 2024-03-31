@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.27.2](https://github.com/plantain-00/type-coverage/compare/v2.27.1...v2.27.2) (2024-03-31)
+  
+* fix: unhandled accessor keyword ([9366a95](https://github.com/plantain-00/type-coverage/commit/9366a95cbb8bef68a7c4ccda42779f180ab6799e))
+* chore: update typescript@5.4 ([1a4a4ff](https://github.com/plantain-00/type-coverage/commit/1a4a4ff43b2d67a4c953b5f0db63523cf87d70c4))
+* chore: update dependencies ([c1c252f](https://github.com/plantain-00/type-coverage/commit/c1c252f9a5ae8eaea317112799bef70c78d1f1f0)) ([247d801](https://github.com/plantain-00/type-coverage/commit/247d801cb696077920a8ef7955c51beac2d77ed0)) ([8a325d2](https://github.com/plantain-00/type-coverage/commit/8a325d211138da75aa634f60b6b9dad327c1ee78))
+
 ## [2.27.1](https://github.com/plantain-00/type-coverage/compare/v2.27.0...v2.27.1) (2023-12-20)
   
 * support tsconfig extends array ([3f93834](https://github.com/plantain-00/type-coverage/commit/3f938348e4f91ab519cbb3a38bb02c9b6f50ba6d))
