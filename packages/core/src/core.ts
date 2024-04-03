@@ -14,7 +14,7 @@ import {
 } from './interfaces'
 import { checkNode } from './checker'
 import { clearCacheOfDependencies, collectDependencies } from './dependencies'
-import { collectIgnoreMap } from './ignore'
+import { collectIgnoreLines } from './ignore'
 import { readCache, getFileHash, saveCache } from './cache'
 
 /**
@@ -106,7 +106,7 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
       continue
     }
 
-    const ingoreMap = collectIgnoreMap(sourceFile, file)
+    const ignoreLines = collectIgnoreLines(sourceFile)
     const context: FileContext = {
       file,
       sourceFile,
@@ -122,7 +122,7 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
       strict: lintOptions.strict,
       processAny: lintOptions.processAny,
       checker,
-      ingoreMap,
+      ignoreLines,
       ignoreNested: lintOptions.ignoreNested,
       ignoreAsAssertion: lintOptions.ignoreAsAssertion,
       ignoreTypeAssertion: lintOptions.ignoreTypeAssertion,
@@ -157,6 +157,20 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
     sourceFile.forEachChild(node => {
       checkNode(node, context)
     })
+
+    if (lintOptions.reportUnusedIgnore && ignoreLines) {
+      for (const line of ignoreLines) {
+        if (!context.usedIgnoreLines?.has(line)) {
+          anys.push({
+            line,
+            character: 0,
+            text: 'Unused ignore line directive(no problems reported on that line)',
+            kind: FileAnyInfoKind.unusedIgnore,
+            file,
+          })
+        }
+      }
+    }
 
     correctCount += context.typeCheckResult.correctCount
     totalCount += context.typeCheckResult.totalCount
@@ -209,6 +223,7 @@ const defaultLintOptions: LintOptions = {
   ignoreObject: false,
   ignoreEmptyType: false,
   reportSemanticError: false,
+  reportUnusedIgnore: false,
 }
 
 /**
@@ -253,7 +268,7 @@ export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[
   const fileCounts =
     new Map<string, Pick<FileTypeCheckResult, 'correctCount' | 'totalCount'>>()
   for (const { sourceFile, file } of sourceFileInfos) {
-    const ingoreMap = collectIgnoreMap(sourceFile, file)
+    const ignoreLines = collectIgnoreLines(sourceFile)
     const context: FileContext = {
       file,
       sourceFile,
@@ -269,7 +284,7 @@ export function lintSync(compilerOptions: ts.CompilerOptions, rootNames: string[
       strict: lintOptions.strict,
       processAny: lintOptions.processAny,
       checker,
-      ingoreMap,
+      ignoreLines,
       ignoreNested: lintOptions.ignoreNested,
       ignoreAsAssertion: lintOptions.ignoreAsAssertion,
       ignoreTypeAssertion: lintOptions.ignoreTypeAssertion,

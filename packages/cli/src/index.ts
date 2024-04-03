@@ -72,6 +72,7 @@ function printHelp() {
 --cache-directory           string?   set cache directory
 --not-only-in-cwd           boolean?  include results outside current working directory
 --json-output               boolean?  output results as JSON
+--report-unused-ignore      boolean?  report unused ignore line directives
   `)
 }
 
@@ -111,6 +112,7 @@ interface CliArgs extends BaseArgs {
   ['update-if-higher']: boolean
 
   ['report-semantic-error']: boolean
+  ['report-unused-ignore']: boolean
   ['cache-directory']: string
   ['not-only-in-cwd']: boolean
   ['json-output']: boolean
@@ -134,6 +136,7 @@ interface PkgArgs extends BaseArgs {
   noDetailWhenFailed: boolean
   updateIfHigher: boolean
   reportSemanticError: boolean
+  reportUnusedIgnore: boolean
   cacheDirectory: string
   notOnlyInCWD: boolean
   jsonOutput: boolean
@@ -182,6 +185,7 @@ async function executeCommandLine() {
     historyFile,
     noDetailWhenFailed,
     reportSemanticError,
+    reportUnusedIgnore,
     cacheDirectory,
     notOnlyInCWD,
   } = await getTarget(argv);
@@ -200,6 +204,7 @@ async function executeCommandLine() {
       ignoreObject,
       ignoreEmptyType,
       reportSemanticError,
+      reportUnusedIgnore,
       cacheDirectory,
       notOnlyInCWD,
       files: argv['--'].length > 0 ? argv['--'] : undefined,
@@ -302,6 +307,7 @@ async function getTarget(argv: CliArgs) {
     const historyFile = getArgOrCfgVal(['history-file', 'historyFile'])
     const noDetailWhenFailed = getArgOrCfgVal(['no-detail-when-failed', 'noDetailWhenFailed'])
     const reportSemanticError = getArgOrCfgVal(['report-semantic-error', 'reportSemanticError'])
+    const reportUnusedIgnore = getArgOrCfgVal(['report-unused-ignore', 'reportUnusedIgnore'])
     const cacheDirectory = getArgOrCfgVal(['cache-directory', 'cacheDirectory'])
     const notOnlyInCWD = getArgOrCfgVal(['not-only-in-cwd', 'notOnlyInCWD'])
 
@@ -328,6 +334,7 @@ async function getTarget(argv: CliArgs) {
       historyFile,
       noDetailWhenFailed,
       reportSemanticError,
+      reportUnusedIgnore,
       cacheDirectory,
       notOnlyInCWD,
     };

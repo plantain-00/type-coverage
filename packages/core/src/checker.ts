@@ -3,12 +3,16 @@ import * as ts from 'typescript'
 import { FileAnyInfoKind, FileContext } from './interfaces'
 
 function collectAny(node: ts.Node, context: FileContext, kind: FileAnyInfoKind) {
-  const { file, sourceFile, typeCheckResult, ingoreMap, ignoreUnreadAnys, debug, processAny } = context
+  const { file, sourceFile, typeCheckResult, ignoreLines, ignoreUnreadAnys, debug, processAny } = context
   if (processAny !== undefined) {
     return processAny(node, context)
   }
   const { line, character } = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart(sourceFile))
-  if (ingoreMap[file] && ingoreMap[file]?.has(line)) {
+  if (ignoreLines?.has(line)) {
+    if (!context.usedIgnoreLines) {
+      context.usedIgnoreLines = new Set()
+    }
+    context.usedIgnoreLines.add(line)
     return false
   }
   if (ignoreUnreadAnys && isEvolvingAssignment(node)) {

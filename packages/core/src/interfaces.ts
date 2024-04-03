@@ -30,6 +30,7 @@ export const enum FileAnyInfoKind {
   unsafeTypeAssertion = 4, // <string>foo
   unsafeNonNull = 5, // foo!
   semanticError = 6,
+  unusedIgnore = 7,
 }
 
 /**
@@ -45,6 +46,7 @@ export interface LintOptions extends CommonOptions {
   fileCounts: boolean,
   absolutePath?: boolean,
   reportSemanticError: boolean
+  reportUnusedIgnore: boolean
   cacheDirectory?: string
   notOnlyInCWD?: boolean
 }
@@ -87,7 +89,8 @@ export interface FileContext extends CommonOptions {
   typeCheckResult: FileTypeCheckResult
   checker: ts.TypeChecker
   catchVariables: { [variable: string]: boolean }
-  ingoreMap: { [file: string]: Set<number> }
+  ignoreLines?: Set<number>
+  usedIgnoreLines?: Set<number>
 }
 
 interface TypeCheckCache extends FileTypeCheckResult {

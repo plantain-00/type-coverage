@@ -59,6 +59,7 @@ name | type | description
 `--cache-directory` | string? | [set cache directory](#enable-cache)(Added in `v2.24`)
 `--not-only-in-cwd` | boolean? | include results outside current working directory(Added in `v2.26`)
 `--json-output` | boolean? | output results as JSON(Added in `v2.27`)
+`--report-unused-ignore` | boolean? | report unused [ignore line](#ignore-line) directives(Added in `v2.28`)
 
 ### strict mode
 
@@ -128,6 +129,7 @@ This tool will ignore the files, eg: `--ignore-files "demo1/*.ts" --ignore-files
     "cacheDirectory": "custom-directory", // same as --cache-directory (Added in `v2.24`)
     "notOnlyInCWD": true, // same as --not-only-in-cwd (Added in `v2.26`)
     "jsonOutput": true, // same as --json-output (Added in `v2.27`)
+    "reportUnusedIgnore": true, // same as --report-unused-ignore (Added in `v2.28`)
   },
 ```
 
@@ -140,6 +142,13 @@ try {
   // type-coverage:ignore-next-line
 } catch (error) { // type-coverage:ignore-line
 }
+```
+
+The `--report-unused-ignore` can report unused ignore line directives.(Added in `v2.28`)
+
+```ts
+// type-coverage:ignore-next-line
+const a = 1 // <- this line is marked to ignore `any`, but there is no `any` here now. 
 ```
 
 ## migrate to stricter typescript
@@ -212,6 +221,7 @@ export interface LintOptions {
   reportSemanticError: boolean // Added in v2.22
   cacheDirectory: string // Added in v2.24
   notOnlyInCWD?: boolean, // Added in v2.26
+  reportUnusedIgnore: boolean, // Added in v2.28
 }
 
 export interface FileTypeCheckResult {
