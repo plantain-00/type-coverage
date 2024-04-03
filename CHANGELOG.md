@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.28.0](https://github.com/plantain-00/type-coverage/compare/v2.27.2...v2.28.0) (2024-04-03)
+  
+* feat: support --report-unused-ignore ([7de9fd9](https://github.com/plantain-00/type-coverage/commit/7de9fd9f5452108d21fed6280fcbd1df85d494c2))
+
 ## [2.27.2](https://github.com/plantain-00/type-coverage/compare/v2.27.1...v2.27.2) (2024-03-31)
   
 * fix: unhandled accessor keyword ([9366a95](https://github.com/plantain-00/type-coverage/commit/9366a95cbb8bef68a7c4ccda42779f180ab6799e))
