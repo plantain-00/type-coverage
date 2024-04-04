@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.28.1](https://github.com/plantain-00/type-coverage/compare/v2.28.0...v2.28.1) (2024-04-04)
+  
+* fix: --report-unused-ignore didn't count, enabled if --strict ([115b159](https://github.com/plantain-00/type-coverage/commit/115b159308f41742c172243b511e681c215dc953))
+
 ## [2.28.0](https://github.com/plantain-00/type-coverage/compare/v2.27.2...v2.28.0) (2024-04-03)
   
 * feat: support --report-unused-ignore ([7de9fd9](https://github.com/plantain-00/type-coverage/commit/7de9fd9f5452108d21fed6280fcbd1df85d494c2))
