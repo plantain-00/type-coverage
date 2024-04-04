@@ -158,9 +158,10 @@ export async function lint(project: string, options?: Partial<LintOptions>) {
       checkNode(node, context)
     })
 
-    if (lintOptions.reportUnusedIgnore && ignoreLines) {
+    if ((lintOptions.reportUnusedIgnore || lintOptions.strict) && ignoreLines) {
       for (const line of ignoreLines) {
         if (!context.usedIgnoreLines?.has(line)) {
+          totalCount++
           anys.push({
             line,
             character: 0,

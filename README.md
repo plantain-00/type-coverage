@@ -59,7 +59,7 @@ name | type | description
 `--cache-directory` | string? | [set cache directory](#enable-cache)(Added in `v2.24`)
 `--not-only-in-cwd` | boolean? | include results outside current working directory(Added in `v2.26`)
 `--json-output` | boolean? | output results as JSON(Added in `v2.27`)
-`--report-unused-ignore` | boolean? | report unused [ignore line](#ignore-line) directives(Added in `v2.28`)
+`--report-unused-ignore` | boolean? | report unused [ignore line](#ignore-line) directives, enabled if `--strict`(Added in `v2.28`)
 
 ### strict mode
 
@@ -68,6 +68,8 @@ If the identifiers' type arguments exist and contain at least one `any`, like `a
 Type assertion, like `foo as string`, `foo!`, `<string>foo` will be considered as uncovered, exclude `foo as const`, `<const>foo`, `foo as unknown`(Added in `v2.8`), and other safe type assertion powered by `isTypeAssignableTo`(Added in `v2.9`)
 
 Object type(like `foo: Object`) and empty type(like `foo: {}`) will be considered as any(Added in `v2.21`)
+
+Strict mode enables [`--report-unused-ignore`](#ignore-line) by default.
 
 Also, future minor release may introduce stricter type check in this mode, which may lower the type coverage rate
 
@@ -144,7 +146,7 @@ try {
 }
 ```
 
-The `--report-unused-ignore` can report unused ignore line directives.(Added in `v2.28`)
+The `--report-unused-ignore` or `--strict` can report unused ignore line directives.(Added in `v2.28`)
 
 ```ts
 // type-coverage:ignore-next-line

@@ -14,7 +14,7 @@ export default {
       ],
       dependencies: d.dependencies
     }))),
-    ...workspaces.map((d) => `node packages/cli/dist/index.js -p ${d.path}/src --detail --strict --report-unused-ignore --suppressError`)
+    ...workspaces.map((d) => `node packages/cli/dist/index.js -p ${d.path}/src --detail --strict --suppressError`)
   ],
   lint: {
     ts: `eslint --ext .js,.ts ${tsFiles}`,
