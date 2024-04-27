@@ -17,9 +17,9 @@ export default {
     ...workspaces.map((d) => `node packages/cli/dist/index.js -p ${d.path}/src --detail --strict --suppressError`)
   ],
   lint: {
-    ts: `eslint --ext .js,.ts ${tsFiles}`,
+    ts: `eslint ${tsFiles}`,
     markdown: `markdownlint README.md`
   },
   test: [],
-  fix: `eslint --ext .js,.ts ${tsFiles} --fix`
+  fix: `eslint ${tsFiles} --fix`
 }
