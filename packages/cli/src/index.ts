@@ -395,7 +395,11 @@ function printOutput(output: Output, asJson: boolean) {
   }
   
   if(percentString) {
-    console.log(`${correctCount} / ${totalCount} ${percentString}%`)
+    if (totalCount) {
+      console.log(`${correctCount} / ${totalCount} ${percentString}%`)
+    } else {
+      console.log(`${correctCount} / ${totalCount}`)
+    }
   }
 
   if(succeeded) {
