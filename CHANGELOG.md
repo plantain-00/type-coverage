@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.28.2](https://github.com/plantain-00/type-coverage/compare/v2.28.1...v2.28.2) (2024-04-29)
+  
+* fix: hide NaN% ([5e22e5b](https://github.com/plantain-00/type-coverage/commit/5e22e5b6633e8dd826cbf006452ee070cb5f2dd6))
+* chore: update dependencies ([8854731](https://github.com/plantain-00/type-coverage/commit/8854731bffeeec192c832f0d41f6b926cf47c670))
+
 ## [2.28.1](https://github.com/plantain-00/type-coverage/compare/v2.28.0...v2.28.1) (2024-04-04)
   
 * fix: --report-unused-ignore didn't count, enabled if --strict ([115b159](https://github.com/plantain-00/type-coverage/commit/115b159308f41742c172243b511e681c215dc953))
