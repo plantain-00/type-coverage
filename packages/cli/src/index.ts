@@ -1,11 +1,11 @@
 import minimist = require('minimist')
+import chalk = require('chalk')
 import * as fs from 'fs'
 import * as util from 'util'
 import * as path from 'path'
 
 import * as packageJson from '../package.json'
 import { lint } from 'type-coverage-core'
-import chalk = require('chalk')
 
 let suppressError = false
 let jsonOutput = false
@@ -29,7 +29,6 @@ interface Output {
   is?: number
   details?: LintResult[]
   error?: string | unknown
-  color?: boolean
 }
 
 const output: Output = {
@@ -75,8 +74,6 @@ function printHelp() {
 --not-only-in-cwd           boolean?  include results outside current working directory
 --json-output               boolean?  output results as JSON
 --report-unused-ignore      boolean?  report unused ignore line directives
---color                     boolean?  force color output
---no-color                  boolean?  disable color output
   `)
 }
 
@@ -120,8 +117,6 @@ interface CliArgs extends BaseArgs {
   ['cache-directory']: string
   ['not-only-in-cwd']: boolean
   ['json-output']: boolean
-  ['color']: boolean
-  ['no-color']: boolean
 }
 
 interface PkgArgs extends BaseArgs {
@@ -146,9 +141,6 @@ interface PkgArgs extends BaseArgs {
   cacheDirectory: string
   notOnlyInCWD: boolean
   jsonOutput: boolean
-
-  color: boolean
-  noColor: boolean
 }
 
 interface PackageJson {
@@ -196,8 +188,7 @@ async function executeCommandLine() {
     reportSemanticError,
     reportUnusedIgnore,
     cacheDirectory,
-    notOnlyInCWD,
-    color
+    notOnlyInCWD
   } = await getTarget(argv);
 
   const { correctCount, totalCount, anys } = await lint(project, {
@@ -246,7 +237,6 @@ async function executeCommandLine() {
   output.percent = percent
   output.percentString = percentString
   output.totalCount = totalCount
-  output.color = color
 
   if (update) {
     await saveTarget(+percentString)
@@ -321,7 +311,6 @@ async function getTarget(argv: CliArgs) {
     const reportUnusedIgnore = getArgOrCfgVal(['report-unused-ignore', 'reportUnusedIgnore'])
     const cacheDirectory = getArgOrCfgVal(['cache-directory', 'cacheDirectory'])
     const notOnlyInCWD = getArgOrCfgVal(['not-only-in-cwd', 'notOnlyInCWD'])
-    const color = getArgOrCfgVal(['color', 'color']) || !getArgOrCfgVal(['no-color', 'no-color'])
 
     return {
       atLeast,
@@ -348,8 +337,7 @@ async function getTarget(argv: CliArgs) {
       reportSemanticError,
       reportUnusedIgnore,
       cacheDirectory,
-      notOnlyInCWD,
-      color
+      notOnlyInCWD
     };
 }
 
@@ -394,10 +382,7 @@ async function saveHistory(percentage: number, historyFile?:string) {
   } 
 }
 
-function printOutput(output: Output, asJson: boolean, colors?: boolean) {
-  if(colors === false) {
-    chalk.level = 0
-  }
+function printOutput(output: Output, asJson: boolean) {
   if(asJson) {
     console.log(JSON.stringify(output, null, 2))
     return
@@ -429,7 +414,7 @@ function printOutput(output: Output, asJson: boolean, colors?: boolean) {
 
 executeCommandLine().then(() => {
   output.succeeded = true;
-  printOutput(output, jsonOutput, output.color)
+  printOutput(output, jsonOutput)
 }, (error: Error | string) => {
   output.succeeded = false;
   if (error instanceof Error) {
@@ -438,7 +423,7 @@ executeCommandLine().then(() => {
     output.error = error
   }
 
-  printOutput(output, jsonOutput, output.color)
+  printOutput(output, jsonOutput)
 
   if (!suppressError) {
     process.exit(1)
