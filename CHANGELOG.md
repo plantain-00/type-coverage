@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.29.0](https://github.com/plantain-00/type-coverage/compare/v2.28.2...v2.29.0) (2024-05-30)
+  
+* fix: remove args ([8632142](https://github.com/plantain-00/type-coverage/commit/8632142cfa00878df6257eacbbf42ad6b32a202e))
+* feat: add color output option ([39ad59f](https://github.com/plantain-00/type-coverage/commit/39ad59f7b2524b9be0d0fc70195a15fe955978ae))
+* ci: include lts node version matrix ([7636d03](https://github.com/plantain-00/type-coverage/commit/7636d03701ee1d9cd6b5b3b37fb5a63f8b25d7f1))
+
 ## [2.28.2](https://github.com/plantain-00/type-coverage/compare/v2.28.1...v2.28.2) (2024-04-29)
   
 * fix: hide NaN% ([5e22e5b](https://github.com/plantain-00/type-coverage/commit/5e22e5b6633e8dd826cbf006452ee070cb5f2dd6))
