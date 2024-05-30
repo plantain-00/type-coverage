@@ -294,6 +294,10 @@ If the plugin does not work, you may see some workarounds:
 
 Yes, This package calls Typescript API, Typescript can parse Javascript file(with `allowJs`), then this package can too.
 
+> Q: How to disable color in output?
+
+Set the environment variable `FORCE_COLOR=0` or use `--no-color` option, see [chalk documentation](https://github.com/chalk/chalk?tab=readme-ov-file#supportscolor) for details.
+
 ## Changelogs
 
 [CHANGELOG for minor and patch release](./CHANGELOG.md)
