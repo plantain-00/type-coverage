@@ -5,6 +5,7 @@ import * as path from 'path'
 
 import * as packageJson from '../package.json'
 import { lint } from 'type-coverage-core'
+import chalk = require('chalk')
 
 let suppressError = false
 let jsonOutput = false
@@ -28,6 +29,7 @@ interface Output {
   is?: number
   details?: LintResult[]
   error?: string | unknown
+  color?: boolean
 }
 
 const output: Output = {
@@ -73,6 +75,8 @@ function printHelp() {
 --not-only-in-cwd           boolean?  include results outside current working directory
 --json-output               boolean?  output results as JSON
 --report-unused-ignore      boolean?  report unused ignore line directives
+--color                     boolean?  force color output
+--no-color                  boolean?  disable color output
   `)
 }
 
@@ -116,6 +120,8 @@ interface CliArgs extends BaseArgs {
   ['cache-directory']: string
   ['not-only-in-cwd']: boolean
   ['json-output']: boolean
+  ['color']: boolean
+  ['no-color']: boolean
 }
 
 interface PkgArgs extends BaseArgs {
@@ -140,6 +146,9 @@ interface PkgArgs extends BaseArgs {
   cacheDirectory: string
   notOnlyInCWD: boolean
   jsonOutput: boolean
+
+  color: boolean
+  noColor: boolean
 }
 
 interface PackageJson {
@@ -188,6 +197,7 @@ async function executeCommandLine() {
     reportUnusedIgnore,
     cacheDirectory,
     notOnlyInCWD,
+    color
   } = await getTarget(argv);
 
   const { correctCount, totalCount, anys } = await lint(project, {
@@ -236,6 +246,7 @@ async function executeCommandLine() {
   output.percent = percent
   output.percentString = percentString
   output.totalCount = totalCount
+  output.color = color
 
   if (update) {
     await saveTarget(+percentString)
@@ -310,6 +321,7 @@ async function getTarget(argv: CliArgs) {
     const reportUnusedIgnore = getArgOrCfgVal(['report-unused-ignore', 'reportUnusedIgnore'])
     const cacheDirectory = getArgOrCfgVal(['cache-directory', 'cacheDirectory'])
     const notOnlyInCWD = getArgOrCfgVal(['not-only-in-cwd', 'notOnlyInCWD'])
+    const color = getArgOrCfgVal(['color', 'color']) || !getArgOrCfgVal(['no-color', 'no-color'])
 
     return {
       atLeast,
@@ -337,6 +349,7 @@ async function getTarget(argv: CliArgs) {
       reportUnusedIgnore,
       cacheDirectory,
       notOnlyInCWD,
+      color
     };
 }
 
@@ -381,7 +394,10 @@ async function saveHistory(percentage: number, historyFile?:string) {
   } 
 }
 
-function printOutput(output: Output, asJson: boolean) {
+function printOutput(output: Output, asJson: boolean, colors?: boolean) {
+  if(colors === false) {
+    chalk.level = 0
+  }
   if(asJson) {
     console.log(JSON.stringify(output, null, 2))
     return
@@ -393,26 +409,27 @@ function printOutput(output: Output, asJson: boolean) {
     const { filePath, line, character, text } = detail
     console.log(`${filePath}:${line + 1}:${character + 1}: ${text}`)
   }
-  
+
   if(percentString) {
+    const diffInfo = `${correctCount} / ${totalCount}`
     if (totalCount) {
-      console.log(`${correctCount} / ${totalCount} ${percentString}%`)
+      console.log(succeeded ? chalk.green(`(${diffInfo}) ${percentString}%`) : chalk.red(`(${diffInfo}) ${percentString}%`))
     } else {
-      console.log(`${correctCount} / ${totalCount}`)
+      console.log(succeeded ? chalk.green(diffInfo) : chalk.red(diffInfo))
     }
   }
 
   if(succeeded) {
-    console.log('type-coverage success.')
+    console.log(chalk.green('type-coverage success.'))
   } else {
-    console.log(error)
+    console.log(chalk.red(error))
   }
 
 }
 
 executeCommandLine().then(() => {
   output.succeeded = true;
-  printOutput(output, jsonOutput)
+  printOutput(output, jsonOutput, output.color)
 }, (error: Error | string) => {
   output.succeeded = false;
   if (error instanceof Error) {
@@ -421,7 +438,7 @@ executeCommandLine().then(() => {
     output.error = error
   }
 
-  printOutput(output, jsonOutput)
+  printOutput(output, jsonOutput, output.color)
 
   if (!suppressError) {
     process.exit(1)
