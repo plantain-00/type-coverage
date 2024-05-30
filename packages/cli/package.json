@@ -7,7 +7,8 @@
   "license": "MIT",
   "dependencies": {
     "minimist": "1",
-    "type-coverage-core": "^2.28.1"
+    "type-coverage-core": "^2.28.1",
+    "chalk": "^4"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
