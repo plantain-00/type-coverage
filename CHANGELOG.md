@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.29.1](https://github.com/plantain-00/type-coverage/compare/v2.29.0...v2.29.1) (2024-07-09)
+  
+* fix: handle class static block delclaration ([367f9bd](https://github.com/plantain-00/type-coverage/commit/367f9bd2f659d3f63504ee14a3a0d16b03f7b5fd))
+* chore: update dependencies ([051d7e5](https://github.com/plantain-00/type-coverage/commit/051d7e56a369453b976ef918db83863b6e133174))
+
 ## [2.29.0](https://github.com/plantain-00/type-coverage/compare/v2.28.2...v2.29.0) (2024-05-30)
   
 * fix: remove args ([8632142](https://github.com/plantain-00/type-coverage/commit/8632142cfa00878df6257eacbbf42ad6b32a202e))
