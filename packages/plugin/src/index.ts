@@ -9,8 +9,9 @@ function init(modules: { typescript: typeof tsserverlibrary }) {
       ...info.languageService,
       getSemanticDiagnostics(fileName) {
         const config: { jsEnable: boolean } = info.config
+        const prior = info.languageService.getSemanticDiagnostics(fileName);
         if (!config?.jsEnable && (fileName.endsWith('.js') || fileName.endsWith('.jsx'))) {
-          return []
+          return [...prior]
         }
         const result = lintSync(
           info.project.getCompilerOptions(),
@@ -22,7 +23,7 @@ function init(modules: { typescript: typeof tsserverlibrary }) {
           },
         )
         oldProgram = result.program
-        const diagnostics: tsserverlibrary.Diagnostic[] = []
+        const diagnostics: tsserverlibrary.Diagnostic[] = [...prior]
         for (const anyObject of result.anys) {
           let messageText: string
           if (anyObject.kind === FileAnyInfoKind.containsAny) {
