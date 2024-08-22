@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.29.2](https://github.com/plantain-00/type-coverage/compare/v2.29.1...v2.29.2) (2024-08-23)
+  
+* fix: ts plugin prior diagnostics ([1c6af3b](https://github.com/plantain-00/type-coverage/commit/1c6af3bbe7bf16a819b39c5e999f5b3859a7f97e))
+
 ## [2.29.1](https://github.com/plantain-00/type-coverage/compare/v2.29.0...v2.29.1) (2024-07-09)
   
 * fix: handle class static block delclaration ([367f9bd](https://github.com/plantain-00/type-coverage/commit/367f9bd2f659d3f63504ee14a3a0d16b03f7b5fd))
