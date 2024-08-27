@@ -1,8 +1,8 @@
 import * as ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
-import fg = require('fast-glob')
-import normalize = require('normalize-path')
+import fg from 'fast-glob'
+import normalize from 'normalize-path'
 
 /**
  * @public

@@ -1,5 +1,5 @@
-import minimist = require('minimist')
-import chalk = require('chalk')
+import * as minimist from 'minimist'
+import * as chalk from 'chalk'
 import * as fs from 'fs'
 import * as util from 'util'
 import * as path from 'path'

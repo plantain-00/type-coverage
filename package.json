@@ -6,17 +6,17 @@
   "license": "MIT",
   "devDependencies": {
     "@types/minimist": "1.2.5",
-    "@types/node": "20.14.8",
+    "@types/node": "22.5.0",
     "@types/normalize-path": "3.0.2",
     "clean-release": "2.18.0",
     "clean-scripts": "1.21.1",
-    "eslint": "9.5.0",
+    "eslint": "9.9.1",
     "markdownlint-cli": "0.41.0",
-    "rimraf": "5.0.7",
+    "rimraf": "6.0.1",
     "tsconfig-plantain": "0.0.2",
     "tsx": "3.12.10",
-    "typescript": "5.5.2",
-    "typescript-eslint": "7.14.1",
+    "typescript": "5.5.4",
+    "typescript-eslint": "8.3.0",
     "vscode": "1.1.37"
   },
   "scripts": {
