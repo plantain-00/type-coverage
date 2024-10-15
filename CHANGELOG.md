@@ -1,5 +1,7 @@
 # Change Log
 
+## [2.29.6](https://github.com/plantain-00/type-coverage/compare/v2.29.5...v2.29.6) (2024-10-15)
+
 ## [2.29.5](https://github.com/plantain-00/type-coverage/compare/v2.29.2...v2.29.5) (2024-10-15)
   
 * fix: reportUnusedIgnore false to disable reportUnusedIgnore when strict ([440cf06](https://github.com/plantain-00/type-coverage/commit/440cf06d55ca5febda91aa253548f3e75ac4587a))
