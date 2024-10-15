@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.29.5](https://github.com/plantain-00/type-coverage/compare/v2.29.2...v2.29.5) (2024-10-15)
+  
+* fix: reportUnusedIgnore false to disable reportUnusedIgnore when strict ([440cf06](https://github.com/plantain-00/type-coverage/commit/440cf06d55ca5febda91aa253548f3e75ac4587a))
+* fix: ci failure ([906bc5b](https://github.com/plantain-00/type-coverage/commit/906bc5b784ccaafac988d392aa21fdf8c6786ba9))
+* chore: update dependencies ([2ac5cf2](https://github.com/plantain-00/type-coverage/commit/2ac5cf21eb6f1524a7dc5f89e9840081869fc72a))
+
 ## [2.29.2](https://github.com/plantain-00/type-coverage/compare/v2.29.1...v2.29.2) (2024-08-23)
   
 * fix: ts plugin prior diagnostics ([1c6af3b](https://github.com/plantain-00/type-coverage/commit/1c6af3bbe7bf16a819b39c5e999f5b3859a7f97e))
