@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.29.7](https://github.com/plantain-00/type-coverage/compare/v2.29.6...v2.29.7) (2024-10-15)
+  
+* fix: package import ([a06cdeb](https://github.com/plantain-00/type-coverage/commit/a06cdeb21c9b27fe23b74a4f0677ca963ce592ca))
+
 ## [2.29.6](https://github.com/plantain-00/type-coverage/compare/v2.29.5...v2.29.6) (2024-10-15)
 
 ## [2.29.5](https://github.com/plantain-00/type-coverage/compare/v2.29.2...v2.29.5) (2024-10-15)
