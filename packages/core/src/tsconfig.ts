@@ -1,8 +1,10 @@
 import * as ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
-import fg from 'fast-glob'
-import normalize from 'normalize-path'
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import fg = require('fast-glob')
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import normalize = require('normalize-path')
 
 /**
  * @public
