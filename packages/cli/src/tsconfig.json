@@ -1,8 +1,12 @@
 {
   "extends": "tsconfig-plantain",
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "outDir": "../dist",
     "esModuleInterop": false,
+    "types": [
+      "@types/node"
+    ],
     "module": "commonjs"
   },
   "files": [
