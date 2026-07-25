@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.30.0](https://github.com/plantain-00/type-coverage/compare/v2.29.7...v2.30.0) (2026-07-25)
+  
+* feat: add typescript 6 and 7 as peerDependencies ([d7d4c96](https://github.com/plantain-00/type-coverage/commit/d7d4c96aeea6d76518909f849d22c4af6960be33))
+* chore: update dependencies ([4af1c3d](https://github.com/plantain-00/type-coverage/commit/4af1c3d972567a7d2a04e5313445dcc3cb3e4abc))
+
 ## [2.29.7](https://github.com/plantain-00/type-coverage/compare/v2.29.6...v2.29.7) (2024-10-15)
   
 * fix: package import ([a06cdeb](https://github.com/plantain-00/type-coverage/commit/a06cdeb21c9b27fe23b74a4f0677ca963ce592ca))
