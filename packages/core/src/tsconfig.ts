@@ -11,7 +11,7 @@ import normalize = require('normalize-path')
  */
 export async function getProjectRootNamesAndCompilerOptions(project: string) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
-  const config = await getTsConfig(configFilePath, dirname)
+  const config = await getTsConfig(configFilePath, dirname, dirname)
 
   const { options: compilerOptions, errors } = ts.convertCompilerOptionsFromJson(config.compilerOptions, config.basePath || dirname)
   if (errors && errors.length > 0) {
@@ -94,12 +94,16 @@ interface JsonConfig {
   extends?: string | string[]
   compilerOptions?: { baseUrl?: string; outDir?: string; [name: string]: unknown }
   include?: string[]
+  includeBasePath?: string
   exclude?: string[]
+  excludeBasePath?: string
   files?: string[]
+  filesBasePath?: string
   basePath?: string
+  configDir?: string
 }
 
-async function getTsConfig(configFilePath: string, dirname: string): Promise<JsonConfig> {
+async function getTsConfig(configFilePath: string, dirname: string, configDir: string): Promise<JsonConfig> {
   const configResult = ts.readConfigFile(configFilePath, p => fs.readFileSync(p).toString())
   const config = configResult.error ? {
     extends: undefined,
@@ -114,10 +118,14 @@ async function getTsConfig(configFilePath: string, dirname: string): Promise<Jso
       allowSyntheticDefaultImports: true
     }
   } : configResult.config as JsonConfig
+  config.configDir = configDir
+  config.includeBasePath = config.include ? dirname : undefined
+  config.excludeBasePath = config.exclude ? dirname : undefined
+  config.filesBasePath = config.files ? dirname : undefined
   if (config.extends) {
     let lastBasename = dirname
     const extendsArray = Array.isArray(config.extends) ? config.extends : [config.extends]
-    let extendsCompilerOptions: JsonConfig = {};
+    let extendsConfig: JsonConfig = {}
     for (const extend of extendsArray) {
       let project: string
       let fallbackProjects: string[] = []
@@ -138,10 +146,24 @@ async function getTsConfig(configFilePath: string, dirname: string): Promise<Jso
       }
       const { configFilePath, dirname: extendsBasename } = getTsConfigFilePath(project, fallbackProjects)
       lastBasename = extendsBasename;
-      const extendsConfig = await getTsConfig(configFilePath, extendsBasename);
-      extendsCompilerOptions = { ...extendsCompilerOptions, ...extendsConfig.compilerOptions }
+      const currentExtendsConfig = await getTsConfig(configFilePath, extendsBasename, configDir)
+      extendsConfig = {
+        ...extendsConfig,
+        ...currentExtendsConfig,
+        compilerOptions: {
+          ...extendsConfig.compilerOptions,
+          ...currentExtendsConfig.compilerOptions,
+        },
+      }
     }
-    config.compilerOptions = { ...extendsCompilerOptions, ...config.compilerOptions }
+    config.compilerOptions = { ...extendsConfig.compilerOptions, ...config.compilerOptions }
+    for (const property of ['include', 'exclude', 'files'] as const) {
+      if (config[property] === undefined) {
+        config[property] = extendsConfig[property]
+        const basePathProperty = `${property}BasePath` as const
+        config[basePathProperty] = extendsConfig[basePathProperty]
+      }
+    }
     const topLevelBaseUrl = config.compilerOptions ? config.compilerOptions.baseUrl : undefined
     config.basePath = topLevelBaseUrl ? dirname : lastBasename;
   }
@@ -158,13 +180,15 @@ async function getRootNames(config: JsonConfig, dirname: string) {
   }
 
   // https://www.typescriptlang.org/tsconfig#files
-  const files = config.files?.map(f => path.resolve(dirname, f)) ?? []
+  const files = config.files?.map(f => resolveConfigPath(config.filesBasePath || dirname, config.configDir || dirname, f)) ?? []
 
   if (Array.isArray(include) && include.length > 0) {
     // https://www.typescriptlang.org/tsconfig#exclude
     let exclude: string[]
+    let explicitExclude = false
     if (config.exclude) {
       exclude = config.exclude
+      explicitExclude = true
     } else {
       exclude = ['node_modules', 'bower_components', 'jspm_packages']
       if (config.compilerOptions?.outDir) {
@@ -175,12 +199,17 @@ async function getRootNames(config: JsonConfig, dirname: string) {
     // https://github.com/mrmlnc/fast-glob#how-to-exclude-directory-from-reading
     let ignore: string[] = []
     for (const e of exclude) {
-      ignore.push(e, `**/${e}`)
+      if (explicitExclude) {
+        const excludePath = resolveConfigPath(config.excludeBasePath || dirname, config.configDir || dirname, e)
+        ignore.push(excludePath, `${excludePath}/**`)
+      } else {
+        ignore.push(e, `**/${e}`)
+      }
     }
 
     let rules: string[] = []
     for (const file of include) {
-      const currentPath = path.resolve(dirname, file)
+      const currentPath = resolveConfigPath(config.includeBasePath || dirname, config.configDir || dirname, file)
       const stats = await statAsync(currentPath)
       if (stats === undefined || stats.isFile()) {
         rules.push(currentPath)
@@ -199,6 +228,10 @@ async function getRootNames(config: JsonConfig, dirname: string) {
   }
 
   return files.map((r) => path.resolve(process.cwd(), dirname, r))
+}
+
+function resolveConfigPath(basePath: string, configDir: string, filePath: string) {
+  return path.resolve(basePath, filePath.replaceAll('${configDir}', configDir))
 }
 
 function statAsync(file: string) {
