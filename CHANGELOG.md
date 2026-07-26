@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.30.1](https://github.com/plantain-00/type-coverage/compare/v2.30.0...v2.30.1) (2026-07-26)
+  
+* fix: inherit file selection from extended tsconfig ([e45b30a](https://github.com/plantain-00/type-coverage/commit/e45b30ae0a5ea563b6778d251ce0dd755197b066))
+
 ## [2.30.0](https://github.com/plantain-00/type-coverage/compare/v2.29.7...v2.30.0) (2026-07-25)
   
 * feat: add typescript 6 and 7 as peerDependencies ([d7d4c96](https://github.com/plantain-00/type-coverage/commit/d7d4c96aeea6d76518909f849d22c4af6960be33))
