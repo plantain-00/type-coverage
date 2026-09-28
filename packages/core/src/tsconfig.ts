@@ -56,7 +56,7 @@ function tryToStatFile(filePath: string) {
   }
 }
 
-function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
+export function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
   let configFilePath: string
   let dirname: string
   let projectStats: fs.Stats | undefined

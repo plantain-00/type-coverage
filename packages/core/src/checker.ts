@@ -169,6 +169,7 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
   checkNodes((node as { decorators?: ts.NodeArray<ts.Node> }).decorators, context)
   checkNodes((node as { modifiers?: ts.NodeArray<ts.Node> }).modifiers, context)
 
+  skippedNodeKinds ??= createSkippedNodeKinds()
   if (skippedNodeKinds.has(node.kind)) {
     return
   }
@@ -674,7 +675,9 @@ export function checkNode(node: ts.Node | undefined, context: FileContext): void
   console.log(`warning: unhandled node kind: ${node.kind} in ${context.file}:${line + 1}:${character + 1}`)
 }
 
-const skippedNodeKinds = new Set([
+// Built on first use so this module still loads when typescript has no SyntaxKind (typescript@7)
+let skippedNodeKinds: Set<ts.SyntaxKind> | undefined
+const createSkippedNodeKinds = () => new Set([
   ts.SyntaxKind.Unknown,
   ts.SyntaxKind.EndOfFileToken,
   ts.SyntaxKind.SingleLineCommentTrivia,
