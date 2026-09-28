@@ -16,13 +16,18 @@ import { checkNode } from './checker'
 import { clearCacheOfDependencies, collectDependencies } from './dependencies'
 import { collectIgnoreLines } from './ignore'
 import { readCache, getFileHash, saveCache } from './cache'
+import { lintWithTypeScript7 } from './typescript7'
 
 /**
  * @public
  */
 export async function lint(project: string, options?: Partial<LintOptions>) {
-  assertCompilerApi()
   const lintOptions = { ...defaultLintOptions, ...options }
+  const [major = 0, minor = 0] = ts.versionMajorMinor.split('.').map(Number)
+  if (major > 7 || (major === 7 && minor >= 1)) {
+    return lintWithTypeScript7(project, lintOptions)
+  }
+  assertCompilerApi()
   const { rootNames, compilerOptions } = await getProjectRootNamesAndCompilerOptions(project)
 
   const program = ts.createProgram(rootNames, compilerOptions, undefined, lintOptions.oldProgram)
@@ -235,7 +240,7 @@ const defaultLintOptions: LintOptions = {
 function assertCompilerApi() {
   if (typeof ts.createProgram !== 'function') {
     throw new Error(`type-coverage needs the TypeScript compiler API (ts.createProgram), which typescript@${ts.version} does not export.
-Keep typescript@${ts.version} for your project and give type-coverage TypeScript 6. With npm, add this to package.json:
+The CLI and lint() work with TypeScript 7.1 or later. For lintSync() or TypeScript 7.0, keep typescript@${ts.version} for your project and give type-coverage TypeScript 6. With npm, add this to package.json:
   "overrides": { "type-coverage-core": { "typescript": "npm:@typescript/typescript6@^6" } }
 TypeScript 7 support: https://github.com/plantain-00/type-coverage/issues/147`)
   }
