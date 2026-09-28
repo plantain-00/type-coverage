@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.30.2](https://github.com/plantain-00/type-coverage/compare/v2.30.1...v2.30.2) (2026-09-29)
+  
+* fix: report a clear error when typescript lacks the compiler API ([b6e64b2](https://github.com/plantain-00/type-coverage/commit/b6e64b2ba36076d0d9fa58c08a7ef0ee3ca04463))
+
 ## [2.30.1](https://github.com/plantain-00/type-coverage/compare/v2.30.0...v2.30.1) (2026-07-26)
   
 * fix: inherit file selection from extended tsconfig ([e45b30a](https://github.com/plantain-00/type-coverage/commit/e45b30ae0a5ea563b6778d251ce0dd755197b066))
