@@ -1,0 +1,4 @@
+{
+  "compilerOptions": { "noEmit": true, "strict": true, "target": "es2022", "module": "commonjs", "moduleResolution": "node" },
+  "include": ["index.ts", "types.d.ts"]
+}

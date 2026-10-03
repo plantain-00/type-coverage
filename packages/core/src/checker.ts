@@ -62,7 +62,11 @@ function collectData(node: ts.Node, context: FileContext) {
   }
 }
 
-function typeIsAnyOrInTypeArguments(type: ts.Type, anyCanBeInTypeArguments: boolean, context: FileContext): boolean {
+function typeIsAnyOrInTypeArguments(type: ts.Type, anyCanBeInTypeArguments: boolean, context: FileContext, seen: Set<ts.Type> = new Set()): boolean {
+  if (seen.has(type)) {
+    return false
+  }
+  seen.add(type)
   if (type.flags === ts.TypeFlags.Any) {
     return (type as unknown as { intrinsicName: string }).intrinsicName === 'any'
   }
@@ -88,7 +92,7 @@ function typeIsAnyOrInTypeArguments(type: ts.Type, anyCanBeInTypeArguments: bool
   if (anyCanBeInTypeArguments && type.flags === ts.TypeFlags.Object) {
     const typeArguments = (type as ts.TypeReference).typeArguments
     if (typeArguments) {
-      return typeArguments.some((typeArgument) => typeIsAnyOrInTypeArguments(typeArgument, anyCanBeInTypeArguments, context))
+      return typeArguments.some((typeArgument) => typeIsAnyOrInTypeArguments(typeArgument, anyCanBeInTypeArguments, context, seen))
     }
   }
   return false
