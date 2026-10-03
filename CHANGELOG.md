@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.30.3](https://github.com/plantain-00/type-coverage/compare/v2.30.2...v2.30.3) (2026-10-03)
+  
+* fix: prevent stack overflow on self-referential type arguments ([f6d6100](https://github.com/plantain-00/type-coverage/commit/f6d6100195fa61959874dea5d8057e9f6a36ef03))
+
 ## [2.30.2](https://github.com/plantain-00/type-coverage/compare/v2.30.1...v2.30.2) (2026-09-29)
   
 * fix: report a clear error when typescript lacks the compiler API ([b6e64b2](https://github.com/plantain-00/type-coverage/commit/b6e64b2ba36076d0d9fa58c08a7ef0ee3ca04463))
