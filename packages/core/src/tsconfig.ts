@@ -13,6 +13,8 @@ export async function getProjectRootNamesAndCompilerOptions(project: string) {
   const { configFilePath, dirname } = getTsConfigFilePath(project)
   const config = await getTsConfig(configFilePath, dirname, dirname)
 
+  substituteConfigDirTemplates(config.compilerOptions, path.resolve(process.cwd(), dirname))
+
   const { options: compilerOptions, errors } = ts.convertCompilerOptionsFromJson(config.compilerOptions, config.basePath || dirname)
   if (errors && errors.length > 0) {
     throw errors
@@ -90,9 +92,11 @@ function getTsConfigFilePath(project: string, fallbackProject?: string[]) {
   return { configFilePath, dirname }
 }
 
+type JsonValue = undefined | null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue }
+
 interface JsonConfig {
   extends?: string | string[]
-  compilerOptions?: { baseUrl?: string; outDir?: string; [name: string]: unknown }
+  compilerOptions?: { baseUrl?: string; outDir?: string; [name: string]: JsonValue }
   include?: string[]
   includeBasePath?: string
   exclude?: string[]
@@ -232,6 +236,47 @@ async function getRootNames(config: JsonConfig, dirname: string) {
 
 function resolveConfigPath(basePath: string, configDir: string, filePath: string) {
   return path.resolve(basePath, filePath.replaceAll('${configDir}', configDir))
+}
+
+// compilerOptions where typescript substitutes ${configDir}:
+// file path options plus paths, rootDirs and typeRoots
+const configDirTemplateOptionNames = new Set([
+  'baseurl',
+  'declarationdir',
+  'outdir',
+  'outfile',
+  'paths',
+  'rootdir',
+  'rootdirs',
+  'tsbuildinfofile',
+  'typeroots',
+])
+
+function substituteConfigDirTemplates(compilerOptions: JsonConfig['compilerOptions'], configDir: string) {
+  if (compilerOptions) {
+    for (const name of Object.keys(compilerOptions)) {
+      if (configDirTemplateOptionNames.has(name.toLowerCase())) {
+        compilerOptions[name] = substituteConfigDirTemplate(compilerOptions[name], configDir)
+      }
+    }
+  }
+}
+
+function substituteConfigDirTemplate(value: JsonValue, configDir: string): JsonValue {
+  if (typeof value === 'string') {
+    return value.toLowerCase().startsWith('${configdir}') ? path.resolve(configDir, value.replace('${configDir}', './')) : value
+  }
+  if (Array.isArray(value)) {
+    return value.map(v => substituteConfigDirTemplate(v, configDir))
+  }
+  if (value !== null && typeof value === 'object') {
+    const result: { [key: string]: JsonValue } = {}
+    for (const key of Object.keys(value)) {
+      result[key] = substituteConfigDirTemplate(value[key], configDir)
+    }
+    return result
+  }
+  return value
 }
 
 function statAsync(file: string) {
