@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.30.4](https://github.com/plantain-00/type-coverage/compare/v2.30.3...v2.30.4) (2026-10-14)
+  
+* chore: add test scripts ([91eb547](https://github.com/plantain-00/type-coverage/commit/91eb5470d28fc098bf8dfb90d07cdfb80e61bed6))
+* fix: support ${configDir} template in tsconfig compilerOptions ([9e23956](https://github.com/plantain-00/type-coverage/commit/9e239566eede69ae0b6d33754b89be8256b70c01))
+
 ## [2.30.3](https://github.com/plantain-00/type-coverage/compare/v2.30.2...v2.30.3) (2026-10-03)
   
 * fix: prevent stack overflow on self-referential type arguments ([f6d6100](https://github.com/plantain-00/type-coverage/commit/f6d6100195fa61959874dea5d8057e9f6a36ef03))
