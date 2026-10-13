@@ -20,6 +20,8 @@ export default {
     ts: `eslint ${tsFiles}`,
     markdown: `markdownlint README.md`
   },
-  test: [],
+  test: [
+    'node --test packages/core/test/*.test.mjs'
+  ],
   fix: `eslint ${tsFiles} --fix`
 }
