@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.31.0](https://github.com/plantain-00/type-coverage/compare/v2.30.4...v2.31.0) (2026-10-31)
+  
+* feat: check coverage with the TypeScript 7.1 API ([1a38373](https://github.com/plantain-00/type-coverage/commit/1a383738fa8f8ebb600d6fe0c02440d889a2cb52))
+
 ## [2.30.4](https://github.com/plantain-00/type-coverage/compare/v2.30.3...v2.30.4) (2026-10-14)
   
 * chore: add test scripts ([91eb547](https://github.com/plantain-00/type-coverage/commit/91eb5470d28fc098bf8dfb90d07cdfb80e61bed6))
