@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.31.1](https://github.com/plantain-00/type-coverage/compare/v2.31.0...v2.31.1) (2026-10-31)
+  
+* chore: remove unused fast-glob ([7ea35c5](https://github.com/plantain-00/type-coverage/commit/7ea35c5c8a9068253bbf4d388a24f200a71507e0))
+* fix: avoid recursive source discovery ([648b33d](https://github.com/plantain-00/type-coverage/commit/648b33d1a7da9df4582d01adda8ec5fc2d058d28))
+
 ## [2.31.0](https://github.com/plantain-00/type-coverage/compare/v2.30.4...v2.31.0) (2026-10-31)
   
 * feat: check coverage with the TypeScript 7.1 API ([1a38373](https://github.com/plantain-00/type-coverage/commit/1a383738fa8f8ebb600d6fe0c02440d889a2cb52))
