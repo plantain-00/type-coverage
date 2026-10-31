@@ -8,7 +8,6 @@
   "author": "york yao <yaoao12306@outlook.com>",
   "license": "MIT",
   "dependencies": {
-    "fast-glob": "3",
     "minimatch": "6 || 7 || 8 || 9 || 10",
     "normalize-path": "3",
     "tslib": "1 || 2",
