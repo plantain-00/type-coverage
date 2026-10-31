@@ -1,8 +1,7 @@
+/// <reference types="node" />
 import * as ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-import fg = require('fast-glob')
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 import normalize = require('normalize-path')
 
@@ -200,7 +199,7 @@ async function getRootNames(config: JsonConfig, dirname: string) {
       }
     }
 
-    // https://github.com/mrmlnc/fast-glob#how-to-exclude-directory-from-reading
+    // Resolve exclusions from the config that declared them.
     let ignore: string[] = []
     for (const e of exclude) {
       if (explicitExclude) {
@@ -224,10 +223,13 @@ async function getRootNames(config: JsonConfig, dirname: string) {
 
     rules = rules.map((r) => normalize(r))
     ignore = ignore.map((r) => normalize(r))
-    const includeFiles = await fg(rules, {
-      ignore,
-      cwd: dirname,
-    })
+    // TypeScript tracks visited real paths, so workspace links cannot create
+    // recursive directory scans. Explicit dependency declarations remain inputs.
+    const includeFiles = ts.parseJsonConfigFileContent({
+      compilerOptions: config.compilerOptions,
+      include: rules,
+      ...(explicitExclude ? { exclude: ignore } : {}),
+    }, ts.sys, dirname).fileNames
     files.push(...includeFiles)
   }
 
