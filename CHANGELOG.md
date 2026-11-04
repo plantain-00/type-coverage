@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.31.2](https://github.com/plantain-00/type-coverage/compare/v2.31.1...v2.31.2) (2026-11-05)
+  
+* fix(cli): fail loudly when no files are measured instead of reporting 0 / 0 ([d50e137](https://github.com/plantain-00/type-coverage/commit/d50e1370703093df1862966ba35a6c49194ab936))
+* fix(core): resolve a relative -p against the project dir so a non-cwd project is measured ([ae1806f](https://github.com/plantain-00/type-coverage/commit/ae1806f46cba683ff619db42df13fa08a9ec9542))
+
 ## [2.31.1](https://github.com/plantain-00/type-coverage/compare/v2.31.0...v2.31.1) (2026-10-31)
   
 * chore: remove unused fast-glob ([7ea35c5](https://github.com/plantain-00/type-coverage/commit/7ea35c5c8a9068253bbf4d388a24f200a71507e0))
