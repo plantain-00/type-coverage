@@ -238,6 +238,14 @@ async function executeCommandLine() {
   output.percentString = percentString
   output.totalCount = totalCount
 
+  // Fail loudly when nothing was measured instead of reporting 0 / 0 and
+  // exiting 0. A zero total means the resolved program matched no files
+  // (e.g. a wrong -p/--project path, or --files/--ignore-files excluding
+  // everything), which silently disables a CI coverage gate. See #158.
+  if (totalCount === 0) {
+    throw new Error('No files were measured for type coverage. The resolved program matched no files - check the -p/--project path and any --files/--ignore-files patterns.')
+  }
+
   if (update) {
     await saveTarget(+percentString)
   } else if (updateIfHigher) {
