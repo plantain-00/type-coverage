@@ -80,11 +80,15 @@ export function getTsConfigFilePath(project: string, fallbackProject?: string[])
   }
 
   if (projectStats && projectStats.isDirectory()) {
+    // Resolve to an absolute path: a relative `project` (e.g. a relative -p)
+    // otherwise leaves `dirname` relative to the cwd, so when the project is
+    // not the cwd the config dir is later joined against the cwd and no files
+    // match the program's sources (#158).
     configFilePath = path.resolve(project, 'tsconfig.json')
-    dirname = project
+    dirname = path.resolve(project)
   } else if (projectStats && projectStats.isFile()) {
-    configFilePath = project
-    dirname = path.dirname(project)
+    configFilePath = path.resolve(project)
+    dirname = path.dirname(path.resolve(project))
   } else {
     throw new Error("paramter 'project' should be a file or directory.")
   }
